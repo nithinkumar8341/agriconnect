@@ -41,7 +41,7 @@ export default defineConfig({
         // shows its offline banner. Every route falls back to index.html; API calls never do.
         globPatterns: ['**/*.{js,css,html,svg,png,ico,webmanifest}'],
         navigateFallback: '/index.html',
-        navigateFallbackDenylist: [/^\/api\//],
+        navigateFallbackDenylist: [/^\/api\//, /^\/uploads\//],
         cleanupOutdatedCaches: true,
       },
       // Service workers in dev cause confusing stale screens; test them with `npm run build && npm run preview`.
@@ -53,17 +53,24 @@ export default defineConfig({
     // Proxying keeps the API same-origin in dev, which the httpOnly refresh cookie (Prompt 2) relies on.
     proxy: {
       '/api': 'http://localhost:4000',
+      // Development photo storage (production photos are on Cloudinary).
+      '/uploads': 'http://localhost:4000',
     },
   },
   preview: {
     port: 4173,
     proxy: {
       '/api': 'http://localhost:4000',
+      // Development photo storage (production photos are on Cloudinary).
+      '/uploads': 'http://localhost:4000',
     },
   },
   test: {
     environment: 'jsdom',
     globals: true,
     setupFiles: './src/test/setup.js',
+    // Full-screen flow tests type and click through several screens; under machine load they
+    // exceeded the 5 s default and failed at random. A truly stuck test still fails at 20 s.
+    testTimeout: 20_000,
   },
 });

@@ -38,13 +38,14 @@ describe('AuthProvider', () => {
 
     expect(screen.getByText('status:loading')).toBeInTheDocument();
     expect(await screen.findByText('status:authenticated')).toBeInTheDocument();
-    expect(probe.auth.user.role).toBe('farmer');
+    await waitFor(() => expect(probe.auth.user?.role).toBe('farmer'));
   });
 
   it('becomes anonymous when there is no session', async () => {
     renderWithAuth(anonymousHandlers);
 
     expect(await screen.findByText('status:anonymous')).toBeInTheDocument();
+    await waitFor(() => expect(probe.auth.status).toBe('anonymous'));
     expect(probe.auth.user).toBeNull();
   });
 

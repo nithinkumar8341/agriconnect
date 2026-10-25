@@ -71,5 +71,29 @@
     "logoutAllTitle": "Log out on all phones?",
     "logoutAllMessage": "You will need an SMS code to log in again on every phone, including this one.",
     "logoutAllConfirm": "Yes, log out everywhere"
+  },
+  "sell": {
+    "title": "Sell produce",
+    "photosHeading": "Step 1: Photos of your produce",
+    "photosHint": "Take a clear photo in daylight, close to the produce. Up to {{max}} photos.",
+    "count": "{{count}} of {{max}} photos",
+    "takePhoto": "Take photo",
+    "gallery": "Choose from gallery",
+    "remove": "Remove photo",
+    "retry": "Try again",
+    "status": {
+      "preparing": "Preparing…",
+      "uploading": "Uploading {{percent}}%",
+      "waiting": "Waiting for internet",
+      "uploaded": "Uploaded",
+      "failed": "Upload failed"
+    },
+    "errors": {
+      "PHOTO_UNREADABLE": "This photo could not be opened. Please take it again.",
+      "INVALID_IMAGE": "This file is not a photo we can use.",
+      "PAYLOAD_TOO_LARGE": "This photo is too large."
+    },
+    "waitingNote": "You are offline. Photos are saved on this phone and will upload by themselves when the internet is back.",
+    "nextSoon": "Next you will choose the crop, quantity and price. That part arrives in the next update."
   }
 }

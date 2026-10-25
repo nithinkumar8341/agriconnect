@@ -5,8 +5,9 @@ const DEFAULT_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? '/api/v1';
 // Talks to the backend. The access token lives only in this closure (memory), never in
 // localStorage, so injected scripts cannot read it from storage; a page reload restores it from the
 // httpOnly refresh cookie instead.
-export function createApiClient({ baseUrl = DEFAULT_BASE_URL, fetchImpl } = {}) {
+export function createApiClient({ baseUrl = DEFAULT_BASE_URL, fetchImpl, xhrFactory } = {}) {
   const doFetch = fetchImpl ?? ((...args) => window.fetch(...args));
+  const makeXhr = xhrFactory ?? (() => new XMLHttpRequest());
   let accessToken = null;
   let refreshInFlight = null;
   const sessionExpiredListeners = new Set();
@@ -77,8 +78,50 @@ export function createApiClient({ baseUrl = DEFAULT_BASE_URL, fetchImpl } = {}) 
     }
   }
 
+  // File uploads use XMLHttpRequest because fetch cannot report upload progress, and a progress
+  // bar matters on a slow connection. Errors are shaped exactly like send()'s.
+  function sendUpload(path, formData, { onProgress, signal } = {}) {
+    return new Promise((resolve, reject) => {
+      const xhr = makeXhr();
+      xhr.open('POST', `${baseUrl}${path}`);
+      xhr.setRequestHeader('Accept', 'application/json');
+      if (accessToken) xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable) onProgress?.(event.loaded / event.total);
+      };
+      xhr.onload = () => {
+        let data = null;
+        try {
+          data = JSON.parse(xhr.responseText);
+        } catch {
+          // Non-JSON bodies (for example a proxy error page) fall through to HTTP_ERROR.
+        }
+        if (xhr.status >= 200 && xhr.status < 300) resolve(data);
+        else
+          reject(new ApiError({ status: xhr.status, ...(data?.error ?? { code: 'HTTP_ERROR' }) }));
+      };
+      xhr.onerror = () => reject(new ApiError({ status: 0, code: 'NETWORK_ERROR' }));
+      xhr.onabort = () => reject(new DOMException('Upload cancelled', 'AbortError'));
+      signal?.addEventListener('abort', () => xhr.abort(), { once: true });
+      xhr.send(formData);
+    });
+  }
+
+  async function upload(path, formData, options) {
+    try {
+      return await sendUpload(path, formData, options);
+    } catch (err) {
+      if (err instanceof ApiError && err.code === 'TOKEN_EXPIRED') {
+        await refreshAccessToken();
+        return sendUpload(path, formData, options);
+      }
+      throw err;
+    }
+  }
+
   return {
     request,
+    upload,
     get: (path, options) => request(path, { ...options, method: 'GET' }),
     post: (path, body, options) => request(path, { ...options, method: 'POST', body }),
     put: (path, body, options) => request(path, { ...options, method: 'PUT', body }),
