@@ -32,25 +32,31 @@ function haversineMeters([lng1, lat1], [lng2, lat2]) {
 
 // An order placed before the farmer's cutoff (IST) can go out from tomorrow; after it, from the day
 // after. The first of those days that is one of the farmer's delivery days is the next delivery.
-export function nextDeliveryDate({ deliveryDays, cutoffTime }, now = new Date()) {
+// The next `count` such days (as YYYY-MM-DD), for the buyer to choose from at checkout.
+export function deliveryDateOptions({ deliveryDays, cutoffTime }, now = new Date(), count = 4) {
   const ist = new Date(now.getTime() + IST_OFFSET_MS);
   const [hours, minutes] = cutoffTime.split(':').map(Number);
   const beforeCutoff = ist.getUTCHours() * 60 + ist.getUTCMinutes() < hours * 60 + minutes;
   const firstDay = beforeCutoff ? 1 : 2;
-  for (let offset = firstDay; offset < firstDay + 7; offset += 1) {
+  const dates = [];
+  for (let offset = firstDay; dates.length < count && offset < firstDay + 7 * count; offset += 1) {
     const day = new Date(ist.getTime() + offset * DAY_MS);
     if (deliveryDays.includes(WEEKDAYS[(day.getUTCDay() + 6) % 7])) {
-      return day.toISOString().slice(0, 10);
+      dates.push(day.toISOString().slice(0, 10));
     }
   }
-  return null;
+  return dates;
+}
+
+export function nextDeliveryDate(profile, now = new Date()) {
+  return deliveryDateOptions(profile, now, 1)[0] ?? null;
 }
 
 function distanceTo(profile, point) {
   return profile.location && point ? haversineMeters(profile.location.coordinates, point) : null;
 }
 
-function servesBuyer(profile, { point, pincode }) {
+export function servesBuyer(profile, { point, pincode }) {
   const distance = distanceTo(profile, point);
   if (distance !== null && distance <= profile.deliveryRadiusKm * 1000) return true;
   return Boolean(pincode) && profile.servicePincodes.includes(pincode);
@@ -97,7 +103,7 @@ async function servingFarmers({ point, pincode }) {
   return found;
 }
 
-function toFarmerSummary(profile) {
+export function toFarmerSummary(profile) {
   return {
     id: profile.userId.toString(),
     firstName: profile.name.trim().split(/\s+/)[0],

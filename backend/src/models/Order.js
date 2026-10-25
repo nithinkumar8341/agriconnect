@@ -101,6 +101,9 @@ const orderSchema = new mongoose.Schema(
 orderSchema.index({ buyerId: 1, createdAt: -1 });
 orderSchema.index({ farmerId: 1, status: 1, createdAt: -1 });
 orderSchema.index({ checkoutGroupId: 1 });
+// The checkout idempotency key is the checkoutGroupId: a repeated submission cannot create a
+// second order for the same buyer, checkout and farmer, even when both requests race.
+orderSchema.index({ buyerId: 1, checkoutGroupId: 1, farmerId: 1 }, { unique: true });
 orderSchema.index({ status: 1, 'delivery.slotDate': 1 });
 
 export const Order = mongoose.models.Order ?? mongoose.model('Order', orderSchema);
