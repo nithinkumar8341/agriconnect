@@ -117,6 +117,38 @@ sequenceDiagram
 - **`requireAuth` then loads the user from MongoDB on every request.** Suspension, role changes and logout-all therefore take effect immediately, and role checks use the database role, not the token's.
 - **Refresh token:** a random 256-bit value, stored only as a SHA-256 hash, sent only to `/api/v1/auth/*`.
 
+## Frontend structure
+
+```
+frontend/src/
+  main.jsx            loads i18n + CSS, renders <App/> in StrictMode
+  App.jsx             AuthProvider > ToastProvider > RouterProvider
+  app/routes.jsx      single route table (browser router in the app, memory router in tests)
+  auth/               AuthProvider (session state + OTP/PIN/role/logout actions), RequireRole guard, role home paths
+  lib/api.js          fetch client: token in memory, ApiError, single-flight refresh + retry
+  i18n/               i18next setup, locales/{te,en,hi}/{common,devui}.json
+  components/ui/      design system (BigButton, IconTile, PageHeader, QuantityStepper, PresetChips,
+                      Toast, Skeleton, EmptyState, ErrorState, BottomNav, ConfirmSheet/BottomSheet)
+  layouts/            RootLayout (skip link, offline banner), PublicLayout, RoleLayout (+ bottom menu)
+  pages/              Welcome, role homes and placeholders, NotFound, DevUi gallery
+  hooks/              useApiRequest (cancellable loading), useOnlineStatus
+```
+
+```mermaid
+flowchart TD
+    Start[App opens] --> I18n[i18n: saved language or te]
+    I18n --> Auth[AuthProvider: POST /auth/token/refresh]
+    Auth -->|200| Authed[authenticated: token in memory, user in state]
+    Auth -->|401| Anon[anonymous]
+    Authed --> Guard{RequireRole}
+    Anon --> Guard
+    Guard -->|anonymous| Login[/login/]
+    Guard -->|role null| Role[/onboarding/role/]
+    Guard -->|other role| OwnHome[user's own home]
+    Guard -->|allowed| Screen[role layout + screen]
+    Screen -->|request fails TOKEN_EXPIRED| Refresh[single-flight refresh, retry once]
+```
+
 ## Key decisions so far
 
 - The browser never talks to ai-service directly. The backend calls it, so authentication, rate limits and auditing stay in one place.

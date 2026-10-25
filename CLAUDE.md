@@ -91,14 +91,16 @@ Works end to end in the browser; tests pass; lint passes; i18n keys added (te + 
 - Dev login: with `SMS_PROVIDER=console` and `DEV_FIXED_OTP=123456` (as in `.env.example`) every OTP is `123456` and the SMS text is printed in the backend terminal. Agents/admins also need a PIN (`/auth/pin/setup` on first login).
 - Dev:
   - backend: `npm run dev` (port 4000, reloads on change, loads `.env` if present; needs MongoDB running). Health: `GET /api/v1/health`
-  - frontend: `npm run dev` (port 5173, proxies `/api` to :4000)
+  - frontend: `npm run dev` (port 5173, proxies `/api` to :4000). Component gallery: `/dev/ui` (dev only)
+  - frontend production check: `npm run build && npm run preview` (port 4173, also proxies `/api`); add `VITE_ENABLE_DEV_UI=true` to the build to include `/dev/ui`
+  - PWA icons: `npm run generate-pwa-assets` (from `public/favicon.svg`)
   - ai-service: `uvicorn app.main:app --reload --port 8000`
 - Lint:
   - backend / frontend: `npm run lint` (ESLint + Prettier check); `npm run format` to fix formatting
   - ai-service: `ruff check .` and `ruff format --check .`
 - Test:
   - backend: `npm test` (Jest + supertest, native ESM; starts an in-memory MongoDB 7.0.14 replica set, so the first run downloads ~100 MB)
-  - frontend: `npm test` (Vitest + Testing Library); `npm run build` for a production build
+  - frontend: `npm test` (Vitest + Testing Library + axe-core; i18n parity tests fail if a te/hi key or placeholder is missing); `npm run build` for a production build
   - ai-service: `pytest`
 - Seed (in `backend/`, needs MongoDB running; every task syncs indexes first):
   - `npm run db:indexes`: sync all model indexes

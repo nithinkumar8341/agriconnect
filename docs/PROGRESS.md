@@ -83,6 +83,30 @@
       - The 2dsphere index is present on `farmerprofiles`.
     - A demo farmer logs in with OTP `123456` (role farmer), and the demo agent is sent to `pin_setup`.
   - **Not done in this prompt (by plan):** no API routes for the new collections. Those come in Prompts 6–16, which implement the permission matrix in `database.md`.
+- **Prompt 4: Frontend foundation and design system** (3 commits, 2026-10-25), frontend only:
+  - **Theme:** Tailwind v4 farmer-first theme with an 18px base, the leaf/soil palette (all text pairs 4.5:1 or better), a Telugu-safe line height, a dark+yellow focus ring, system fonts, and reduced-motion support.
+  - **Components:** BigButton, IconTile, PageHeader (back + language switcher), QuantityStepper, PresetChips, Toast, Skeleton/SkeletonList, EmptyState, ErrorState, BottomNav, and ConfirmSheet on an accessible BottomSheet. The sheet traps focus, closes on Escape and returns focus; Cancel is focused first.
+  - **i18n:** react-i18next with te/en/hi in `common` and `devui` namespaces. Default is te; an explicit choice is saved; `<html lang>` stays in sync. Tests fail on any missing key, empty string or mismatched `{{placeholder}}`. 85 UI strings were added to translation review.
+  - **API client:**
+    - access token in memory only;
+    - `ApiError` built from the backend error shape;
+    - `NETWORK_ERROR` for failed connections; cancellation passed through;
+    - single-flight refresh with one retry, plus a session-expired event;
+    - error codes mapped to translated messages.
+  - **Auth:** `AuthProvider` restores the session via refresh (one request even under StrictMode) and exposes requestOtp, verifyOtp (returns the PIN step for agents/admins), verifyPin, setupPin, chooseRole, logout and logoutAll.
+  - **Routing:** React Router data router with root, public and per-role layouts. `RequireRole` sends anonymous users to `/login`, users without a role to `/onboarding/role`, and wrong roles to their own home. Bottom menus are defined per role; non-home screens are placeholders.
+  - **Pages:**
+    - Welcome page (language picker first, then login);
+    - role home placeholders with logout;
+    - 404 page;
+    - the `/dev/ui` gallery (development only, or `VITE_ENABLE_DEV_UI=true`).
+  - **Hooks:** `useApiRequest(load, key)`, which cancels stale requests and ignores late answers; `useOnlineStatus` and the offline banner.
+  - **PWA:** manifest, generated icons (full-bleed maskable), and a Workbox-precached app shell, so the app opens offline. `/api` is never cached or used as a fallback.
+  - **Verified:**
+    - 58 frontend tests pass, 3 runs in a row; lint is clean; the production build works (128 KB gzipped JS; the service worker precaches 20 files).
+    - axe-core shows 0 violations on `/dev/ui` in en and te.
+    - Lighthouse 12 mobile (412 px) on the production preview: `/dev/ui` and `/` both scored Accessibility 100, Performance 98, Best practices 96. A phone-width screenshot confirmed no horizontal overflow.
+  - **Not done in this prompt (by plan):** login/OTP/onboarding screens (Prompt 5) and the farmer dashboard (Prompt 6).
 
 ## In progress
 
@@ -90,17 +114,20 @@
 
 ## Next
 
-- Prompt 4: Frontend foundation and design system (Tailwind theme, components, router with role guards, i18n te/en/hi, API client with single-flight refresh, PWA).
+- Prompt 5: Login, onboarding and profile setup UI (language → phone → OTP → role → farmer/buyer onboarding). Needs backend profile endpoints for FarmerProfile/BuyerProfile.
 
 ## Known issues
 
+- **The startup login check logs a browser console error for visitors who are not signed in** (`POST /auth/token/refresh` answers 401). This costs 4 Lighthouse best-practice points. Options for later: a non-secret "has session" hint so first-time visitors skip the call, or a 204 "no session" response.
+- The frontend bundle is 128 KB gzipped in a single chunk. Route-level code splitting is planned for Prompt 23.
+
 - ai-service tests print a `StarletteDeprecationWarning` saying the httpx-backed `TestClient` is deprecated in Starlette 1.x. Tests pass. The suggested replacement package was not installed because it could not be verified during setup; review it before switching.
-- CI has not run on Prompts 1–3: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
+- CI has not run on Prompts 1–4: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
+- 85 frontend UI strings in te/hi are machine-written and await native-speaker review.
 - The 59 crop names in te/hi are machine-written and await native-speaker review.
 - Demo phone numbers (`+9199999000xx`) are invented but could belong to real people: never seed demo data where a real SMS gateway is active.
 - AuditLog and LedgerEntry immutability is enforced in Mongoose only; direct database access could still change rows.
 - **Real SMS is not implemented.** India requires DLT registration (sender ID and approved templates) first, so start that early if the pilot needs real SMS. Until then production cannot send OTPs.
-- **Two parallel refreshes from one browser end the session** (they look like token reuse). Prompt 4's API client must run one refresh at a time.
 - `TRUST_PROXY` for production (Vercel rewrite + Render) is expected to be 2 but is unverified until deploy.
 - The te/hi OTP SMS texts are machine-written and await native-speaker review ([translation-review.md](translation-review.md)).
 - Graceful shutdown can't be checked by hand on Windows (no SIGTERM). Press Ctrl+C in a terminal running `npm run dev`; that sends SIGINT, which takes the same shutdown path.
