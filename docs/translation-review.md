@@ -188,7 +188,11 @@ Machine-written te and hi for every UI key, in all namespaces. The app falls bac
 | buyer:product.minOrder | Minimum order | కనీస ఆర్డర్ |  | न्यूनतम ऑर्डर |  |
 | buyer:product.nextDelivery | Next delivery | తదుపరి డెలివరీ |  | अगली डिलीवरी |  |
 | buyer:product.cannotDeliver | This farmer does not deliver to your location. | ఈ రైతు మీ ప్రాంతానికి డెలివరీ చేయరు. |  | यह किसान आपकी जगह पर डिलीवरी नहीं करते। |  |
-| buyer:product.orderSoon | Ordering opens in the next update. | ఆర్డర్ చేయడం తదుపరి అప్‌డేట్‌లో వస్తుంది. |  | ऑर्डर करना अगले अपडेट में शुरू होगा। |  |
+| buyer:product.quantity | How much? | ఎంత కావాలి? |  | कितना चाहिए? |  |
+| buyer:product.addToCart | Add to cart | కార్ట్‌లో వేయండి |  | कार्ट में डालें |  |
+| buyer:product.added | Added to cart. | కార్ట్‌లో వేశాము. |  | कार्ट में डाल दिया। |  |
+| buyer:product.goToCart | Go to cart | కార్ట్‌కు వెళ్ళండి |  | कार्ट पर जाएँ |  |
+| buyer:product.inCart | {{quantity}} {{unit}} in your cart | మీ కార్ట్‌లో {{quantity}} {{unit}} |  | आपके कार्ट में {{quantity}} {{unit}} |  |
 | buyer:farmer.title | Farmer | రైతు |  | किसान |  |
 | buyer:farmer.new | New | కొత్త |  | नए |  |
 | buyer:farmer.levels.phone_verified | Phone verified | ఫోన్ ధృవీకరించబడింది |  | फ़ोन सत्यापित |  |
@@ -200,6 +204,58 @@ Machine-written te and hi for every UI key, in all namespaces. The app falls bac
 | buyer:farmer.nothing | Nothing on sale right now. | ప్రస్తుతం అమ్మకానికి ఏమీ లేవు. |  | अभी कुछ बिक्री पर नहीं है। |  |
 | buyer:farmer.reviews | Reviews | రివ్యూలు |  | समीक्षाएँ |  |
 | buyer:farmer.reviewsSoon | Reviews from buyers will appear here after delivered orders. | డెలివరీ అయిన ఆర్డర్ల తర్వాత కొనుగోలుదారుల రివ్యూలు ఇక్కడ కనిపిస్తాయి. |  | डिलीवर हुए ऑर्डर के बाद खरीदारों की समीक्षाएँ यहाँ दिखेंगी। |  |
+| buyer:cart.title | My cart | నా కార్ట్ |  | मेरा कार्ट |  |
+| buyer:cart.emptyTitle | Your cart is empty | మీ కార్ట్ ఖాళీగా ఉంది |  | आपका कार्ट ख़ाली है |  |
+| buyer:cart.emptyMessage | Add vegetables and fruits from farmers near you. | మీ దగ్గరలోని రైతుల నుండి కూరగాయలు, పండ్లు వేయండి. |  | पास के किसानों से सब्ज़ियाँ और फल डालें। |  |
+| buyer:cart.browse | See produce | పంటలు చూడండి |  | फ़सलें देखें |  |
+| buyer:cart.from | From {{name}}, {{village}} | {{name}}, {{village}} నుండి |  | {{name}}, {{village}} से |  |
+| buyer:cart.remove | Remove {{crop}} | {{crop}} తీసివేయండి |  | {{crop}} हटाएँ |  |
+| buyer:cart.itemTotal | Item total | పంటల మొత్తం |  | फ़सलों का कुल |  |
+| buyer:cart.deliveryFee | Delivery fee | డెలివరీ ఛార్జీ |  | डिलीवरी शुल्क |  |
+| buyer:cart.farmerTotal | Total for this farmer | ఈ రైతుకు మొత్తం |  | इस किसान का कुल |  |
+| buyer:cart.belowMinimum | Add {{amount}} more: this farmer’s minimum order is {{minimum}}. | ఇంకా {{amount}} వేయండి: ఈ రైతు కనీస ఆర్డర్ {{minimum}}. |  | {{amount}} और डालें: इस किसान का न्यूनतम ऑर्डर {{minimum}} है। |  |
+| buyer:cart.deliveryDay | Delivery day | డెలివరీ రోజు |  | डिलीवरी का दिन |  |
+| buyer:cart.deliverTo | Deliver to | డెలివరీ చిరునామా |  | डिलीवरी पता |  |
+| buyer:cart.payment | Payment | చెల్లింపు |  | भुगतान |  |
+| buyer:cart.cod | Cash on delivery | డెలివరీ సమయంలో నగదు |  | डिलीवरी पर नकद |  |
+| buyer:cart.upiSoon | UPI payment comes in the next update. | UPI చెల్లింపు తదుపరి అప్‌డేట్‌లో వస్తుంది. |  | UPI भुगतान अगले अपडेट में आएगा। |  |
+| buyer:cart.summary | Price summary | ధర వివరాలు |  | कीमत का ब्योरा |  |
+| buyer:cart.itemsTotal | Vegetables and fruits | కూరగాయలు, పండ్లు |  | सब्ज़ियाँ और फल |  |
+| buyer:cart.deliveryTotal | Delivery | డెలివరీ |  | डिलीवरी |  |
+| buyer:cart.platformFee | Platform fee (from the farmer’s share) | ప్లాట్‌ఫామ్ ఫీజు (రైతు వాటా నుండి) |  | प्लेटफ़ॉर्म शुल्क (किसान के हिस्से से) |  |
+| buyer:cart.grandTotal | You pay | మీరు చెల్లించేది |  | आप देंगे |  |
+| buyer:cart.placeOrder | Place order | ఆర్డర్ చేయండి |  | ऑर्डर करें |  |
+| buyer:cart.placed | Order placed. The farmer will confirm it soon. | ఆర్డర్ అయింది. రైతు త్వరలో నిర్ధారిస్తారు. |  | ऑर्डर हो गया। किसान जल्द ही पुष्टि करेंगे। |  |
+| buyer:cart.changedTitle | Some things changed | కొన్ని మారాయి |  | कुछ बदल गया है |  |
+| buyer:cart.changes.price | {{crop}}: price is now {{new}} (was {{old}}). | {{crop}}: ధర ఇప్పుడు {{new}} (ముందు {{old}}). |  | {{crop}}: भाव अब {{new}} है (पहले {{old}})। |  |
+| buyer:cart.changes.stock | {{crop}}: only {{available}} {{unit}} left. | {{crop}}: {{available}} {{unit}} మాత్రమే మిగిలింది. |  | {{crop}}: सिर्फ़ {{available}} {{unit}} बचा है। |  |
+| buyer:cart.changes.unavailable | {{crop}} is no longer available. | {{crop}} ఇప్పుడు అందుబాటులో లేదు. |  | {{crop}} अब उपलब्ध नहीं है। |  |
+| buyer:cart.changes.not_delivered | {{crop}}: this farmer does not deliver to your address. | {{crop}}: ఈ రైతు మీ చిరునామాకు డెలివరీ చేయరు. |  | {{crop}}: ये किसान आपके पते पर डिलीवरी नहीं करते। |  |
+| buyer:cart.acceptChanges | OK, update my cart | సరే, కార్ట్ మార్చండి |  | ठीक है, कार्ट बदलें |  |
+| buyer:cart.errors.BELOW_MINIMUM | Some farmers need a bigger order. Add more items or remove theirs. | కొందరు రైతులకు పెద్ద ఆర్డర్ కావాలి. ఇంకా వేయండి లేదా వారి పంటలు తీసేయండి. |  | कुछ किसानों को बड़ा ऑर्डर चाहिए। और डालें या उनकी चीज़ें हटाएँ। |  |
+| buyer:cart.errors.INVALID_DELIVERY_DATE | Choose a delivery day for each farmer. | ప్రతి రైతుకు డెలివరీ రోజు ఎంచుకోండి. |  | हर किसान के लिए डिलीवरी का दिन चुनें। |  |
+| buyer:cart.errors.COD_LIMIT | New buyers can pay cash for orders up to {{limit}}. Make the order smaller. | కొత్త కొనుగోలుదారులు {{limit}} వరకు నగదుతో చెల్లించవచ్చు. ఆర్డర్ తగ్గించండి. |  | नए खरीदार {{limit}} तक नकद दे सकते हैं। ऑर्डर छोटा करें। |  |
+| buyer:cart.errors.TOO_MANY_OPEN_ORDERS | You already have open orders. Please wait until they are delivered. | మీకు ఇప్పటికే తెరిచిన ఆర్డర్లు ఉన్నాయి. అవి డెలివరీ అయ్యే వరకు ఆగండి. |  | आपके पहले से खुले ऑर्डर हैं। उनके डिलीवर होने तक रुकें। |  |
+| buyer:cart.errors.COD_BLOCKED | Cash on delivery is not available on this account. | ఈ ఖాతాకు డెలివరీ సమయంలో నగదు అందుబాటులో లేదు. |  | इस खाते पर डिलीवरी पर नकद उपलब्ध नहीं है। |  |
+| buyer:cart.errors.ADDRESS_REQUIRED | Add a delivery address in your profile first. | ముందుగా మీ ప్రొఫైల్‌లో డెలివరీ చిరునామా ఇవ్వండి. |  | पहले अपनी प्रोफ़ाइल में डिलीवरी पता जोड़ें। |  |
+| buyer:orders.title | My orders | నా ఆర్డర్లు |  | मेरे ऑर्डर |  |
+| buyer:orders.emptyTitle | No orders yet | ఇంకా ఆర్డర్లు లేవు |  | अभी कोई ऑर्डर नहीं |  |
+| buyer:orders.emptyMessage | Your orders will appear here. | మీ ఆర్డర్లు ఇక్కడ కనిపిస్తాయి. |  | आपके ऑर्डर यहाँ दिखेंगे। |  |
+| buyer:orders.status.placed | Waiting for farmer | రైతు కోసం వేచి ఉంది |  | किसान का इंतज़ार |  |
+| buyer:orders.status.accepted | Accepted | అంగీకరించారు |  | स्वीकार हुआ |  |
+| buyer:orders.status.out_for_delivery | On the way | దారిలో ఉంది |  | रास्ते में |  |
+| buyer:orders.status.delivered | Delivered | డెలివరీ అయింది |  | डिलीवर हुआ |  |
+| buyer:orders.status.cancelled | Cancelled | రద్దు అయింది |  | रद्द हुआ |  |
+| buyer:orders.status.rejected | Declined by farmer | రైతు తిరస్కరించారు |  | किसान ने मना किया |  |
+| buyer:orders.status.failed | Not delivered | డెలివరీ కాలేదు |  | डिलीवर नहीं हुआ |  |
+| buyer:orders.delivery | Delivery {{date}} | డెలివరీ {{date}} |  | डिलीवरी {{date}} |  |
+| buyer:orders.total | Total {{amount}} · {{method}} | మొత్తం {{amount}} · {{method}} |  | कुल {{amount}} · {{method}} |  |
+| buyer:orders.cancel | Cancel order | ఆర్డర్ రద్దు చేయండి |  | ऑर्डर रद्द करें |  |
+| buyer:orders.cancelTitle | Cancel this order? | ఈ ఆర్డర్ రద్దు చేయాలా? |  | यह ऑर्डर रद्द करें? |  |
+| buyer:orders.cancelMessage | The farmer will be told. You can order again any time. | రైతుకు తెలియజేస్తాము. మీరు ఎప్పుడైనా మళ్ళీ ఆర్డర్ చేయవచ్చు. |  | किसान को बताया जाएगा। आप कभी भी फिर ऑर्डर कर सकते हैं। |  |
+| buyer:orders.cancelConfirm | Yes, cancel | అవును, రద్దు చేయండి |  | हाँ, रद्द करें |  |
+| buyer:orders.cancelled | Order cancelled. | ఆర్డర్ రద్దు అయింది. |  | ऑर्डर रद्द हुआ। |  |
+| buyer:orders.errors.INVALID_STATUS_CHANGE | The farmer already accepted this order, so it cannot be cancelled here. | రైతు ఇప్పటికే ఈ ఆర్డర్ అంగీకరించారు, కాబట్టి ఇక్కడ రద్దు చేయలేరు. |  | किसान ने यह ऑर्डर स्वीकार कर लिया है, इसलिए यहाँ रद्द नहीं हो सकता। |  |
 | common:app.name | AgriConnect | AgriConnect |  | AgriConnect |  |
 | common:app.tagline | Fresh vegetables and fruits, straight from nearby farmers | దగ్గరలోని రైతుల నుండి నేరుగా తాజా కూరగాయలు, పండ్లు |  | पास के किसानों से सीधे ताज़ी सब्ज़ियाँ और फल |  |
 | common:actions.back | Back | వెనుకకు |  | वापस |  |
@@ -224,6 +280,7 @@ Machine-written te and hi for every UI key, in all namespaces. The app falls bac
 | common:nav.farmers | Farmers | రైతులు |  | किसान |  |
 | common:nav.users | Users | వినియోగదారులు |  | उपयोगकर्ता |  |
 | common:nav.settings | Settings | సెట్టింగ్‌లు |  | सेटिंग्स |  |
+| common:nav.cart | Cart | కార్ట్ |  | कार्ट |  |
 | common:roles.farmer | Farmer | రైతు |  | किसान |  |
 | common:roles.buyer | Buyer | కొనుగోలుదారు |  | खरीदार |  |
 | common:roles.agent | Field agent | ఫీల్డ్ ఏజెంట్ |  | फ़ील्ड एजेंट |  |

@@ -342,6 +342,32 @@ A change from any other status, or a listing that changed in between (an order a
 
 **Sorting:** `distance` (default with a location), `price`, `freshness` (default with a pincode only). Farmers without a known distance sort after those with one.
 
+## Cart, checkout and orders
+
+The cart lives on the buyer's phone. The server trusts none of it: every quote and checkout re-reads prices, stock, farmer status and delivery coverage.
+
+| Method | Path | Who | Body / query | Success |
+| --- | --- | --- | --- | --- |
+| POST | `/checkout/quote` | buyer | `items[]` (`productId`, `quantity`, optional `pricePerUnit` the buyer saw), optional `addressId` (default address otherwise) | `200 { address, groups[], totals, changes[] }` |
+| POST | `/checkout` | buyer | `idempotencyKey` (UUID), `items[]` (with `pricePerUnit`), `paymentMethod: 'cod'`, `deliveryDates` (`{ farmerId: 'YYYY-MM-DD' }`), optional `addressId` | `201 { checkoutGroupId, orders[], replayed: false }`; the same key again answers `200` with the same orders (`replayed: true`) |
+| GET | `/orders/mine` | buyer | `page`, `limit` | `200 { items, page, limit, total }` newest first |
+| GET | `/orders/:id` | buyer (own) | none | `200 { order }` |
+| POST | `/orders/:id/cancel` | buyer (own) | optional `reason` | `200 { order }`: only while `placed`; stock is restored |
+| POST | `/orders/:id/reject` | farmer (own) | optional `reason` | `200 { order: { id, status } }`: only while `placed`; stock is restored |
+
+**Quote groups** (one per farmer): `farmer`, `items[]` (`productId`, `crop`, `unit`, `quantity`, `pricePerUnit`, `lineTotal`, `availableQuantity`, `quantityStep`), `priceBreakdown` (`itemsTotal`, `deliveryFee`, `platformFee`, `buyerTotal`, `farmerEarnings`), `minOrderValue`, `meetsMinimum`, `deliveryDates` (next 4 of the farmer's delivery days after the cutoff rule).
+
+**`changes[]`:** `{ productId, kind }` with `kind` = `price` (`old`, `new`), `stock` (`requested`, `available`), `unavailable` (paused, removed, sold out or farmer suspended) or `not_delivered` (the farmer does not cover this address).
+
+**Checkout rules, in order:**
+1. A known `idempotencyKey` returns the existing orders (it is the `checkoutGroupId`; a unique index on buyer + key + farmer also stops two simultaneous submissions).
+2. Any change → `409 CART_CHANGED` with `details.quote` (the fresh quote). Nothing is created.
+3. `409 BELOW_MINIMUM` (`details.farmerIds`), `400 INVALID_DELIVERY_DATE` (`details.farmerId`).
+4. COD limits from AppConfig: `403 COD_BLOCKED` (too many failed COD deliveries), `409 TOO_MANY_OPEN_ORDERS` (`details.max`, `details.open`), `409 COD_LIMIT` for buyers with fewer than `newBuyerDeliveredOrders` deliveries (`details.limit`, default ₹500 per order).
+5. In one transaction: for each item, `updateOne({ _id, status: 'available', pricePerUnit, availableQuantity: { $gte: qty } }, { $inc: { availableQuantity: -qty } })`. Any miss aborts everything and answers `409 CART_CHANGED`. Listings at 0 become `out_of_stock`. One order per farmer is created with item snapshots, the delivery address and day, the breakdown, and an `order.placed` audit entry.
+
+**Cancel / reject:** one transaction: a conditional `placed → cancelled/rejected` update (`409 INVALID_STATUS_CHANGE` otherwise), quantities added back (never above the listing's `quantity`), sold-out listings back to `available` (paused or removed ones stay as they are), and an audit entry.
+
 ## Photo uploads (farmer or agent)
 
 | Method | Path | Body | Success |

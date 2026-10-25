@@ -219,13 +219,26 @@
     - 295 backend tests (+14) and 139 frontend tests (+6) pass; lint is clean; the build works.
     - **Real browser, real stack, 360px:** buyer Padma sees Ramu's 4 listings at 16 km (no coordinates in responses); product and farmer pages open; pincode 500032 shows Venkatesh's 3 listings without distance; te/hi home and product pages; no sideways overflow.
 
+- **Prompt 10: Cart and checkout** (3 commits, 2026-10-26):
+  - **API** ([ADR 0011](decisions/0011-cart-and-checkout.md)): `POST /checkout/quote`, `POST /checkout`, `GET /orders/mine`, `GET /orders/:id`, `POST /orders/:id/cancel` (buyer), `POST /orders/:id/reject` (farmer).
+    - The quote re-reads prices, stock, farmer status and delivery coverage, and lists exactly what changed (price, stock, unavailable, not delivered here).
+    - Checkout creates one order per farmer sharing a `checkoutGroupId`, which is the idempotency key (unique index on buyer + key + farmer).
+    - Stock: one conditional `$inc` per item (enough stock, same price, still available) inside one transaction; any miss rolls everything back; zero stock → out of stock.
+    - Minimum order, delivery day from the farmer's schedule, COD limits from AppConfig (new-buyer cap, open orders, failed deliveries); audit entry per order.
+    - Cancel (buyer) and reject (farmer) only while `placed`, restoring stock in the same transaction.
+  - **Buyer screens:** add to cart (crop's steps, capped at stock), Cart tab grouped by farmer (minimum order, delivery day, fees, platform fee, total; changes applied in one tap), cash on delivery, My orders with cancel. Strings in en/te/hi.
+  - **Verified:**
+    - 306 backend tests (+11) and 144 frontend tests (+5) pass; lint is clean; the build works.
+    - Concurrency: 50 buyers racing for 30 units sell exactly 30 (20 clean refusals, stock 0, out of stock); passed 4 runs in a row.
+    - **Real browser, real stack, 360px:** buyer `…0022` added 5 dozen bananas, chose the second delivery day, placed a COD order (₹300 + ₹20 delivery = ₹320); stock 58 → 53, then back to 58 after cancelling; cart emptied; no overflow.
+
 ## In progress
 
 - Nothing.
 
 ## Next
 
-- Prompt 10: Cart and checkout (multi-farmer cart, one order per farmer, atomic stock reservation, COD).
+- Prompt 11: Order lifecycle and delivery OTP (state machine; farmer accept/reject, out for delivery, delivery OTP, failed delivery; buyer tracking; notifications; order screens for both roles).
 
 ## Known issues
 
@@ -237,8 +250,8 @@
 - The frontend bundle is 128 KB gzipped in a single chunk. Route-level code splitting is planned for Prompt 23.
 
 - ai-service tests print a `StarletteDeprecationWarning` saying the httpx-backed `TestClient` is deprecated in Starlette 1.x. Tests pass. The suggested replacement package was not installed because it could not be verified during setup; review it before switching.
-- CI has not run on Prompts 1–9: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
-- 403 frontend UI strings in te/hi are machine-written and await native-speaker review.
+- CI has not run on Prompts 1–10: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
+- 460 frontend UI strings in te/hi are machine-written and await native-speaker review.
 - The 59 crop names in te/hi are machine-written and await native-speaker review.
 - Demo phone numbers (`+9199999000xx`) are invented but could belong to real people: never seed demo data where a real SMS gateway is active.
 - AuditLog and LedgerEntry immutability is enforced in Mongoose only; direct database access could still change rows.
@@ -249,4 +262,4 @@
 - Success toasts sit above the bottom navigation for 5 seconds and can cover the lowest card's button. They can be dismissed; revisit in the UI polish pass.
 - The listing-expiry and photo-cleanup jobs run with `setInterval` inside the web process. With more than one backend instance they would run on each (harmless, as both are idempotent updates), but a proper scheduler is better at scale.
 - Buyer search loads the farmer list into memory per request (fine for the pilot). Revisit with many farmers within 50 km.
-- Buyers cannot order yet; the product page says ordering opens in the next update (Prompt 10).
+- Farmers cannot see or act on orders in the app yet (reject exists in the API only); Prompt 11 adds their order screens. UPI payment comes in Prompt 12.
