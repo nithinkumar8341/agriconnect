@@ -1,0 +1,88 @@
+{
+  "home": {
+    "title": "Fresh near you",
+    "search": "Search vegetables and fruits",
+    "categoryLabel": "Category",
+    "sortLabel": "Sort by",
+    "filters": "Filters",
+    "filtersOn": "Filters ({{count}})",
+    "showing": "Showing {{shown}} of {{total}}",
+    "loadMore": "Show more",
+    "end": "That is everything near you.",
+    "emptyTitle": "Nothing here yet",
+    "emptyMessage": "No farmer delivers here with these choices. Try another pincode or clear the filters."
+  },
+  "categories": {
+    "all": "All",
+    "vegetable": "Vegetables",
+    "leafy": "Leafy greens",
+    "fruit": "Fruits",
+    "other": "Others"
+  },
+  "sort": {
+    "distance": "Nearest",
+    "price": "Lowest price",
+    "freshness": "Freshest"
+  },
+  "location": {
+    "near": "Near your location",
+    "pincode": "Pincode {{pincode}}",
+    "change": "Change",
+    "title": "Where should we deliver?",
+    "why": "Used only to find farmers who deliver to you. Farmers never see your location.",
+    "useLocation": "Use my location",
+    "denied": "Location is off. Enter your pincode instead.",
+    "pincodeLabel": "Or enter your pincode",
+    "pincodeError": "Enter a 6-digit pincode.",
+    "save": "Show produce",
+    "needed": "Tell us where you are to see farmers who deliver to you."
+  },
+  "filter": {
+    "title": "Filters",
+    "minPrice": "Lowest price (₹)",
+    "maxPrice": "Highest price (₹)",
+    "day": "Delivery day",
+    "anyDay": "Any day",
+    "stock": "Show",
+    "inStock": "In stock only",
+    "all": "Also out of stock",
+    "apply": "Show results",
+    "clear": "Clear filters"
+  },
+  "card": {
+    "price": "{{price}} / {{unit}}",
+    "km": "{{km}} km away",
+    "under1": "Under 1 km",
+    "from": "{{name}}, {{village}}",
+    "delivery": "Delivery {{date}}",
+    "outOfStock": "Out of stock"
+  },
+  "product": {
+    "title": "Product details",
+    "available": "{{quantity}} {{unit}} available",
+    "harvested": "Harvested {{date}}",
+    "soldBy": "Sold by",
+    "seeFarmer": "See farmer",
+    "deliveryDays": "Delivers on",
+    "deliveryFee": "Delivery fee",
+    "minOrder": "Minimum order",
+    "nextDelivery": "Next delivery",
+    "cannotDeliver": "This farmer does not deliver to your location.",
+    "orderSoon": "Ordering opens in the next update."
+  },
+  "farmer": {
+    "title": "Farmer",
+    "new": "New",
+    "levels": {
+      "phone_verified": "Phone verified",
+      "agent_verified": "Checked by agent",
+      "trusted_seller": "Trusted seller"
+    },
+    "since": "On AgriConnect since {{date}}",
+    "cutoff": "Order before {{time}} for the next delivery",
+    "selling": "Selling now",
+    "nothing": "Nothing on sale right now.",
+    "reviews": "Reviews",
+    "reviewsSoon": "Reviews from buyers will appear here after delivered orders."
+  }
+}

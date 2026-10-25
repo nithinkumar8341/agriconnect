@@ -278,10 +278,9 @@ describe('onboarding guards and logout', () => {
 
   it('saves a language change to the account while logged in', async () => {
     const user = userEvent.setup();
-    const { calls } = renderApp('/buyer', signedInHandlers(testUsers.buyer));
-    await screen.findByText('Signed in as Buyer');
+    const { calls } = renderApp('/buyer/orders', signedInHandlers(testUsers.buyer));
 
-    await user.click(screen.getByRole('button', { name: /Change language/ }));
+    await user.click(await screen.findByRole('button', { name: /Change language/ }));
     await user.click(screen.getByRole('button', { name: 'हिंदी' }));
 
     await waitFor(() =>

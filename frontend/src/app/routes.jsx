@@ -4,6 +4,9 @@ import { ROLE_SECTIONS } from '../layouts/navigation.js';
 import { PublicLayout } from '../layouts/PublicLayout.jsx';
 import { RoleLayout } from '../layouts/RoleLayout.jsx';
 import { RootLayout } from '../layouts/RootLayout.jsx';
+import { BuyerHomePage } from '../pages/buyer/BuyerHomePage.jsx';
+import { FarmerPublicPage } from '../pages/buyer/FarmerPublicPage.jsx';
+import { ProductDetailPage } from '../pages/buyer/ProductDetailPage.jsx';
 import { ComingSoonPage } from '../pages/ComingSoonPage.jsx';
 import { FarmerHomePage } from '../pages/farmer/FarmerHomePage.jsx';
 import { FarmerProfilePage } from '../pages/farmer/FarmerProfilePage.jsx';
@@ -27,6 +30,11 @@ const devUiRoute = {
 
 // Screens built so far, by role and path ('' = home). Any other menu entry shows a placeholder.
 const BUILT_SCREENS = {
+  buyer: {
+    '': <BuyerHomePage />,
+    'products/:id': <ProductDetailPage />,
+    'farmers/:id': <FarmerPublicPage />,
+  },
   farmer: {
     '': <FarmerHomePage />,
     products: <MyProductsPage />,

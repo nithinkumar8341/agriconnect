@@ -2,16 +2,19 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { storage } from '../lib/storage.js';
 import enAuth from './locales/en/auth.json';
+import enBuyer from './locales/en/buyer.json';
 import enCommon from './locales/en/common.json';
 import enDevui from './locales/en/devui.json';
 import enFarmer from './locales/en/farmer.json';
 import enOnboarding from './locales/en/onboarding.json';
 import hiAuth from './locales/hi/auth.json';
+import hiBuyer from './locales/hi/buyer.json';
 import hiCommon from './locales/hi/common.json';
 import hiDevui from './locales/hi/devui.json';
 import hiFarmer from './locales/hi/farmer.json';
 import hiOnboarding from './locales/hi/onboarding.json';
 import teAuth from './locales/te/auth.json';
+import teBuyer from './locales/te/buyer.json';
 import teCommon from './locales/te/common.json';
 import teDevui from './locales/te/devui.json';
 import teFarmer from './locales/te/farmer.json';
@@ -29,6 +32,7 @@ export const LANGUAGE_STORAGE_KEY = 'agc.language';
 export const resources = {
   en: {
     common: enCommon,
+    buyer: enBuyer,
     devui: enDevui,
     auth: enAuth,
     onboarding: enOnboarding,
@@ -36,6 +40,7 @@ export const resources = {
   },
   te: {
     common: teCommon,
+    buyer: teBuyer,
     devui: teDevui,
     auth: teAuth,
     onboarding: teOnboarding,
@@ -43,6 +48,7 @@ export const resources = {
   },
   hi: {
     common: hiCommon,
+    buyer: hiBuyer,
     devui: hiDevui,
     auth: hiAuth,
     onboarding: hiOnboarding,
@@ -67,7 +73,7 @@ i18n.use(initReactI18next).init({
   lng: initialLanguage(),
   // A missing te/hi key shows English rather than a raw key.
   fallbackLng: 'en',
-  ns: ['common', 'devui', 'auth', 'onboarding', 'farmer'],
+  ns: ['common', 'devui', 'auth', 'onboarding', 'farmer', 'buyer'],
   defaultNS: 'common',
   interpolation: { escapeValue: false },
 });
