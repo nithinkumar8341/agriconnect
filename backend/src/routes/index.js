@@ -6,6 +6,7 @@ import { createOtpService } from '../services/otp.service.js';
 import { createSessionService } from '../services/session.service.js';
 import { createAuthRouter } from './auth.routes.js';
 import { healthRouter } from './health.routes.js';
+import { createLocationsRouter, createProfileRouter, createUsersRouter } from './profile.routes.js';
 
 // Services are built here from injected dependencies (config, logger, SMS provider), so tests can
 // swap the SMS provider for a fake that records messages.
@@ -20,5 +21,8 @@ export function createApiRouter({ config, logger, smsProvider }) {
   const router = Router();
   router.use('/health', healthRouter);
   router.use('/auth', createAuthRouter({ controller: authController, requireAuth }));
+  router.use('/profile', createProfileRouter({ requireAuth }));
+  router.use('/users', createUsersRouter({ requireAuth }));
+  router.use('/locations', createLocationsRouter());
   return router;
 }
