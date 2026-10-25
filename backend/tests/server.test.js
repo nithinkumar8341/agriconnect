@@ -1,6 +1,7 @@
 import { spawn } from 'node:child_process';
 import { once } from 'node:events';
 import { fileURLToPath } from 'node:url';
+import { TEST_SECRETS } from './helpers/testConfig.js';
 
 const SERVER_PATH = fileURLToPath(new URL('../src/server.js', import.meta.url));
 const PORT = 4599;
@@ -48,6 +49,7 @@ describe('server process', () => {
     async () => {
       const { child, getOutput } = startServer({
         NODE_ENV: 'test',
+        ...TEST_SECRETS,
         LOG_LEVEL: 'info',
         PORT: String(PORT),
         MONGODB_URI: process.env.MONGO_TEST_URI.replace('/?', '/server-test?'),

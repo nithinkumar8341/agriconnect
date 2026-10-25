@@ -33,14 +33,37 @@ const envSchema = z
     // Number of reverse proxies in front of the app (1 on Render). Without it every request
     // appears to come from the proxy's IP and all users share one rate-limit bucket.
     TRUST_PROXY: z.coerce.number().int().min(0).default(0),
+
+    JWT_ACCESS_SECRET: z.string({ error: 'is required' }).min(32, 'must be at least 32 characters'),
+    // Keys the OTP hashes, so a leaked database alone cannot be brute-forced back to codes.
+    OTP_HMAC_SECRET: z.string({ error: 'is required' }).min(32, 'must be at least 32 characters'),
+    ACCESS_TOKEN_TTL_MINUTES: z.coerce.number().int().min(1).max(60).default(15),
+    REFRESH_TOKEN_TTL_DAYS: z.coerce.number().int().min(1).max(90).default(30),
+    // Strict works because the frontend reaches the API same-origin (Vite proxy in dev,
+    // Vercel rewrite in production). "none" would additionally need CSRF tokens.
+    COOKIE_SAMESITE: z.enum(['strict', 'lax', 'none']).default('strict'),
+    SMS_PROVIDER: z.enum(['console', 'msg91']).default('console'),
+    MSG91_AUTH_KEY: z.string().optional(),
+    DEV_FIXED_OTP: z
+      .string()
+      .regex(/^\d{6}$/, 'must be exactly 6 digits')
+      .optional(),
   })
   .superRefine((env, ctx) => {
-    if (env.NODE_ENV === 'production' && env.CORS_ORIGINS.length === 0) {
-      ctx.addIssue({
-        code: 'custom',
-        path: ['CORS_ORIGINS'],
-        message: 'is required in production',
-      });
+    const fail = (path, message) => ctx.addIssue({ code: 'custom', path: [path], message });
+
+    if (env.NODE_ENV === 'production') {
+      if (env.CORS_ORIGINS.length === 0) fail('CORS_ORIGINS', 'is required in production');
+      if (env.DEV_FIXED_OTP) fail('DEV_FIXED_OTP', 'must not be set in production');
+      if (env.SMS_PROVIDER === 'console') {
+        fail('SMS_PROVIDER', 'console prints OTPs to the log and is not allowed in production');
+      }
+    }
+    if (env.SMS_PROVIDER === 'msg91' && !env.MSG91_AUTH_KEY) {
+      fail('MSG91_AUTH_KEY', 'is required when SMS_PROVIDER=msg91');
+    }
+    if (env.JWT_ACCESS_SECRET && env.JWT_ACCESS_SECRET === env.OTP_HMAC_SECRET) {
+      fail('OTP_HMAC_SECRET', 'must differ from JWT_ACCESS_SECRET');
     }
   });
 
@@ -74,5 +97,14 @@ export function loadConfig(env = process.env) {
     jsonBodyLimit: parsed.JSON_BODY_LIMIT,
     rateLimit: { windowMs: parsed.RATE_LIMIT_WINDOW_MS, max: parsed.RATE_LIMIT_MAX },
     trustProxy: parsed.TRUST_PROXY,
+    auth: Object.freeze({
+      jwtAccessSecret: parsed.JWT_ACCESS_SECRET,
+      otpHmacSecret: parsed.OTP_HMAC_SECRET,
+      accessTokenTtlMinutes: parsed.ACCESS_TOKEN_TTL_MINUTES,
+      refreshTokenTtlDays: parsed.REFRESH_TOKEN_TTL_DAYS,
+      cookieSameSite: parsed.COOKIE_SAMESITE,
+      devFixedOtp: parsed.DEV_FIXED_OTP,
+    }),
+    sms: Object.freeze({ provider: parsed.SMS_PROVIDER, msg91AuthKey: parsed.MSG91_AUTH_KEY }),
   });
 }
