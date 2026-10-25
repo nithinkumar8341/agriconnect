@@ -1,7 +1,17 @@
 import { createApp } from './app.js';
+import { loadConfig } from './config/env.js';
+import { createLogger } from './config/logger.js';
 
-const port = Number(process.env.PORT) || 4000;
+let config;
+try {
+  config = loadConfig();
+} catch (err) {
+  console.error(err.message);
+  process.exit(1);
+}
 
-createApp().listen(port, () => {
-  console.log(`AgriConnect backend listening on http://localhost:${port}`);
+const logger = createLogger(config);
+
+createApp(config, logger).listen(config.port, () => {
+  logger.info(`AgriConnect backend listening on http://localhost:${config.port}`);
 });
