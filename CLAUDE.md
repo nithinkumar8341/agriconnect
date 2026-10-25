@@ -94,6 +94,7 @@ Works end to end in the browser; tests pass; lint passes; i18n keys added (te + 
   - frontend: `npm run dev` (port 5173, proxies `/api` to :4000). Component gallery: `/dev/ui` (dev only). Optional `VITE_SUPPORT_PHONE` in `frontend/.env.local` shows a support helpline on the OTP screen
   - frontend production check: `npm run build && npm run preview` (port 4173, also proxies `/api`); add `VITE_ENABLE_DEV_UI=true` to the build to include `/dev/ui`
   - PWA icons: `npm run generate-pwa-assets` (from `public/favicon.svg`)
+- Photo storage: `STORAGE_PROVIDER=local` in development (files in `backend/uploads/`, served at `/uploads`, proxied by Vite); production needs `STORAGE_PROVIDER=cloudinary` plus `CLOUDINARY_CLOUD_NAME/API_KEY/API_SECRET`.
   - ai-service: `uvicorn app.main:app --reload --port 8000`
 - Lint:
   - backend / frontend: `npm run lint` (ESLint + Prettier check); `npm run format` to fix formatting

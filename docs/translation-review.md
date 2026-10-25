@@ -309,6 +309,24 @@ Machine-written te and hi for every UI key, in all namespaces. The app falls bac
 | farmer:profile.logoutAllTitle | Log out on all phones? | అన్ని ఫోన్లలో లాగ్ అవుట్ చేయాలా? | | सभी फ़ोन पर लॉग आउट करें? | |
 | farmer:profile.logoutAllMessage | You will need an SMS code to log in again on every phone, including this one. | ఈ ఫోన్‌తో సహా ప్రతి ఫోన్‌లో మళ్ళీ లాగిన్ అవ్వడానికి SMS కోడ్ కావాలి. | | इस फ़ोन समेत हर फ़ोन पर फिर से लॉगिन करने के लिए SMS कोड चाहिए होगा। | |
 | farmer:profile.logoutAllConfirm | Yes, log out everywhere | అవును, అన్నిచోట్లా లాగ్ అవుట్ | | हाँ, हर जगह लॉग आउट करें | |
+| farmer:sell.title | Sell produce | పంట అమ్మండి | | फ़सल बेचें | |
+| farmer:sell.photosHeading | Step 1: Photos of your produce | దశ 1: మీ పంట ఫోటోలు | | चरण 1: आपकी फ़सल की फ़ोटो | |
+| farmer:sell.photosHint | Take a clear photo in daylight, close to the produce. Up to {{max}} photos. | పగటి వెలుతురులో, పంటకు దగ్గరగా స్పష్టమైన ఫోటో తీయండి. గరిష్టంగా {{max}} ఫోటోలు. | | दिन की रोशनी में, फ़सल के पास से साफ़ फ़ोटो लें। ज़्यादा से ज़्यादा {{max}} फ़ोटो। | |
+| farmer:sell.count | {{count}} of {{max}} photos | {{max}}లో {{count}} ఫోటోలు | | {{max}} में से {{count}} फ़ोटो | |
+| farmer:sell.takePhoto | Take photo | ఫోటో తీయండి | | फ़ोटो लें | |
+| farmer:sell.gallery | Choose from gallery | గ్యాలరీ నుండి ఎంచుకోండి | | गैलरी से चुनें | |
+| farmer:sell.remove | Remove photo | ఫోటో తీసివేయండి | | फ़ोटो हटाएँ | |
+| farmer:sell.retry | Try again | మళ్ళీ ప్రయత్నించండి | | फिर से कोशिश करें | |
+| farmer:sell.status.preparing | Preparing… | సిద్ధం చేస్తున్నాము… | | तैयार कर रहे हैं… | |
+| farmer:sell.status.uploading | Uploading {{percent}}% | అప్‌లోడ్ అవుతోంది {{percent}}% | | अपलोड हो रहा है {{percent}}% | |
+| farmer:sell.status.waiting | Waiting for internet | ఇంటర్నెట్ కోసం వేచి ఉంది | | इंटरनेट का इंतज़ार | |
+| farmer:sell.status.uploaded | Uploaded | అప్‌లోడ్ అయింది | | अपलोड हो गया | |
+| farmer:sell.status.failed | Upload failed | అప్‌లోడ్ కాలేదు | | अपलोड नहीं हुआ | |
+| farmer:sell.errors.PHOTO_UNREADABLE | This photo could not be opened. Please take it again. | ఈ ఫోటో తెరవలేకపోయాము. దయచేసి మళ్ళీ తీయండి. | | यह फ़ोटो खुल नहीं सकी। कृपया फिर से लें। | |
+| farmer:sell.errors.INVALID_IMAGE | This file is not a photo we can use. | ఈ ఫైల్ మేము ఉపయోగించగలిగే ఫోటో కాదు. | | यह फ़ाइल ऐसी फ़ोटो नहीं है जिसका हम उपयोग कर सकें। | |
+| farmer:sell.errors.PAYLOAD_TOO_LARGE | This photo is too large. | ఈ ఫోటో చాలా పెద్దది. | | यह फ़ोटो बहुत बड़ी है। | |
+| farmer:sell.waitingNote | You are offline. Photos are saved on this phone and will upload by themselves when the internet is back. | మీరు ఆఫ్‌లైన్‌లో ఉన్నారు. ఫోటోలు ఈ ఫోన్‌లో సేవ్ అయ్యాయి, ఇంటర్నెట్ వచ్చినప్పుడు వాటంతట అవే అప్‌లోడ్ అవుతాయి. | | आप ऑफ़लाइन हैं। फ़ोटो इस फ़ोन पर सेव हैं और इंटरनेट आने पर अपने आप अपलोड हो जाएँगी। | |
+| farmer:sell.nextSoon | Next you will choose the crop, quantity and price. That part arrives in the next update. | తరువాత మీరు పంట, పరిమాణం, ధర ఎంచుకుంటారు. ఆ భాగం తదుపరి అప్‌డేట్‌లో వస్తుంది. | | इसके बाद आप फ़सल, मात्रा और भाव चुनेंगे। यह हिस्सा अगले अपडेट में आएगा। | |
 | devui:title | Component gallery | కాంపోనెంట్ గ్యాలరీ | | कंपोनेंट गैलरी | |
 | devui:intro | Every reusable component, shown in the current language. Switch the language to check the layout. | ప్రతి కాంపోనెంట్ ప్రస్తుత భాషలో చూపబడింది. లేఅవుట్ చూడటానికి భాష మార్చండి. | | हर कंपोनेंट मौजूदा भाषा में दिखाया गया है। लेआउट जाँचने के लिए भाषा बदलें। | |
 | devui:sections.buttons | Big buttons | పెద్ద బటన్లు | | बड़े बटन | |

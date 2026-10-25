@@ -277,6 +277,33 @@ Every route works on the **caller's own** records. The user id always comes from
 - Sorted by most recently changed.
 - `status=low` is a view, not a stored status: available listings at or below the threshold.
 
+## Photo uploads (farmer or agent)
+
+| Method | Path | Body | Success |
+| --- | --- | --- | --- |
+| POST | `/uploads/photos` | `multipart/form-data`: `photo` (file), optional `capturedAt` (ISO date, not in the future, at most 1 year old) | `201 { asset: { id, url, thumbnailUrl, width, height, bytes, capturedAt, status: 'pending' } }` |
+| DELETE | `/uploads/photos/:id` | none | `204`. `404` if the photo isn't yours or doesn't exist; `409 PHOTO_IN_USE` once it's on a listing. |
+
+**Processing:** the server decodes the file to confirm it really is JPEG, PNG or WebP, then:
+1. rotates it upright using the EXIF orientation;
+2. **removes all metadata (including GPS)**;
+3. stores a JPEG up to 1280 px plus a 320 px WebP thumbnail.
+
+**Errors and limits:**
+
+| Error | When |
+| --- | --- |
+| `400 INVALID_IMAGE` | Not a usable image, including SVG, GIF, plain text, truncated files, and anything over 50 megapixels |
+| `413 PAYLOAD_TOO_LARGE` | The file is over 8 MB |
+| `400 PHOTO_REQUIRED` | No file was attached |
+| `429 RATE_LIMITED` | More than 60 uploads per user per hour |
+
+**Lifecycle:**
+- Uploaded photos stay `pending` until a listing uses them (Prompt 8). Pending photos are deleted after 24 hours.
+- Near-identical photos from another farmer are recorded server-side for fraud review. The uploader never sees that.
+
+**URLs:** in development they're served from `/uploads/...` (proxied by Vite); in production they're Cloudinary URLs.
+
 ## ai-service (internal, called only by the backend)
 
 | Method | Path | Description |

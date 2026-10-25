@@ -359,6 +359,29 @@ One published mandi price row.
 - `{ cropId: 1, district: 1, date: -1 }`.
 - `{ cropId: 1, state: 1, date: -1 }`.
 
+### `mediaassets` ([MediaAsset.js](../backend/src/models/MediaAsset.js))
+
+One uploaded photo. Photos are uploaded before their listing exists; Prompt 8 attaches them.
+
+| Field | Type | Notes |
+| --- | --- | --- |
+| `ownerId` | ObjectId → users | Uploader (farmer or agent). |
+| `provider` | `local` \| `cloudinary` | Where the files are stored. |
+| `storageKey`, `thumbnailKey` | string | Server-generated random keys (`photos/YYYY-MM/<uuid>.jpg`, `-thumb.webp`). |
+| `url`, `thumbnailUrl` | string | Public URLs. |
+| `width`, `height`, `bytes` | number | Of the processed JPEG (max 1280 px). |
+| `capturedAt` | date \| null | When the photo was taken, as reported by the phone. |
+| `perceptualHash` | 16 hex chars | 64-bit difference hash; survives resizing and recompression. |
+| `perceptualHashBands` | string[4] | The hash split into four indexed 16-bit bands: the near-duplicate pre-filter. |
+| `duplicateOf` | `{ assetId, ownerId, distance }` \| null | Closest near-identical photo by **another** owner. Fraud evidence (Prompt 13); never sent to the uploader. |
+| `status` | `pending` \| `attached` | Pending photos older than 24 h are deleted, with their files, by an hourly job. |
+| `attachedTo` | ObjectId \| null | The listing (Prompt 8). |
+
+**Indexes:**
+- `{ ownerId: 1, createdAt: -1 }`.
+- `{ perceptualHashBands: 1 }` (multikey).
+- `{ status: 1, createdAt: 1 }` (cleanup).
+
 ### `appconfigs` ([AppConfig.js](../backend/src/models/AppConfig.js))
 
 Only **overrides** are stored: `{ key (unique), value, updatedBy }`. Defaults, descriptions and validation live in [appConfig.service.js](../backend/src/services/appConfig.service.js). Every change is validated against the key's zod schema and audited.
@@ -377,6 +400,7 @@ Only **overrides** are stored: `{ key (unique), value, updatedBy }`. Defaults, d
 | `mandiCommissionPercentEstimate` | 10 | Only for the labelled "vs mandi" estimate |
 | `priceStaleAfterDays` | 7 | Mandi price age that triggers a warning |
 | `lowStockPercent` | 20 | A listing is "running low" when what is left is at or below this % of what was listed |
+| `duplicatePhotoMaxDistance` | 6 | Photo fingerprints (64-bit) differing in at most this many bits count as the same photo |
 | `agentListingsNeedFarmerApproval` | true | Agent-created listings wait for farmer confirmation |
 
 ## Authentication collections

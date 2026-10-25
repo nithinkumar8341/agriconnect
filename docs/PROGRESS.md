@@ -174,13 +174,33 @@
       - Telugu mid-word breaks found there were fixed with stacked summary rows and shorter labels.
   - **Process note:** one commit (the crops API) was made while unrelated tests were failing, because the command didn't stop on failure. The code itself was fine and the cause is fixed above. Every commit command now runs the full test suite first and refuses to commit on failure.
 
+- **Prompt 7: Image upload pipeline** (3 commits, 2026-10-25):
+  - **Upload API:** `POST /uploads/photos` (farmer/agent) and `DELETE /uploads/photos/:id` (owner, unattached only).
+    - sharp decodes the file to check it is really JPEG, PNG or WebP (SVG, GIF, text and truncated files are rejected).
+    - It applies the EXIF orientation, strips all metadata including GPS, and stores a 1280px JPEG plus a 320px WebP thumbnail.
+    - Limits: 8 MB upload, 50 MP (decompression bombs), 60 uploads per user per hour.
+  - **Storage:** a `MediaAsset` collection, and a `StorageProvider` interface with local disk in development (served at `/uploads`) and Cloudinary in production (signed on the server; production config refuses local disk). An hourly job deletes photos never attached after 24 h.
+  - **Duplicate detection:** a 64-bit difference hash with 4 indexed bands; a near-identical photo from another farmer is recorded in `duplicateOf` (never shown to the uploader). New AppConfig setting `duplicatePhotoMaxDistance` (default 6).
+  - **Sell step 1:** Take photo (opens the camera) and Choose from gallery, up to 5 photos, each tile showing preparing, uploading (progress bar), waiting for internet, uploaded, or failed (with reason and retry), plus remove.
+  - **Phone-side processing:** compression to 1280px and ≤300 KB (EXIF dropped). Uploads go over XHR so progress can be shown, with the same token refresh as other requests, and retry automatically with backoff.
+  - **Offline queue:** photos taken offline are kept in IndexedDB (as ArrayBuffers) and upload automatically on reconnect or when the app is reopened.
+  - **Header:** `PageHeader` now gives the title its own line when there is a back button (Telugu titles were squeezed at 360px).
+  - **Verified:**
+    - 260 backend tests (+19) and 123 frontend tests (+15) pass; lint is clean; the build works.
+    - **Real browser, real stack, 360px:**
+      - A 7.6 MB photo with camera EXIF became 195 KB at 1280×960 in the browser (metadata gone) and 159 KB on the server.
+      - An offline photo showed "Waiting for internet" and uploaded by itself after reconnecting.
+      - The same farmer's re-used photo was not flagged.
+      - No overflow in en/te/hi.
+  - **Test stability:** frontend `testTimeout` raised to 20 s. A few multi-screen flow tests went past 5 s under machine load (the same cause as the backend hooks in Prompt 6). A race in an old AuthProvider test assertion was also fixed.
+
 ## In progress
 
 - Nothing.
 
 ## Next
 
-- Prompt 7: Image upload pipeline (Cloudinary signed upload with local-disk fallback, client-side compression, EXIF location stripping, thumbnails, perceptual hash, offline drafts in IndexedDB).
+- Prompt 8: Farmer product listing flow (photo → crop → quantity → price → harvest date → review and publish; My Products actions: edit, pause, out of stock, delete, duplicate; attach uploaded photos; shelf-life expiry).
 
 ## Known issues
 
@@ -192,8 +212,8 @@
 - The frontend bundle is 128 KB gzipped in a single chunk. Route-level code splitting is planned for Prompt 23.
 
 - ai-service tests print a `StarletteDeprecationWarning` saying the httpx-backed `TestClient` is deprecated in Starlette 1.x. Tests pass. The suggested replacement package was not installed because it could not be verified during setup; review it before switching.
-- CI has not run on Prompts 1–6: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
-- 253 frontend UI strings in te/hi are machine-written and await native-speaker review.
+- CI has not run on Prompts 1–7: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
+- 271 frontend UI strings in te/hi are machine-written and await native-speaker review.
 - The 59 crop names in te/hi are machine-written and await native-speaker review.
 - Demo phone numbers (`+9199999000xx`) are invented but could belong to real people: never seed demo data where a real SMS gateway is active.
 - AuditLog and LedgerEntry immutability is enforced in Mongoose only; direct database access could still change rows.
