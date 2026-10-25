@@ -6,7 +6,7 @@ import { createApiClient } from '../../lib/api.js';
 import { findSmallEnough, TARGET_BYTES } from '../../lib/imageCompression.js';
 import { listDrafts, resetDraftsForTests } from '../../lib/photoDrafts.js';
 import { usePhotoUploads } from '../../hooks/usePhotoUploads.js';
-import { renderApp, signedInHandlers, testUsers } from '../../test/helpers.jsx';
+import { renderApp, sellHandlers, signedInHandlers, testUsers } from '../../test/helpers.jsx';
 
 // Image decoding needs a real browser; in jsdom the "compressed" photo is just a small blob.
 vi.mock('../../lib/imageCompression.js', async (importOriginal) => ({
@@ -293,10 +293,10 @@ describe('Sell screen photo step', () => {
   beforeEach(() => changeLanguage('en'));
 
   it('opens from the Sell tile with camera and gallery buttons', async () => {
-    renderApp('/farmer/sell', signedInHandlers(testUsers.farmer));
+    renderApp('/farmer/sell', sellHandlers(signedInHandlers(testUsers.farmer)));
 
     expect(
-      await screen.findByRole('heading', { name: 'Step 1: Photos of your produce' }),
+      await screen.findByRole('heading', { name: 'Photos of your produce' }),
     ).toBeInTheDocument();
     const camera = screen.getByLabelText('Take photo');
     expect(camera).toHaveAttribute('capture', 'environment');
@@ -308,11 +308,12 @@ describe('Sell screen photo step', () => {
     await changeLanguage('te');
     setOnline(false);
     const user = userEvent.setup();
-    renderApp('/farmer/sell', signedInHandlers(testUsers.farmer));
+    renderApp('/farmer/sell', sellHandlers(signedInHandlers(testUsers.farmer)));
 
     await user.upload(await screen.findByLabelText('ఫోటో తీయండి'), photoFile());
 
-    const tile = (await screen.findAllByRole('listitem'))[0];
+    const photos = screen.getByRole('region', { name: /ఫోటో/ });
+    const tile = (await within(photos).findAllByRole('listitem'))[0];
     expect(within(tile).getByRole('status')).toHaveTextContent('ఇంటర్నెట్ కోసం వేచి ఉంది');
     expect(screen.getByText(/ఫోటోలు ఈ ఫోన్‌లో సేవ్ అయ్యాయి/)).toBeInTheDocument();
   });

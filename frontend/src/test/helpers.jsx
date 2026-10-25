@@ -100,6 +100,53 @@ export function withProducts(handlers, respond = () => [200, emptyPage]) {
   });
 }
 
+export const testCrops = [
+  {
+    slug: 'tomato',
+    names: { en: 'Tomato', te: 'టమాటా', hi: 'टमाटर' },
+    icon: '🍅',
+    category: 'vegetable',
+    defaultUnit: 'kg',
+    allowedUnits: ['kg'],
+    quantityStep: 1,
+    quantityPresets: [5, 10, 25, 50],
+    shelfLifeDays: 7,
+  },
+  {
+    slug: 'spinach',
+    names: { en: 'Spinach', te: 'పాలకూర', hi: 'पालक' },
+    icon: '🥬',
+    category: 'leafy',
+    defaultUnit: 'bunch',
+    allowedUnits: ['bunch', 'kg'],
+    quantityStep: 1,
+    quantityPresets: [10, 20, 50],
+    shelfLifeDays: 2,
+  },
+];
+
+// Everything the Sell screen asks for: the crop catalog, the farmer's listings (for "sold
+// before"), their last price for a crop, and publishing. Requests with a query string are matched
+// by prefix.
+export function sellHandlers(
+  handlers,
+  { listings = [], lastPrice = null, publish = (request) => [201, { product: request.body }] } = {},
+) {
+  const extra = {
+    'GET /crops': () => [200, { items: testCrops }],
+    'GET /products/mine': () => [200, { ...emptyPage, items: listings, total: listings.length }],
+    'GET /products/last-price': () => [200, { lastPrice }],
+    'POST /products': publish,
+  };
+  return new Proxy(handlers, {
+    get(target, key) {
+      if (typeof key !== 'string') return target[key];
+      const prefix = Object.keys(extra).find((k) => key === k || key.startsWith(`${k}?`));
+      return prefix ? extra[prefix] : target[key];
+    },
+  });
+}
+
 export const testDistricts = {
   states: [
     {

@@ -1,7 +1,6 @@
 import { Camera, CircleAlert, CircleCheck, CloudOff, Images, RotateCw, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { useAuth } from '../../auth/authContext.js';
-import { MAX_PHOTOS, usePhotoUploads } from '../../hooks/usePhotoUploads.js';
+import { MAX_PHOTOS } from '../../hooks/usePhotoUploads.js';
 import { useOnlineStatus } from '../../hooks/useOnlineStatus.js';
 
 const PICKER =
@@ -106,13 +105,11 @@ function PhotoTile({ photo, onRemove, onRetry }) {
   );
 }
 
-// Step 1 of selling: up to 5 photos, compressed on the phone, uploaded with progress, and kept on
+// Photos for a listing: up to 5, compressed on the phone, uploaded with progress, and kept on
 // the phone when there is no internet until they can be sent.
-export function PhotoStep() {
+export function PhotoStep({ uploads }) {
   const { t } = useTranslation('farmer');
-  const { client } = useAuth();
   const online = useOnlineStatus();
-  const uploads = usePhotoUploads({ client });
   const hasWaiting = uploads.photos.some((photo) => photo.status === 'waiting');
 
   return (

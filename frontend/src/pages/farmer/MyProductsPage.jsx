@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router';
 import { useAuth } from '../../auth/authContext.js';
+import { ManageListing } from '../../components/farmer/ManageListing.jsx';
 import { ProductCard } from '../../components/farmer/ProductCard.jsx';
 import { FormAlert } from '../../components/form/FormAlert.jsx';
 import { Screen } from '../../components/Screen.jsx';
@@ -27,7 +28,7 @@ const productsPath = (status, page) => {
 
 // The list for one filter. It is remounted (new key) when the filter changes, which resets the
 // extra pages loaded with "Show more".
-function ProductList({ status }) {
+function ProductList({ status, onManage }) {
   const { t } = useTranslation(['farmer', 'common']);
   const { client } = useAuth();
   const first = useApiRequest((signal) => client.get(productsPath(status, 1), { signal }), status);
@@ -87,7 +88,7 @@ function ProductList({ status }) {
       <ul className="flex flex-col gap-3">
         {all.map((product) => (
           <li key={product.id}>
-            <ProductCard product={product} />
+            <ProductCard product={product} onManage={onManage} />
           </li>
         ))}
       </ul>
@@ -101,14 +102,16 @@ function ProductList({ status }) {
   );
 }
 
-// Read-only list of the farmer's listings with a status filter. Editing, pausing and removing
-// arrive with the listing flow (Prompt 8). The filter lives in the URL (?status=low) so the
-// "Running low" card on the home screen can open it directly.
+// The farmer's listings with a status filter, each with a Manage sheet (edit, pause, resume, out of
+// stock, sell again, delete). The filter lives in the URL (?status=low) so the home screen's
+// "Running low" card can open it directly. After any change the list reloads.
 export function MyProductsPage() {
   const { t } = useTranslation('farmer');
   const [searchParams, setSearchParams] = useSearchParams();
   const requested = searchParams.get('status');
   const status = FILTERS.includes(requested) ? requested : 'all';
+  const [managing, setManaging] = useState(null);
+  const [version, setVersion] = useState(0);
 
   return (
     <Screen title={t('products.title')}>
@@ -121,7 +124,16 @@ export function MyProductsPage() {
         }
         formatOption={(filter) => t(`products.filters.${filter}`)}
       />
-      <ProductList key={status} status={status} />
+      <ProductList key={`${status}:${version}`} status={status} onManage={setManaging} />
+      {managing && (
+        <ManageListing
+          key={managing.id}
+          product={managing}
+          open
+          onClose={() => setManaging(null)}
+          onChanged={() => setVersion((v) => v + 1)}
+        />
+      )}
     </Screen>
   );
 }

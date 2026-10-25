@@ -1,4 +1,4 @@
-import { CircleAlert, PackageMinus } from 'lucide-react';
+import { CircleAlert, PackageMinus, Settings2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { formatDate, formatQuantity, formatRupees, localName } from '../../lib/format.js';
 
@@ -10,8 +10,8 @@ const STATUS_STYLES = {
   paused: 'bg-soil-100 text-ink',
 };
 
-// One of the farmer's own listings (read-only for now; actions arrive with the listing flow).
-export function ProductCard({ product }) {
+// One of the farmer's own listings. onManage opens the actions sheet (edit, pause, sell again...).
+export function ProductCard({ product, onManage }) {
   const { t, i18n } = useTranslation(['farmer', 'common']);
   const language = i18n.language;
   const unit = t(`common:units.${product.unit}`);
@@ -78,11 +78,29 @@ export function ProductCard({ product }) {
           {t('products.lowBadge')}
         </p>
       )}
-      {product.isPastShelfLife && (
+      {product.status === 'paused' && product.pausedReason === 'expired' ? (
         <p className="flex items-start gap-2 rounded-xl bg-danger-50 px-3 py-2 font-semibold text-danger-800">
           <CircleAlert aria-hidden="true" className="mt-1 size-5 shrink-0" />
-          {t('products.oldWarning')}
+          {t('products.pausedExpired')}
         </p>
+      ) : (
+        product.isPastShelfLife && (
+          <p className="flex items-start gap-2 rounded-xl bg-danger-50 px-3 py-2 font-semibold text-danger-800">
+            <CircleAlert aria-hidden="true" className="mt-1 size-5 shrink-0" />
+            {t('products.oldWarning')}
+          </p>
+        )
+      )}
+      {onManage && (
+        <button
+          type="button"
+          onClick={() => onManage(product)}
+          aria-label={`${t('products.manage')}: ${localName(product.crop?.names, language)}`}
+          className="flex min-h-12 items-center justify-center gap-2 rounded-xl border-2 border-leaf-700 font-semibold text-leaf-800 hover:bg-leaf-50"
+        >
+          <Settings2 aria-hidden="true" className="size-5" />
+          {t('products.manage')}
+        </button>
       )}
     </article>
   );

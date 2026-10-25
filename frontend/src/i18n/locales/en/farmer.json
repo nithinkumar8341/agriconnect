@@ -45,7 +45,40 @@
     "emptyFilteredTitle": "Nothing here",
     "emptyFilteredMessage": "None of your products match this filter.",
     "showing": "Showing {{shown}} of {{total}}",
-    "loadMore": "Show more"
+    "loadMore": "Show more",
+    "manage": "Manage",
+    "manageTitle": "{{crop}}: what do you want to do?",
+    "actions": {
+      "edit": "Edit price or quantity",
+      "pause": "Pause selling",
+      "resume": "Start selling again",
+      "outOfStock": "Mark out of stock",
+      "sellAgain": "Sell again",
+      "delete": "Delete listing"
+    },
+    "editTitle": "Edit listing",
+    "save": "Save",
+    "harvestKeep": "Keep harvest date",
+    "harvestToday": "Harvested today",
+    "sellAgainTitle": "Sell {{crop}} again",
+    "sellAgainHint": "Same crop, price and photos, harvested today.",
+    "deleteTitle": "Delete this listing?",
+    "deleteMessage": "Buyers will no longer see it. Past orders are kept.",
+    "deleteConfirm": "Yes, delete",
+    "done": {
+      "edit": "Listing updated.",
+      "pause": "Listing paused.",
+      "resume": "Selling again.",
+      "outOfStock": "Marked out of stock.",
+      "sellAgain": "New listing published.",
+      "delete": "Listing deleted."
+    },
+    "pausedExpired": "Paused automatically: harvested too long ago. Edit the harvest date to sell again.",
+    "errors": {
+      "QUANTITY_BELOW_SOLD": "Buyers already ordered more than this. Choose a bigger quantity.",
+      "LISTING_EXPIRED": "Harvested too long ago. Edit the harvest date first.",
+      "INVALID_STATUS_CHANGE": "This listing just changed. Please try again."
+    }
   },
   "profile": {
     "title": "My profile",
@@ -74,7 +107,7 @@
   },
   "sell": {
     "title": "Sell produce",
-    "photosHeading": "Step 1: Photos of your produce",
+    "photosHeading": "Photos of your produce",
     "photosHint": "Take a clear photo in daylight, close to the produce. Up to {{max}} photos.",
     "count": "{{count}} of {{max}} photos",
     "takePhoto": "Take photo",
@@ -89,11 +122,46 @@
       "failed": "Upload failed"
     },
     "errors": {
-      "PHOTO_UNREADABLE": "This photo could not be opened. Please take it again.",
-      "INVALID_IMAGE": "This file is not a photo we can use.",
-      "PAYLOAD_TOO_LARGE": "This photo is too large."
+      "UNKNOWN_CROP": "This crop is not available. Choose another.",
+      "UNIT_NOT_ALLOWED": "Choose a unit from the list.",
+      "HARVEST_IN_FUTURE": "The harvest date cannot be in the future.",
+      "HARVEST_TOO_OLD": "This harvest is too old to sell. Pick a newer date.",
+      "PHOTOS_UNAVAILABLE": "A photo could not be used. Remove it and take it again."
     },
     "waitingNote": "You are offline. Photos are saved on this phone and will upload by themselves when the internet is back.",
-    "nextSoon": "Next you will choose the crop, quantity and price. That part arrives in the next update."
+    "stepPhotosCrop": "Photos and crop",
+    "stepAmount": "Quantity, price and harvest",
+    "stepReview": "Check and publish",
+    "cropHeading": "Which crop?",
+    "cropSearch": "Search crop",
+    "cropNone": "No crop matches. Try another spelling.",
+    "soldBefore": "You sold before",
+    "categories": {
+      "all": "All",
+      "vegetable": "Vegetables",
+      "leafy": "Leafy greens",
+      "fruit": "Fruits"
+    },
+    "unit": "Sold by",
+    "quantity": "How much do you have?",
+    "price": "Price per {{unit}}",
+    "priceWarning": "This is very different from your last price ({{price}} per {{unit}}). Please check.",
+    "harvest": "When was it harvested?",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "pickDate": "Pick a date",
+    "harvestDateLabel": "Harvest date",
+    "needPhoto": "Add at least one photo.",
+    "needCrop": "Choose a crop.",
+    "reviewHeading": "Check your listing",
+    "total": "Total value",
+    "readAloud": "Read aloud",
+    "readAloudText": "{{crop}}. {{quantity}} {{unit}}. {{price}} per {{unit}}. Harvested {{date}}.",
+    "publish": "Publish listing",
+    "published": "Your listing is live. Nearby buyers can see it.",
+    "photosPending": "Waiting for photos to finish uploading.",
+    "offlineQueued": "You are offline. Your listing is saved and will be published automatically when the internet is back.",
+    "typePrice": "Or type the price (₹)",
+    "quickPick": "Quick pick"
   }
 }

@@ -69,16 +69,20 @@ export function usePhotoUploads({ client, compress = compressImage, sleep = defa
     listDrafts().then((stored) => {
       if (!active) return;
       for (const draft of stored) drafts.current.set(draft.id, draft);
-      setPhotos(
-        stored.map((draft) => ({
-          id: draft.id,
-          status: draft.status === 'uploaded' ? 'uploaded' : 'waiting',
-          progress: draft.status === 'uploaded' ? 1 : 0,
-          asset: draft.asset ?? null,
-          previewUrl: draft.asset?.thumbnailUrl ?? URL.createObjectURL(draft.blob),
-          errorCode: null,
-        })),
-      );
+      const restored = stored.map((draft) => ({
+        id: draft.id,
+        status: draft.status === 'uploaded' ? 'uploaded' : 'waiting',
+        progress: draft.status === 'uploaded' ? 1 : 0,
+        asset: draft.asset ?? null,
+        previewUrl: draft.asset?.thumbnailUrl ?? URL.createObjectURL(draft.blob),
+        errorCode: null,
+      }));
+      // Merge rather than replace: a photo taken before this read finished must not vanish.
+      const restoredIds = new Set(restored.map((photo) => photo.id));
+      setPhotos((current) => [
+        ...restored,
+        ...current.filter((photo) => !restoredIds.has(photo.id)),
+      ]);
       setLoaded(true);
     });
     return () => {
@@ -145,8 +149,21 @@ export function usePhotoUploads({ client, compress = compressImage, sleep = defa
     setPhotos((current) => current.filter((p) => p.id !== id));
   }
 
+  // After publishing: the photos now belong to the listing, so only the phone's drafts are
+  // forgotten (the server copies must stay).
+  async function clearAll() {
+    for (const photo of photos) {
+      if (photo.previewUrl?.startsWith('blob:')) URL.revokeObjectURL(photo.previewUrl);
+      await deleteDraft(photo.id);
+    }
+    drafts.current.clear();
+    setPhotos([]);
+  }
+
   return {
     photos,
+    clearAll,
+    allUploaded: photos.length > 0 && photos.every((p) => p.status === 'uploaded'),
     loaded,
     canAddMore: photos.length < MAX_PHOTOS,
     uploadedAssets: photos.filter((p) => p.status === 'uploaded').map((p) => p.asset),
