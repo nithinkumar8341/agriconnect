@@ -5,6 +5,7 @@ import { createAuthService } from '../services/auth.service.js';
 import { createOtpService } from '../services/otp.service.js';
 import { createSessionService } from '../services/session.service.js';
 import { createAuthRouter } from './auth.routes.js';
+import { createCropsRouter } from './crops.routes.js';
 import { healthRouter } from './health.routes.js';
 import { createLocationsRouter, createProfileRouter, createUsersRouter } from './profile.routes.js';
 
@@ -24,5 +25,6 @@ export function createApiRouter({ config, logger, smsProvider }) {
   router.use('/profile', createProfileRouter({ requireAuth }));
   router.use('/users', createUsersRouter({ requireAuth }));
   router.use('/locations', createLocationsRouter());
+  router.use('/crops', createCropsRouter());
   return router;
 }
