@@ -1,0 +1,46 @@
+# Architecture
+
+AgriConnect is a monorepo with three deployable services and a handful of managed external services.
+
+```mermaid
+flowchart LR
+    subgraph Client["Phone browser (PWA)"]
+        FE["frontend<br/>React + Vite + Tailwind<br/>(Vercel)"]
+    end
+
+    subgraph Server["Render"]
+        BE["backend<br/>Node.js + Express<br/>/api/v1"]
+        AI["ai-service<br/>Python + FastAPI<br/>price suggestion, quality check"]
+    end
+
+    DB[("MongoDB<br/>(Atlas in prod,<br/>Docker locally)")]
+    CLD["Cloudinary<br/>product photos"]
+    SMS["SMS provider<br/>OTP + order alerts<br/>(console in dev)"]
+    RZP["Razorpay<br/>UPI, test mode"]
+
+    FE -- "HTTPS JSON + httpOnly refresh cookie" --> BE
+    FE -- "signed direct upload" --> CLD
+    BE -- "Mongoose" --> DB
+    BE -- "internal HTTP" --> AI
+    BE -- "upload signatures, URLs" --> CLD
+    BE -- "SmsProvider interface" --> SMS
+    BE -- "create order / verify signature" --> RZP
+    RZP -- "webhook (idempotent)" --> BE
+```
+
+## Responsibilities
+
+| Component | Owns | Does not own |
+| --- | --- | --- |
+| frontend | UI, i18n (te/en/hi), offline drafts in IndexedDB, access token in memory | Prices, totals, stock, authorization (server re-checks all of these) |
+| backend | Auth, business rules, orders, inventory, payments ledger, fraud rules, audit log | ML inference |
+| ai-service | Price suggestion model, crop visual quality check | User data and authorization (only called by the backend) |
+| MongoDB | All persistent state | |
+
+## Key decisions so far
+
+- The browser never talks to ai-service directly. The backend calls it, so authentication, rate limits and auditing stay in one place.
+- In development the Vite dev server proxies `/api` to the backend so the app is same-origin, matching the cookie setup used in production.
+- Local MongoDB runs as a single-node replica set because checkout transactions (Prompt 10) need one.
+
+This file is updated whenever the architecture changes.
