@@ -376,6 +376,7 @@ Only **overrides** are stored: `{ key (unique), value, updatedBy }`. Defaults, d
 | `platformFeePercent` | 0 | Commission on produce, deducted from farmer earnings |
 | `mandiCommissionPercentEstimate` | 10 | Only for the labelled "vs mandi" estimate |
 | `priceStaleAfterDays` | 7 | Mandi price age that triggers a warning |
+| `lowStockPercent` | 20 | A listing is "running low" when what is left is at or below this % of what was listed |
 | `agentListingsNeedFarmerApproval` | true | Agent-created listings wait for farmer confirmation |
 
 ## Authentication collections

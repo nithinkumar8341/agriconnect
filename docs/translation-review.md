@@ -85,7 +85,7 @@ Fill the "reviewed" columns with the reviewer's name or a corrected name.
 
 ## Frontend UI strings (frontend/src/i18n/locales)
 
-Machine-written te and hi for every UI key, in all namespaces. The app falls back to English for a missing key, but every key is currently filled (a test checks this).
+Machine-written te and hi for every UI key, in all namespaces. The app falls back to English for a missing key, but every key is currently filled (a test checks this). Some Telugu labels were deliberately shortened to fit a 360px phone (for example "నా పంటలు" for My products); reviewers should keep replacements short too.
 
 | namespace:key | English | Telugu (machine) | te reviewed | Hindi (machine) | hi reviewed |
 | --- | --- | --- | --- | --- | --- |
@@ -106,7 +106,7 @@ Machine-written te and hi for every UI key, in all namespaces. The app falls bac
 | common:language.change | Change language | భాష మార్చండి | | भाषा बदलें | |
 | common:nav.label | Main menu | ప్రధాన మెనూ | | मुख्य मेनू | |
 | common:nav.home | Home | హోమ్ | | होम | |
-| common:nav.products | My products | నా ఉత్పత్తులు | | मेरे उत्पाद | |
+| common:nav.products | My products | నా పంటలు | | मेरे उत्पाद | |
 | common:nav.orders | Orders | ఆర్డర్లు | | ऑर्डर | |
 | common:nav.profile | Profile | ప్రొఫైల్ | | प्रोफ़ाइल | |
 | common:nav.farmers | Farmers | రైతులు | | किसान | |
@@ -240,6 +240,7 @@ Machine-written te and hi for every UI key, in all namespaces. The app falls bac
 | onboarding:location.unavailable | We could not find your location. That is fine, we will use your pincode instead. | మీ స్థానం కనుగొనలేకపోయాము. పరవాలేదు, మీ పిన్‌కోడ్ ఉపయోగిస్తాము. | | आपकी जगह नहीं मिल सकी। कोई बात नहीं, हम आपका पिनकोड इस्तेमाल करेंगे। | |
 | onboarding:location.unsupported | This phone cannot share its location. We will use your pincode instead. | ఈ ఫోన్ స్థానాన్ని పంచుకోలేదు. మీ పిన్‌కోడ్ ఉపయోగిస్తాము. | | यह फ़ोन जगह साझा नहीं कर सकता। हम आपका पिनकोड इस्तेमाल करेंगे। | |
 | onboarding:location.skip | Continue without location | స్థానం లేకుండా కొనసాగించండి | | जगह के बिना आगे बढ़ें | |
+| onboarding:location.savedNoAccuracy | Location saved. | స్థానం సేవ్ అయింది. | | जगह सेव हो गई। | |
 | onboarding:km | {{count}} km | {{count}} కి.మీ | | {{count}} किमी | |
 | onboarding:errors.required | Please fill this in. | దయచేసి దీన్ని నింపండి. | | कृपया इसे भरें। | |
 | onboarding:errors.pincode | Enter a 6-digit pincode. | 6 అంకెల పిన్‌కోడ్ ఇవ్వండి. | | 6 अंकों का पिनकोड डालें। | |
@@ -247,6 +248,67 @@ Machine-written te and hi for every UI key, in all namespaces. The app falls bac
 | onboarding:errors.pickDistrict | Please choose your district. | దయచేసి మీ జిల్లాను ఎంచుకోండి. | | कृपया अपना ज़िला चुनें। | |
 | onboarding:errors.pickDay | Pick at least one delivery day. | కనీసం ఒక డెలివరీ రోజు ఎంచుకోండి. | | कम से कम एक डिलीवरी दिन चुनें। | |
 | onboarding:errors.saveFailed | We could not save. Your answers are kept, please try again. | సేవ్ చేయలేకపోయాము. మీ సమాధానాలు అలాగే ఉన్నాయి, దయచేసి మళ్ళీ ప్రయత్నించండి. | | सेव नहीं हो सका। आपके जवाब सुरक्षित हैं, कृपया फिर से कोशिश करें। | |
+| farmer:home.greeting | Namaste, {{name}} | నమస్కారం, {{name}} | | नमस्ते, {{name}} | |
+| farmer:home.greetingNoName | Namaste | నమస్కారం | | नमस्ते | |
+| farmer:home.glance | Today at a glance | ఈరోజు ఒక్క చూపులో | | आज एक नज़र में | |
+| farmer:home.todayOrders | Orders today | ఈరోజు ఆర్డర్లు | | आज के ऑर्डर | |
+| farmer:home.pendingDeliveries | Waiting to deliver | డెలివరీ చేయాల్సినవి | | डिलीवरी बाकी | |
+| farmer:home.lowStock | Running low | తక్కువగా ఉన్నవి | | कम बचा है | |
+| farmer:home.lowItem | {{crop}}: {{left}} {{unit}} left | {{crop}}: ఇంకా {{left}} {{unit}} మిగిలింది | | {{crop}}: {{left}} {{unit}} बचा है | |
+| farmer:home.tasks | What do you want to do? | మీరు ఏమి చేయాలనుకుంటున్నారు? | | आप क्या करना चाहते हैं? | |
+| farmer:tiles.sell | Sell produce | పంట అమ్మండి | | फ़सल बेचें | |
+| farmer:tiles.products | My products | నా పంటలు | | मेरे उत्पाद | |
+| farmer:tiles.orders | My orders | నా ఆర్డర్లు | | मेरे ऑर्डर | |
+| farmer:tiles.prices | Market prices | మార్కెట్ ధరలు | | मंडी भाव | |
+| farmer:tiles.assistant | Ask assistant | సహాయం అడగండి | | सहायक से पूछें | |
+| farmer:tiles.callAgent | Call my agent | నా ఏజెంట్‌కు కాల్ | | मेरे एजेंट को कॉल | |
+| farmer:tiles.callSupport | Call support | సపోర్ట్‌కు కాల్ | | सहायता को कॉल | |
+| farmer:tiles.noAgent | No agent yet | ఇంకా ఏజెంట్ లేరు | | अभी कोई एजेंट नहीं | |
+| farmer:tiles.newOrders | new | కొత్తవి | | नए | |
+| farmer:products.title | My products | నా పంటలు | | मेरे उत्पाद | |
+| farmer:products.filterLabel | Show | చూపించు | | दिखाएँ | |
+| farmer:products.filters.all | All | అన్నీ | | सभी | |
+| farmer:products.filters.available | Selling | అమ్ముతున్నవి | | बिक रहे | |
+| farmer:products.filters.low | Running low | తక్కువగా ఉన్నవి | | कम बचे | |
+| farmer:products.filters.out_of_stock | Out of stock | అయిపోయినవి | | खत्म | |
+| farmer:products.filters.paused | Paused | ఆపినవి | | रोके गए | |
+| farmer:products.status.available | Selling | అమ్ముతున్నారు | | बिक रहा है | |
+| farmer:products.status.out_of_stock | Out of stock | అయిపోయింది | | खत्म | |
+| farmer:products.status.paused | Paused | ఆపారు | | रोका गया | |
+| farmer:products.left | {{left}} of {{total}} {{unit}} left | {{total}} {{unit}}లో {{left}} మిగిలింది | | {{total}} {{unit}} में से {{left}} बचा है | |
+| farmer:products.price | {{price}} per {{unit}} | {{unit}}కు {{price}} | | {{price}} प्रति {{unit}} | |
+| farmer:products.harvested | Harvested {{date}} | {{date}}న కోశారు | | {{date}} को तोड़ा | |
+| farmer:products.lowBadge | Running low | తక్కువగా ఉంది | | कम बचा है | |
+| farmer:products.oldWarning | Harvested long ago. Check it is still fresh. | చాలా రోజుల క్రితం కోశారు. ఇంకా తాజాగా ఉందో చూడండి. | | काफ़ी पहले तोड़ा गया। देख लें कि अभी भी ताज़ा है। | |
+| farmer:products.emptyTitle | No products yet | ఇంకా ఉత్పత్తులు లేవు | | अभी कोई उत्पाद नहीं | |
+| farmer:products.emptyMessage | Add your first crop and nearby buyers will see it. | మీ మొదటి పంటను జోడించండి, దగ్గరలోని కొనుగోలుదారులకు కనిపిస్తుంది. | | अपनी पहली फ़सल जोड़ें, पास के खरीदारों को दिखेगी। | |
+| farmer:products.emptyFilteredTitle | Nothing here | ఇక్కడ ఏమీ లేదు | | यहाँ कुछ नहीं | |
+| farmer:products.emptyFilteredMessage | None of your products match this filter. | ఈ ఎంపికకు సరిపోయే ఉత్పత్తులు లేవు. | | इस विकल्प से कोई उत्पाद मेल नहीं खाता। | |
+| farmer:products.showing | Showing {{shown}} of {{total}} | {{total}}లో {{shown}} చూపిస్తున్నాము | | {{total}} में से {{shown}} दिखा रहे हैं | |
+| farmer:products.loadMore | Show more | మరిన్ని చూపించు | | और दिखाएँ | |
+| farmer:profile.title | My profile | నా ప్రొఫైల్ | | मेरी प्रोफ़ाइल | |
+| farmer:profile.farm | Farm details | పొలం వివరాలు | | खेत की जानकारी | |
+| farmer:profile.location | Farm location | పొలం స్థానం | | खेत की जगह | |
+| farmer:profile.delivery | Delivery | డెలివరీ | | डिलीवरी | |
+| farmer:profile.language | Language | భాష | | भाषा | |
+| farmer:profile.account | Account | ఖాతా | | खाता | |
+| farmer:profile.edit | Edit | మార్చండి | | बदलें | |
+| farmer:profile.editTitle | Edit farm details | పొలం వివరాలు మార్చండి | | खेत की जानकारी बदलें | |
+| farmer:profile.save | Save changes | మార్పులు సేవ్ చేయండి | | बदलाव सेव करें | |
+| farmer:profile.saved | Your details are saved. | మీ వివరాలు సేవ్ అయ్యాయి. | | आपकी जानकारी सेव हो गई। | |
+| farmer:profile.noLocation | Not shared. Buyers find you by pincode. | పంచుకోలేదు. కొనుగోలుదారులు పిన్‌కోడ్ ద్వారా మిమ్మల్ని కనుగొంటారు. | | साझा नहीं की। खरीदार पिनकोड से आपको ढूँढेंगे। | |
+| farmer:profile.locationShared | Shared. Buyers only see the approximate distance. | పంచుకున్నారు. కొనుగోలుదారులకు సుమారు దూరం మాత్రమే కనిపిస్తుంది. | | साझा की। खरीदारों को सिर्फ़ अनुमानित दूरी दिखती है। | |
+| farmer:profile.days | Delivery days | డెలివరీ రోజులు | | डिलीवरी के दिन | |
+| farmer:profile.cutoff | Order until {{time}} for the next delivery | తదుపరి డెలివరీకి {{time}} వరకు ఆర్డర్ చేయవచ్చు | | अगली डिलीवरी के लिए {{time}} तक ऑर्डर | |
+| farmer:profile.radius | Up to {{km}} km | {{km}} కి.మీ వరకు | | {{km}} किमी तक | |
+| farmer:profile.minOrder | Smallest order: {{amount}} | కనీస ఆర్డర్: {{amount}} | | सबसे छोटा ऑर्डर: {{amount}} | |
+| farmer:profile.fee | Delivery charge: {{amount}} | డెలివరీ ఛార్జీ: {{amount}} | | डिलीवरी शुल्क: {{amount}} | |
+| farmer:profile.pincodes | Delivers to: {{list}} | డెలివరీ చేసేది: {{list}} | | यहाँ डिलीवरी: {{list}} | |
+| farmer:profile.phone | Phone | ఫోన్ | | फ़ोन | |
+| farmer:profile.logoutAll | Log out on all phones | అన్ని ఫోన్లలో లాగ్ అవుట్ | | सभी फ़ोन पर लॉग आउट | |
+| farmer:profile.logoutAllTitle | Log out on all phones? | అన్ని ఫోన్లలో లాగ్ అవుట్ చేయాలా? | | सभी फ़ोन पर लॉग आउट करें? | |
+| farmer:profile.logoutAllMessage | You will need an SMS code to log in again on every phone, including this one. | ఈ ఫోన్‌తో సహా ప్రతి ఫోన్‌లో మళ్ళీ లాగిన్ అవ్వడానికి SMS కోడ్ కావాలి. | | इस फ़ोन समेत हर फ़ोन पर फिर से लॉगिन करने के लिए SMS कोड चाहिए होगा। | |
+| farmer:profile.logoutAllConfirm | Yes, log out everywhere | అవును, అన్నిచోట్లా లాగ్ అవుట్ | | हाँ, हर जगह लॉग आउट करें | |
 | devui:title | Component gallery | కాంపోనెంట్ గ్యాలరీ | | कंपोनेंट गैलरी | |
 | devui:intro | Every reusable component, shown in the current language. Switch the language to check the layout. | ప్రతి కాంపోనెంట్ ప్రస్తుత భాషలో చూపబడింది. లేఅవుట్ చూడటానికి భాష మార్చండి. | | हर कंपोनेंट मौजूदा भाषा में दिखाया गया है। लेआउट जाँचने के लिए भाषा बदलें। | |
 | devui:sections.buttons | Big buttons | పెద్ద బటన్లు | | बड़े बटन | |

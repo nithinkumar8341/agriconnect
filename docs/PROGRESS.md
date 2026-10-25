@@ -139,6 +139,40 @@
     - Mandal and village are text fields (official list needed; ADR 0006).
     - No WebOTP auto-read (needs the DLT SMS format).
     - "Call my agent" waits for the agent module (Prompt 15).
+- **Prompt 6: Crop catalog API and farmer dashboard** (5 commits, 2026-10-25):
+  - **Crop catalog API:**
+    - `GET /crops` is public: active crops A–Z, search across en/te/hi names and slug (case-insensitive, prefix matches first), category filter, pagination.
+    - The catalog is cached in memory for 10 minutes and searched in JavaScript, so user text never becomes a regex.
+    - `Cache-Control: public, max-age=3600` plus an ETag gives `304` on revalidation.
+    - `GET /crops/:slug` returns one crop.
+  - **Dashboard API:** `GET /farmer/dashboard` (farmer only) returns:
+    - orders today (from midnight IST), new orders, and orders waiting to deliver;
+    - listing counts by status;
+    - up to 5 low-stock listings;
+    - the assigned agent's phone (active agents only).
+  - **My products API:** `GET /products/mine` (farmer only) returns the farmer's own listings, never removed ones, newest change first. It filters by status including `low`, paginates, and flags `isLowStock` and `isPastShelfLife` on each item.
+  - **New setting:** `lowStockPercent` (default 20) in AppConfig.
+  - **Farmer home:**
+    - A greeting, then three summary rows that each open their list.
+    - A low-stock list in the farmer's language.
+    - Six task tiles: Sell → Coming soon; My products; My orders with a new-order badge; Market prices → Coming soon; Ask assistant (disabled, "Coming soon"); Call my agent (a `tel:` link, with a support-number or "No agent yet" fallback).
+  - **My Products** (read-only, as decided):
+    - Filter chips kept in the URL.
+    - Cards with crop icon and name, ₹ price, a stock bar, status as text plus colour, and low-stock and old-listing warnings.
+    - "Show more" pagination, empty states, and error with retry.
+  - **Profile:** a summary plus editing with the same shared fields and rules as onboarding, a language picker, log out, and log out on all phones (with confirmation).
+  - **Refactor:** farmer onboarding now uses the shared form parts. Its tests pass unchanged.
+  - **Test fix:** the backend hook timeout was raised to 30 s. This was the real cause of the "transient" failures in Prompt 5 (index-building hooks queueing on the shared in-memory MongoDB). Verified with 5 consecutive green runs.
+  - **Verified:**
+    - 241 backend tests (+29) and 108 frontend tests (+22) pass, the frontend 3 times in a row; lint is clean; the build works.
+    - axe shows 0 violations on the farmer home in en, te and hi.
+    - **Real browser, real stack:** demo farmer Ramu at 360px, viewing home, products, low stock and profile in en, te and hi (12 screens).
+      - No sideways overflow.
+      - The real counts are correct (2 today, 1 new, 1 running low).
+      - "Call my agent" dials the demo agent.
+      - The only console error is the known startup 401.
+      - Telugu mid-word breaks found there were fixed with stacked summary rows and shorter labels.
+  - **Process note:** one commit (the crops API) was made while unrelated tests were failing, because the command didn't stop on failure. The code itself was fine and the cause is fixed above. Every commit command now runs the full test suite first and refuses to commit on failure.
 
 ## In progress
 
@@ -146,7 +180,7 @@
 
 ## Next
 
-- Prompt 6: Crop catalog API (`GET /crops`, searchable en/te/hi) and the farmer dashboard (Sell, My Products, My Orders, Market Prices, Ask Assistant placeholder, Call My Agent; profile page to edit delivery settings, language and location).
+- Prompt 7: Image upload pipeline (Cloudinary signed upload with local-disk fallback, client-side compression, EXIF location stripping, thumbnails, perceptual hash, offline drafts in IndexedDB).
 
 ## Known issues
 
@@ -158,8 +192,8 @@
 - The frontend bundle is 128 KB gzipped in a single chunk. Route-level code splitting is planned for Prompt 23.
 
 - ai-service tests print a `StarletteDeprecationWarning` saying the httpx-backed `TestClient` is deprecated in Starlette 1.x. Tests pass. The suggested replacement package was not installed because it could not be verified during setup; review it before switching.
-- CI has not run on Prompts 1–5: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
-- 191 frontend UI strings in te/hi are machine-written and await native-speaker review.
+- CI has not run on Prompts 1–6: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
+- 253 frontend UI strings in te/hi are machine-written and await native-speaker review.
 - The 59 crop names in te/hi are machine-written and await native-speaker review.
 - Demo phone numbers (`+9199999000xx`) are invented but could belong to real people: never seed demo data where a real SMS gateway is active.
 - AuditLog and LedgerEntry immutability is enforced in Mongoose only; direct database access could still change rows.

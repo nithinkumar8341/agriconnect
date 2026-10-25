@@ -207,6 +207,76 @@ Every route works on the **caller's own** records. The user id always comes from
 
 `landmark` and `pincode` are required; everything else is optional.
 
+## Crop catalog (public)
+
+| Method | Path | Query | Success |
+| --- | --- | --- | --- |
+| GET | `/crops` | `search` (≤50 chars), `category` (`vegetable`\|`fruit`\|`leafy`\|`other`), `page` (≥1), `limit` (1–100, default 100) | `200 { items, page, limit, total }` |
+| GET | `/crops/:slug` | none | `200 { crop }` or `404 NOT_FOUND` |
+
+**Each crop:**
+- `slug`, `names` (`en`, `te`, `hi`), `category`
+- `defaultUnit`, `allowedUnits`, `quantityPresets`, `quantityStep`
+- `shelfLifeDays`, `icon`
+
+**Order and search:**
+- Only active crops are returned, sorted by English name.
+- `search` matches any of the three names or the slug, ignoring case.
+- Names that **start with** the search text come before names that only contain it.
+- Search is plain-text matching in JavaScript over the cached catalog, so special characters such as `(`, `.*` or `\` are just characters.
+
+**Caching:**
+- The server keeps the active catalog in memory for 10 minutes.
+- Responses carry `Cache-Control: public, max-age=3600` and an ETag. A request with a matching `If-None-Match` gets `304 Not Modified` with no body.
+
+## Farmer (role farmer only)
+
+| Method | Path | Query | Success |
+| --- | --- | --- | --- |
+| GET | `/farmer/dashboard` | none | `200` dashboard (below) |
+| GET | `/products/mine` | `status` (`available`\|`out_of_stock`\|`paused`\|`low`), `page`, `limit` (1–50, default 20) | `200 { items, page, limit, total }` |
+
+### Dashboard
+
+```json
+{
+  "farmerName": "Ramu",
+  "orders": { "today": 2, "new": 1, "pendingDelivery": 0 },
+  "listings": { "available": 4, "outOfStock": 0, "paused": 0 },
+  "lowStockPercent": 20,
+  "lowStock": [ { "id": "…", "crop": { "slug": "green-chilli", "names": { "en": "Green chilli", "te": "…", "hi": "…" }, "icon": "🌶️", "category": "vegetable" }, "availableQuantity": 3, "quantity": 20, "unit": "kg", "...": "same fields as /products/mine items" } ],
+  "agent": { "phone": "+919999900001" }
+}
+```
+
+**Order counts:**
+- `orders.today`: orders placed since **midnight IST** (India's calendar day, not the server's UTC day).
+- `orders.new`: orders with status `placed`.
+- `orders.pendingDelivery`: orders with status `accepted` or `out_for_delivery`.
+
+**Low stock:**
+- `lowStock` lists up to 5 `available` listings where `availableQuantity ≤ quantity × lowStockPercent / 100`.
+- `lowStockPercent` is an AppConfig setting, default 20.
+
+**Agent:** `agent` is the farmer's own assigned agent, and only while that agent's account is active; otherwise `null`.
+
+### My products item
+
+**Fields:**
+- `id`
+- `crop` (`slug`, `names`, `icon`, `category`)
+- `quantity`, `availableQuantity`, `unit`
+- `pricePerUnit` (paise)
+- `status`, `harvestDate`, `updatedAt`
+- `photoUrl` (null until Prompt 7)
+- `isLowStock`
+- `isPastShelfLife` (harvested longer ago than the crop's `shelfLifeDays`)
+
+**Rules:**
+- Only the caller's own listings are returned; `removed` (soft-deleted) listings never are.
+- Sorted by most recently changed.
+- `status=low` is a view, not a stored status: available listings at or below the threshold.
+
 ## ai-service (internal, called only by the backend)
 
 | Method | Path | Description |
