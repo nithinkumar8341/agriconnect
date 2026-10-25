@@ -78,6 +78,12 @@ export const APP_CONFIG_DEFINITIONS = Object.freeze({
     description:
       'A listing counts as low on stock when what is left is at or below this % of what was listed.',
   },
+  duplicatePhotoMaxDistance: {
+    default: 6,
+    schema: z.number().int().min(0).max(32),
+    description:
+      'Photos whose 64-bit fingerprints differ in at most this many bits count as the same photo.',
+  },
   agentListingsNeedFarmerApproval: {
     default: true,
     schema: z.boolean(),

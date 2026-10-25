@@ -48,6 +48,13 @@ const envSchema = z
       .string()
       .regex(/^\d{6}$/, 'must be exactly 6 digits')
       .optional(),
+    // Where photos are stored. Local disk is for development only: hosts like Render wipe the
+    // disk on every deploy, so production must use Cloudinary.
+    STORAGE_PROVIDER: z.enum(['local', 'cloudinary']).default('local'),
+    UPLOAD_DIR: z.string().default('uploads'),
+    CLOUDINARY_CLOUD_NAME: z.string().optional(),
+    CLOUDINARY_API_KEY: z.string().optional(),
+    CLOUDINARY_API_SECRET: z.string().optional(),
   })
   .superRefine((env, ctx) => {
     const fail = (path, message) => ctx.addIssue({ code: 'custom', path: [path], message });
@@ -57,6 +64,14 @@ const envSchema = z
       if (env.DEV_FIXED_OTP) fail('DEV_FIXED_OTP', 'must not be set in production');
       if (env.SMS_PROVIDER === 'console') {
         fail('SMS_PROVIDER', 'console prints OTPs to the log and is not allowed in production');
+      }
+      if (env.STORAGE_PROVIDER === 'local') {
+        fail('STORAGE_PROVIDER', 'local disk is wiped on redeploy; use cloudinary in production');
+      }
+    }
+    if (env.STORAGE_PROVIDER === 'cloudinary') {
+      for (const key of ['CLOUDINARY_CLOUD_NAME', 'CLOUDINARY_API_KEY', 'CLOUDINARY_API_SECRET']) {
+        if (!env[key]) fail(key, 'is required when STORAGE_PROVIDER=cloudinary');
       }
     }
     if (env.SMS_PROVIDER === 'msg91' && !env.MSG91_AUTH_KEY) {
@@ -106,5 +121,14 @@ export function loadConfig(env = process.env) {
       devFixedOtp: parsed.DEV_FIXED_OTP,
     }),
     sms: Object.freeze({ provider: parsed.SMS_PROVIDER, msg91AuthKey: parsed.MSG91_AUTH_KEY }),
+    storage: Object.freeze({
+      provider: parsed.STORAGE_PROVIDER,
+      uploadDir: parsed.UPLOAD_DIR,
+      cloudinary: {
+        cloudName: parsed.CLOUDINARY_CLOUD_NAME,
+        apiKey: parsed.CLOUDINARY_API_KEY,
+        apiSecret: parsed.CLOUDINARY_API_SECRET,
+      },
+    }),
   });
 }

@@ -81,7 +81,20 @@ describe('loadConfig: authentication and SMS', () => {
     CORS_ORIGINS: 'https://agriconnect.example',
     SMS_PROVIDER: 'msg91',
     MSG91_AUTH_KEY: 'key',
+    STORAGE_PROVIDER: 'cloudinary',
+    CLOUDINARY_CLOUD_NAME: 'demo',
+    CLOUDINARY_API_KEY: 'key',
+    CLOUDINARY_API_SECRET: 'secret',
   };
+
+  it('refuses local disk storage in production and needs all Cloudinary keys', () => {
+    expect(() => loadConfig({ ...productionEnv, STORAGE_PROVIDER: 'local' })).toThrow(
+      /STORAGE_PROVIDER: local disk is wiped on redeploy/,
+    );
+    expect(() => loadConfig({ ...productionEnv, CLOUDINARY_API_SECRET: undefined })).toThrow(
+      /CLOUDINARY_API_SECRET: is required/,
+    );
+  });
 
   it('maps auth and SMS settings with defaults', () => {
     const config = loadConfig({ ...validEnv, DEV_FIXED_OTP: '123456' });

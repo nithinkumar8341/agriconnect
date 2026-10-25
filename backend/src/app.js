@@ -10,6 +10,7 @@ import { createRateLimiter } from './middleware/rateLimiter.js';
 import { requestId } from './middleware/requestId.js';
 import { sanitizeRequest } from './middleware/sanitize.js';
 import { createSmsProvider } from './services/sms/index.js';
+import { createStorage } from './services/storage/index.js';
 import { createApiRouter } from './routes/index.js';
 
 function httpLogLevel(req, res, err) {
@@ -21,7 +22,11 @@ function httpLogLevel(req, res, err) {
 // Building the app separately from server.js lets tests import it without opening a port.
 export function createApp(
   config,
-  { logger = createLogger(config), smsProvider = createSmsProvider(config.sms) } = {},
+  {
+    logger = createLogger(config),
+    smsProvider = createSmsProvider(config.sms),
+    storage = createStorage(config.storage),
+  } = {},
 ) {
   const app = express();
   app.set('trust proxy', config.trustProxy);
@@ -60,7 +65,21 @@ export function createApp(
   app.use(cookieParser());
   app.use(sanitizeRequest);
 
-  app.use('/api/v1', createApiRouter({ config, logger, smsProvider }));
+  // Development only: photos on local disk are served from here (production uses Cloudinary URLs).
+  // Files get random names and are never executable; helmet already sends nosniff.
+  if (storage.provider === 'local') {
+    app.use(
+      '/uploads',
+      express.static(storage.root, {
+        index: false,
+        dotfiles: 'deny',
+        maxAge: '30d',
+        immutable: true,
+      }),
+    );
+  }
+
+  app.use('/api/v1', createApiRouter({ config, logger, smsProvider, storage }));
 
   app.use(notFound);
   app.use(createErrorHandler(config));

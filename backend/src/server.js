@@ -2,6 +2,9 @@ import { createApp } from './app.js';
 import { connectDb, disconnectDb } from './config/db.js';
 import { loadConfig } from './config/env.js';
 import { createLogger } from './config/logger.js';
+import { startMediaCleanupJob } from './jobs/mediaCleanup.js';
+import { createMediaService } from './services/media.service.js';
+import { createStorage } from './services/storage/index.js';
 
 const SHUTDOWN_TIMEOUT_MS = 10_000;
 
@@ -22,9 +25,11 @@ try {
   process.exit(1);
 }
 
-const server = createApp(config, { logger }).listen(config.port, () => {
+const storage = createStorage(config.storage);
+const server = createApp(config, { logger, storage }).listen(config.port, () => {
   logger.info(`AgriConnect backend listening on http://localhost:${config.port}`);
 });
+startMediaCleanupJob({ mediaService: createMediaService({ storage, logger }), logger });
 
 let shuttingDown = false;
 

@@ -6,6 +6,7 @@ import { Crop } from './Crop.js';
 import { FarmerProfile } from './FarmerProfile.js';
 import { FraudFlag } from './FraudFlag.js';
 import { LedgerEntry } from './LedgerEntry.js';
+import { MediaAsset } from './MediaAsset.js';
 import { Notification } from './Notification.js';
 import { Order } from './Order.js';
 import { OtpRequest } from './OtpRequest.js';
@@ -26,6 +27,7 @@ export const ALL_MODELS = [
   FarmerProfile,
   FraudFlag,
   LedgerEntry,
+  MediaAsset,
   Notification,
   Order,
   OtpRequest,
