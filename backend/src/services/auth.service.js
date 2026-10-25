@@ -153,5 +153,25 @@ export function createAuthService({ otpService, sessionService, logger }) {
     };
   }
 
-  return { verifyLogin, verifyPin, setupPin, refresh };
+  // Only farmer or buyer can be self-chosen (the validator enforces that), and only once:
+  // the conditional update makes a second call fail even if two arrive at the same time.
+  async function chooseRole(user, role, { sessionFamilyId }) {
+    const updated = await User.findOneAndUpdate(
+      { _id: user._id, role: null },
+      { role },
+      { returnDocument: 'after' },
+    );
+    if (!updated) {
+      throw new AppError(409, 'ROLE_ALREADY_SET', 'Your account type is already set');
+    }
+    logger.info({ userId: updated._id.toString(), role }, 'User chose role');
+
+    // The old access token carries role null; hand back one that matches the new role.
+    return {
+      accessToken: sessionService.issueAccessToken(updated, sessionFamilyId),
+      user: updated.toPublic(),
+    };
+  }
+
+  return { verifyLogin, verifyPin, setupPin, refresh, chooseRole };
 }

@@ -61,10 +61,66 @@ flowchart LR
 2. **Shutdown on SIGTERM/SIGINT.** Stop accepting connections, let in-flight requests finish, then disconnect MongoDB. If this takes more than 10 s, force the exit.
 3. **On an unhandled rejection or uncaught exception,** log at fatal level and run the same shutdown with exit code 1. The host then restarts the process.
 
+## Authentication
+
+### Same-origin in every environment
+
+The browser always calls `/api/...` on the page's own origin, so it treats the refresh cookie as first-party and `SameSite=Strict` works:
+
+| Environment | Browser calls | Forwarded to |
+| --- | --- | --- |
+| Development | `http://localhost:5173/api/*` | Vite proxy → `http://localhost:4000` |
+| Production | `https://<app>.vercel.app/api/*` | Vercel rewrite ([frontend/vercel.json](../frontend/vercel.json)) → Render backend |
+
+The Render URL in `vercel.json` is a placeholder until the backend is deployed (Prompt 24). With the rewrite, requests pass through two proxies (Vercel, then Render), so `TRUST_PROXY` will likely be 2. This must be confirmed at deploy time.
+
+### Login, refresh and reuse detection
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant B as Browser
+    participant API as Backend
+    participant DB as MongoDB
+    participant SMS as SMS provider
+
+    B->>API: POST /auth/otp/request {phone}
+    API->>DB: cooldown + hourly cap check, store HMAC(code)
+    API->>SMS: send code in user's language
+    API-->>B: 202
+
+    B->>API: POST /auth/otp/verify {phone, otp}
+    API->>DB: attempts += 1 (atomic, max 5), compare HMAC, mark consumed
+    API->>DB: upsert user
+    alt agent or admin
+        API-->>B: {next: pin, pinToken (5 min)}
+        B->>API: POST /auth/pin/verify {pinToken, pin}
+        API->>DB: pin attempts += 1 (atomic), bcrypt compare
+    end
+    API->>DB: Session {familyId F, hash(R1)}
+    API-->>B: accessToken (15 min, kept in memory) + Set-Cookie agc_rt=R1
+
+    Note over B,API: 15 minutes later the access token expires
+    B->>API: POST /auth/token/refresh (cookie R1)
+    API->>DB: mark R1 replaced (atomic), insert hash(R2) in family F
+    API-->>B: new accessToken + Set-Cookie agc_rt=R2
+
+    Note over B,API: An attacker replays stolen R1
+    B->>API: POST /auth/token/refresh (cookie R1)
+    API->>DB: R1 already replaced → revoke every session in family F
+    API-->>B: 401 REFRESH_INVALID (R2 is now dead too)
+```
+
+### What each request trusts
+
+- **Access token (JWT, HS256):** proves *who* the caller is, for up to 15 minutes.
+- **`requireAuth` then loads the user from MongoDB on every request.** Suspension, role changes and logout-all therefore take effect immediately, and role checks use the database role, not the token's.
+- **Refresh token:** a random 256-bit value, stored only as a SHA-256 hash, sent only to `/api/v1/auth/*`.
+
 ## Key decisions so far
 
 - The browser never talks to ai-service directly. The backend calls it, so authentication, rate limits and auditing stay in one place.
-- In development the Vite dev server proxies `/api` to the backend so the app is same-origin, matching the cookie setup used in production.
+- In development the Vite dev server proxies `/api` to the backend, and in production a Vercel rewrite does the same. Either way the app is same-origin, which lets the refresh cookie use `SameSite=Strict` (ADR 0003).
 - Local MongoDB runs as a single-node replica set because checkout transactions (Prompt 10) need one.
 
 This file is updated whenever the architecture changes.

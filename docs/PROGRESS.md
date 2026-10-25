@@ -21,6 +21,34 @@
       - CORS headers are sent to the allowed origin and withheld from an unlisted one.
       - An invalid env exits with code 1 and names `PORT` and `MONGODB_URI`.
   - The `/api/v1/hello` bootstrap route was removed; the frontend placeholder now shows `/api/v1/health`.
+- **Prompt 2: Authentication and sessions** (3 commits, 2026-10-25), backend only:
+  - **Models:** User, OtpRequest and Session, with TTL indexes. Phone numbers are normalised to `+91XXXXXXXXXX`.
+  - **SMS:** a `SmsProvider` interface with a console provider (dev only) and an msg91 stub that fails loudly; OTP templates in te/en/hi.
+  - **Phone OTP:**
+    - HMAC-hashed, 5-minute expiry, single use, latest code only.
+    - 5 attempts, counted atomically before comparing.
+    - 30 s resend cooldown and 5 codes per phone per hour, stored in MongoDB.
+    - Per-IP limits; a failed SMS does not start the cooldown.
+    - The dev fixed OTP and the console SMS provider are rejected in production config.
+  - **PIN step** for agents and admins: 5-minute pinToken with its own audience, bcrypt PIN, one-time setup, and a lock after 5 wrong tries for 15 minutes (counted atomically).
+  - **Tokens:**
+    - 15-minute HS256 access JWT, kept in memory by clients.
+    - Rotating refresh token in an `HttpOnly; Secure; SameSite=Strict; Path=/api/v1/auth` cookie, stored as SHA-256.
+    - `rememberDevice: false` gives a browser-session cookie and a 1-day session.
+    - Reuse of a rotated token revokes the whole family, including a token created mid-rotation (race found and fixed).
+  - **Endpoints:** `/otp/request`, `/otp/verify`, `/pin/verify`, `/pin/setup`, `/token/refresh`, `/logout`, `/logout-all` (also invalidates access tokens already issued, via `tokensValidAfter` + `issuedAtMs`), `/me`, `/role` (farmer/buyer only, once).
+  - **Guards:**
+    - `requireAuth` loads the user each request, so suspension and role changes apply at once.
+    - `requireRole(...)` returns `ROLE_REQUIRED` for users without a role.
+    - `requireOwnership(...)` returns 404 for other people's records.
+  - **Production same-origin:** [frontend/vercel.json](../frontend/vercel.json) rewrites `/api/*` to Render. The Render URL is a placeholder until Prompt 24.
+  - **Verified:**
+    - 146 backend tests pass on Linux (`node:22` container, `npm ci`, full repo), including the SIGTERM test. On Windows 145 pass and 1 is skipped (SIGTERM); the full suite was run 3+ times in a row with no flakes after the race fix.
+    - Mutation checks:
+      - Removing the mid-rotation re-check makes its regression test fail.
+      - Planting an OTP debug log makes the log-safety test fail.
+    - Manual curl walkthrough against the Docker MongoDB: OTP request, cooldown, wrong code, login with cookie attributes, `/me`, role choice (admin refused), refresh rotation, reuse detection killing the new token too, and admin PIN setup followed by logout-all (old token gives `TOKEN_REVOKED`). The server log had no full phone numbers outside the dev SMS line, and no JWTs.
+  - **Not done in this prompt (by plan):** no frontend login screens (Prompt 5) and no AuditLog (Prompt 3; login events only go to logs).
 
 ## In progress
 
@@ -28,10 +56,14 @@
 
 ## Next
 
-- Prompt 2: Authentication and sessions (phone OTP, JWT access token + rotating refresh cookie, PIN for agents/admins, role guards).
+- Prompt 3: Core data models and seed data (seed:crops, seed:admin, seed:demo; AuditLog).
 
 ## Known issues
 
 - ai-service tests print a `StarletteDeprecationWarning` saying the httpx-backed `TestClient` is deprecated in Starlette 1.x. Tests pass. The suggested replacement package was not installed because it could not be verified during setup; review it before switching.
-- The CI results for Prompt 1 have not been seen yet: the 3 commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
+- CI has not run on Prompt 1 or Prompt 2: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
+- **Real SMS is not implemented.** India requires DLT registration (sender ID and approved templates) first, so start that early if the pilot needs real SMS. Until then production cannot send OTPs.
+- **Two parallel refreshes from one browser end the session** (they look like token reuse). Prompt 4's API client must run one refresh at a time.
+- `TRUST_PROXY` for production (Vercel rewrite + Render) is expected to be 2 but is unverified until deploy.
+- The te/hi OTP SMS texts are machine-written and await native-speaker review ([translation-review.md](translation-review.md)).
 - Graceful shutdown can't be checked by hand on Windows (no SIGTERM). Press Ctrl+C in a terminal running `npm run dev`; that sends SIGINT, which takes the same shutdown path.

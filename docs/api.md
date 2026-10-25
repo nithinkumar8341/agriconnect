@@ -60,6 +60,94 @@ Auth: none. Not rate-limited, because hosting monitors poll it.
 | 200 | `{ "status": "ok", "db": "up", "uptimeSeconds": 42 }` |
 | 503 | `{ "status": "degraded", "db": "down", "uptimeSeconds": 42 }` (MongoDB unreachable or ping took over 2 s) |
 
+## Authentication (`/api/v1/auth`)
+
+### How a client uses it
+
+1. `POST /otp/request` → the user receives an SMS.
+2. `POST /otp/verify` → one of two outcomes:
+   - **Farmer, buyer, or new user:** you get an `accessToken` (keep it **in memory only**) and the server sets the `agc_rt` refresh cookie.
+   - **Agent or admin:** you get `{ next, pinToken }`. Call `/pin/verify` or `/pin/setup` to get the session.
+3. Send `Authorization: Bearer <accessToken>` on API calls.
+4. When a call fails with `401 TOKEN_EXPIRED`, call `POST /token/refresh` and retry. **Send only one refresh at a time**: two parallel refreshes with the same cookie look like token theft and end the session.
+5. If `user.role` is `null`, show the role picker and call `POST /role`.
+
+**The refresh cookie** `agc_rt`:
+- `HttpOnly; Secure; SameSite=Strict; Path=/api/v1/auth`.
+- `Max-Age` is 30 days when `rememberDevice` is true. Without it, the cookie is a browser-session cookie and the server-side session lasts at most 1 day.
+- It never appears in a response body.
+
+The frontend must reach the API on its **own origin**: through the Vite proxy in dev and the Vercel rewrite in production. Otherwise the browser will not send a `SameSite=Strict` cookie.
+
+### Endpoints
+
+| Method | Path | Auth | Body | Success |
+| --- | --- | --- | --- | --- |
+| POST | `/otp/request` | none | `{ phone, language? }` | `202 { expiresInSeconds: 300, resendAfterSeconds: 30 }` |
+| POST | `/otp/verify` | none | `{ phone, otp, language?, rememberDevice? = true }` | `200 { accessToken, user, isNewUser }` + cookie, or `200 { next: 'pin' \| 'pin_setup', pinToken }` |
+| POST | `/pin/verify` | pinToken in body | `{ pinToken, pin }` | `200 { accessToken, user, isNewUser: false }` + cookie |
+| POST | `/pin/setup` | pinToken in body | `{ pinToken, pin }` | same as `/pin/verify`; only if no PIN is set yet |
+| POST | `/token/refresh` | `agc_rt` cookie | none | `200 { accessToken, user }` + rotated cookie |
+| POST | `/logout` | `agc_rt` cookie (optional) | none | `204`, cookie cleared, session revoked |
+| POST | `/logout-all` | Bearer | none | `204`; every session ended and every access token already issued rejected |
+| GET | `/me` | Bearer | none | `200 { user }` |
+| POST | `/role` | Bearer | `{ role: 'farmer' \| 'buyer' }` | `200 { accessToken, user }` (new token carries the role) |
+
+**Field formats:**
+- `phone`: a 10-digit Indian mobile starting 6–9, with an optional `+91`, `91` or `0` prefix; spaces and dashes are allowed. It is stored as `+91XXXXXXXXXX`.
+- `otp`: 6 digits. `pin`: 4–6 digits. `language`: `te`, `en` or `hi`.
+
+**Language:**
+- For a new number, the OTP SMS uses the `language` from `/otp/request`, and the new account's language is the `language` from `/otp/verify` (default `te`). Send it on both calls.
+- A known number always gets the SMS in its saved language.
+
+**user object:** `{ id, phone, role, language, status, lastLoginAt, createdAt }`. `role` is `null` until chosen.
+
+### Limits
+
+| What | Limit |
+| --- | --- |
+| OTP validity | 5 minutes, single use; requesting a new code invalidates the old one |
+| Wrong OTP guesses | 5 per code, then `OTP_LOCKED`; request a new code |
+| Resend cooldown | 30 seconds per phone |
+| Codes per phone | 5 per hour |
+| Per IP (15 min) | 10 `/otp/request`, 30 `/otp/verify`, 30 `/pin/*` |
+| Wrong PIN | 5, then locked for 15 minutes |
+| Access token | 15 minutes |
+| pinToken | 5 minutes, only accepted by `/pin/*` |
+
+### Auth error codes
+
+| HTTP | `code` | Meaning / what the client should do |
+| --- | --- | --- |
+| 400 | `OTP_INVALID` | Wrong code; `details.attemptsLeft` says how many tries remain. |
+| 400 | `OTP_EXPIRED` | Older than 5 minutes; request a new one. |
+| 400 | `OTP_NOT_FOUND` | No active code (never sent, already used, or replaced). |
+| 429 | `OTP_LOCKED` | 5 wrong guesses; request a new code. |
+| 429 | `OTP_COOLDOWN` | Asked again within 30 s; `details.retryAfterSeconds`. |
+| 429 | `OTP_LIMIT_REACHED` | 5 codes in the last hour for this phone. |
+| 503 | `SMS_FAILED` | SMS gateway failed; safe to retry immediately. |
+| 400 | `PIN_INVALID` | Wrong PIN; `details.attemptsLeft`. |
+| 429 | `PIN_LOCKED` | Locked for 15 minutes; `details.retryAfterSeconds` when known. |
+| 409 | `PIN_NOT_SET` / `PIN_ALREADY_SET` | Use `/pin/setup` or `/pin/verify` instead. |
+| 401 | `PIN_TOKEN_INVALID` | pinToken missing, expired or wrong; start again with a new OTP. |
+| 401 | `AUTH_REQUIRED` | No bearer token. |
+| 401 | `TOKEN_EXPIRED` | Access token expired; call `/token/refresh`. |
+| 401 | `TOKEN_INVALID` | Bad signature, wrong token type, or the user no longer exists; log in again. |
+| 401 | `TOKEN_REVOKED` | Issued before a logout-all; log in again. |
+| 401 | `REFRESH_INVALID` | Refresh cookie missing, expired, revoked or reused; log in again. |
+| 403 | `ACCOUNT_SUSPENDED` | Account suspended by an admin. |
+| 403 | `ROLE_REQUIRED` | User has no role yet; show the role picker. |
+| 403 | `FORBIDDEN` | Role not allowed on this route. |
+| 404 | `NOT_FOUND` | Also returned for another user's record, so ids cannot be probed. |
+| 409 | `ROLE_ALREADY_SET` | Role can be chosen only once. |
+
+### Route guards (for later prompts)
+
+- `requireAuth` validates the bearer token, then loads the user from MongoDB. It sets `req.user` and `req.auth.sessionFamilyId`.
+- `requireRole('farmer', ...)` uses the role from the database, never from the token.
+- `requireOwnership(loadResource, { ownerField = 'userId', bypassRoles = [] })` returns 404 unless `resource[ownerField]` is the current user. It sets `req.resource`.
+
 ## ai-service (internal, called only by the backend)
 
 | Method | Path | Description |

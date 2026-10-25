@@ -1,7 +1,12 @@
 import { Router } from 'express';
 import { createRateLimiter } from '../middleware/rateLimiter.js';
 import { validate } from '../middleware/validate.js';
-import { pinSchema, requestOtpSchema, verifyOtpSchema } from '../validators/auth.validators.js';
+import {
+  chooseRoleSchema,
+  pinSchema,
+  requestOtpSchema,
+  verifyOtpSchema,
+} from '../validators/auth.validators.js';
 
 const FIFTEEN_MINUTES = 15 * 60 * 1000;
 
@@ -35,7 +40,9 @@ export function createAuthRouter({ controller, requireAuth }) {
 
   router.post('/token/refresh', controller.refresh);
   router.post('/logout', controller.logout);
+  router.post('/logout-all', requireAuth, controller.logoutAll);
   router.get('/me', requireAuth, controller.me);
+  router.post('/role', requireAuth, validate({ body: chooseRoleSchema }), controller.chooseRole);
 
   return router;
 }

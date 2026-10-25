@@ -21,8 +21,11 @@ export function createSessionService({ config, logger }) {
     return rememberDevice ? refreshTokenTtlDays * DAY_MS : UNREMEMBERED_SESSION_MS;
   }
 
+  // issuedAtMs exists because the standard iat claim only has 1-second precision, which is too
+  // coarse to tell tokens issued just before a logout-all from a fresh login just after it.
   function issueAccessToken(user, familyId) {
-    return jwt.sign({ role: user.role, sid: familyId }, jwtAccessSecret, {
+    const claims = { role: user.role, sid: familyId, issuedAtMs: Date.now() };
+    return jwt.sign(claims, jwtAccessSecret, {
       algorithm: 'HS256',
       subject: user._id.toString(),
       issuer: ISSUER,
@@ -146,11 +149,8 @@ export function createSessionService({ config, logger }) {
   async function revokeAllForUser(userId) {
     const now = new Date();
     await Session.updateMany({ userId, revokedAt: null }, { revokedAt: now });
-    // JWT iat has 1-second resolution; tokens issued in earlier seconds are now rejected by requireAuth.
-    await User.updateOne(
-      { _id: userId },
-      { tokensValidAfter: new Date(Math.floor(now.getTime() / 1000) * 1000) },
-    );
+    // Refresh tokens are now dead; this also kills access tokens already issued (see requireAuth).
+    await User.updateOne({ _id: userId }, { tokensValidAfter: now });
   }
 
   return {

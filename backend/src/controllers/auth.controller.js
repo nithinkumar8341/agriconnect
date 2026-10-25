@@ -75,8 +75,18 @@ export function createAuthController({ config, otpService, authService, sessionS
       res.status(204).end();
     },
 
+    async logoutAll(req, res) {
+      await sessionService.revokeAllForUser(req.user._id);
+      clearRefreshCookie(res, config.auth);
+      res.status(204).end();
+    },
+
     async me(req, res) {
       res.json({ user: req.user.toPublic() });
+    },
+
+    async chooseRole(req, res) {
+      res.json(await authService.chooseRole(req.user, req.body.role, req.auth));
     },
   };
 }

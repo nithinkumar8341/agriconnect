@@ -87,7 +87,8 @@ Works end to end in the browser; tests pass; lint passes; i18n keys added (te + 
 
 - Install: `npm install` in `frontend/` and `backend/`; in `ai-service/`: `python -m venv .venv`, activate it, then `pip install -r requirements-dev.txt`
 - Database: `docker compose up -d` (MongoDB 7, single-node replica set `rs0` on :27017)
-- Env: backend reads `.env` (copy `backend/.env.example`); variables are validated by `backend/src/config/env.js` and the server refuses to start if any are invalid. Set `TRUST_PROXY=1` and `CORS_ORIGINS` on Render.
+- Env: backend reads `.env` (copy `backend/.env.example`); variables are validated by `backend/src/config/env.js` and the server refuses to start if any are invalid. `JWT_ACCESS_SECRET` and `OTP_HMAC_SECRET` are required (32+ chars, different). In production set `CORS_ORIGINS`, `SMS_PROVIDER=msg91`, no `DEV_FIXED_OTP`, and `TRUST_PROXY` (expected 2 behind Vercel rewrite + Render; confirm at deploy).
+- Dev login: with `SMS_PROVIDER=console` and `DEV_FIXED_OTP=123456` (as in `.env.example`) every OTP is `123456` and the SMS text is printed in the backend terminal. Agents/admins also need a PIN (`/auth/pin/setup` on first login).
 - Dev:
   - backend: `npm run dev` (port 4000, reloads on change, loads `.env` if present; needs MongoDB running). Health: `GET /api/v1/health`
   - frontend: `npm run dev` (port 5173, proxies `/api` to :4000)
