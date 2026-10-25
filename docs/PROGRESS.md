@@ -107,6 +107,38 @@
     - axe-core shows 0 violations on `/dev/ui` in en and te.
     - Lighthouse 12 mobile (412 px) on the production preview: `/dev/ui` and `/` both scored Accessibility 100, Performance 98, Best practices 96. A phone-width screenshot confirmed no horizontal overflow.
   - **Not done in this prompt (by plan):** login/OTP/onboarding screens (Prompt 5) and the farmer dashboard (Prompt 6).
+- **Prompt 5: Login, onboarding and profile setup** (3 commits, 2026-10-25):
+  - **Backend** (the auth backend from Prompt 2 is unchanged):
+    - `GET /profile`, `PUT /profile/farmer` and `PUT /profile/buyer` work only on the caller's own records; the id comes from the token, and `verificationLevel`/`agentId`/`userId` in a body are ignored.
+    - Locations arrive as `{latitude, longitude}` and are stored as GeoJSON.
+    - Farmer validation: the district must belong to the state, the pincode to the state's postal circle, and service pincodes are required without a location.
+    - `PATCH /users/me` saves the language.
+    - `GET /locations/districts` serves 26 AP and 33 TS districts in en/te/hi.
+    - 19 new API tests.
+  - **Login UI:**
+    - The language step appears on a first visit only, then phone, OTP, and a PIN for agents and admins.
+    - Phone input accepts pasted `+91` numbers; the code field autofills and submits at 6 digits.
+    - The resend countdown follows the server cooldown; "Keep me logged in" can be switched off.
+    - Every backend error code is explained in te/en/hi, with tries left or seconds to wait.
+    - An optional support helpline appears via `VITE_SUPPORT_PHONE`.
+  - **Onboarding UI:**
+    - Role choice with two large cards.
+    - Farmer onboarding in 3 steps: details (district searchable in te/en/hi), optional location (explained first, with a pincode fallback), and delivery (stepper/chip defaults).
+    - Buyer onboarding on one screen.
+    - Answers are kept if saving fails.
+    - "Not you? Log out" on every onboarding screen.
+  - **Auth state:** the profile is loaded before the session is announced; guards route people to role choice, onboarding or home; language changes are saved to the account. The access token is still memory-only, and a test checks storage.
+  - **Verified:**
+    - 212 backend tests and 86 frontend tests pass; lint is clean; the build works.
+    - One backend run failed transiently (63 failures) straight after I force-killed the dev servers. It did not reproduce in 3 runs afterwards and there were no backend code changes, so the in-memory MongoDB start is suspected.
+    - **Real browser, real stack:** a Puppeteer script drove headless Edge at 390×844 against the live backend and MongoDB. It completed a new-farmer sign-up (with location) and a new-buyer sign-up, finishing on `/farmer` and `/buyer`.
+    - The stored data was correct: GeoJSON `[lng, lat]`, paise, role and language.
+    - No screen overflows sideways at 390px (English) or 360px (Telugu).
+    - Three layout bugs found this way were fixed: the pincode editor overflowing, long Telugu words widening cards, and truncated header titles.
+  - **Not done (by plan / decision):**
+    - Mandal and village are text fields (official list needed; ADR 0006).
+    - No WebOTP auto-read (needs the DLT SMS format).
+    - "Call my agent" waits for the agent module (Prompt 15).
 
 ## In progress
 
@@ -114,16 +146,20 @@
 
 ## Next
 
-- Prompt 5: Login, onboarding and profile setup UI (language → phone → OTP → role → farmer/buyer onboarding). Needs backend profile endpoints for FarmerProfile/BuyerProfile.
+- Prompt 6: Crop catalog API (`GET /crops`, searchable en/te/hi) and the farmer dashboard (Sell, My Products, My Orders, Market Prices, Ask Assistant placeholder, Call My Agent; profile page to edit delivery settings, language and location).
 
 ## Known issues
+
+- Mandal and village are free text. Import the official Local Government Directory lists to make them searchable dropdowns.
+- The real-browser sign-up check is a one-off script, not part of CI yet. Prompt 23 adds Playwright e2e tests.
+- The district names (59) and the login/onboarding strings in te/hi are machine-written and listed in translation review.
 
 - **The startup login check logs a browser console error for visitors who are not signed in** (`POST /auth/token/refresh` answers 401). This costs 4 Lighthouse best-practice points. Options for later: a non-secret "has session" hint so first-time visitors skip the call, or a 204 "no session" response.
 - The frontend bundle is 128 KB gzipped in a single chunk. Route-level code splitting is planned for Prompt 23.
 
 - ai-service tests print a `StarletteDeprecationWarning` saying the httpx-backed `TestClient` is deprecated in Starlette 1.x. Tests pass. The suggested replacement package was not installed because it could not be verified during setup; review it before switching.
-- CI has not run on Prompts 1–4: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
-- 85 frontend UI strings in te/hi are machine-written and await native-speaker review.
+- CI has not run on Prompts 1–5: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
+- 191 frontend UI strings in te/hi are machine-written and await native-speaker review.
 - The 59 crop names in te/hi are machine-written and await native-speaker review.
 - Demo phone numbers (`+9199999000xx`) are invented but could belong to real people: never seed demo data where a real SMS gateway is active.
 - AuditLog and LedgerEntry immutability is enforced in Mongoose only; direct database access could still change rows.

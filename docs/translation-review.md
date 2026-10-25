@@ -85,7 +85,7 @@ Fill the "reviewed" columns with the reviewer's name or a corrected name.
 
 ## Frontend UI strings (frontend/src/i18n/locales)
 
-Machine-written te and hi for every UI key. The app falls back to English for a missing key, but every key is currently filled (a test checks this).
+Machine-written te and hi for every UI key, in all namespaces. The app falls back to English for a missing key, but every key is currently filled (a test checks this).
 
 | namespace:key | English | Telugu (machine) | te reviewed | Hindi (machine) | hi reviewed |
 | --- | --- | --- | --- | --- | --- |
@@ -100,6 +100,7 @@ Machine-written te and hi for every UI key. The app falls back to English for a 
 | common:actions.logout | Log out | లాగ్ అవుట్ | | लॉग आउट | |
 | common:actions.goHome | Go to home | హోమ్‌కు వెళ్ళండి | | होम पर जाएँ | |
 | common:actions.skipToContent | Skip to main content | ప్రధాన విషయానికి వెళ్ళండి | | मुख्य सामग्री पर जाएँ | |
+| common:actions.next | Next | తరువాత | | आगे | |
 | common:language.label | Language | భాష | | भाषा | |
 | common:language.choose | Choose your language | మీ భాషను ఎంచుకోండి | | अपनी भाषा चुनें | |
 | common:language.change | Change language | భాష మార్చండి | | भाषा बदलें | |
@@ -125,6 +126,7 @@ Machine-written te and hi for every UI key. The app falls back to English for a 
 | common:units.dozen | dozen | డజను | | दर्जन | |
 | common:units.bunch | bunch | కట్ట | | गुच्छा | |
 | common:units.piece | piece | ఒక్కటి | | नग | |
+| common:units.km | km | కి.మీ | | किमी | |
 | common:stepper.decrease | Decrease {{label}} | {{label}} తగ్గించండి | | {{label}} घटाएँ | |
 | common:stepper.increase | Increase {{label}} | {{label}} పెంచండి | | {{label}} बढ़ाएँ | |
 | common:comingSoon.title | Coming soon | త్వరలో వస్తుంది | | जल्द आ रहा है | |
@@ -141,6 +143,110 @@ Machine-written te and hi for every UI key. The app falls back to English for a 
 | common:errors.FORBIDDEN | You do not have access to this. | దీనికి మీకు అనుమతి లేదు. | | आपको इसकी अनुमति नहीं है। | |
 | common:errors.NOT_FOUND | We could not find what you were looking for. | మీరు వెతుకుతున్నది కనబడలేదు. | | आप जो ढूँढ रहे थे वह नहीं मिला। | |
 | common:errors.VALIDATION_ERROR | Some details are not correct. Please check and try again. | కొన్ని వివరాలు సరిగ్గా లేవు. దయచేసి చూసి మళ్ళీ ప్రయత్నించండి. | | कुछ जानकारी सही नहीं है। कृपया जाँचकर फिर से कोशिश करें। | |
+| common:weekdays.mon | Monday | సోమవారం | | सोमवार | |
+| common:weekdays.tue | Tuesday | మంగళవారం | | मंगलवार | |
+| common:weekdays.wed | Wednesday | బుధవారం | | बुधवार | |
+| common:weekdays.thu | Thursday | గురువారం | | गुरुवार | |
+| common:weekdays.fri | Friday | శుక్రవారం | | शुक्रवार | |
+| common:weekdays.sat | Saturday | శనివారం | | शनिवार | |
+| common:weekdays.sun | Sunday | ఆదివారం | | रविवार | |
+| common:states.andhraPradesh | Andhra Pradesh | ఆంధ్రప్రదేశ్ | | आंध्र प्रदेश | |
+| common:states.telangana | Telangana | తెలంగాణ | | तेलंगाना | |
+| auth:stepOf | Step {{current}} of {{total}} | {{total}}లో {{current}}వ దశ | | चरण {{current}} / {{total}} | |
+| auth:language.title | Choose your language | మీ భాషను ఎంచుకోండి | | अपनी भाषा चुनें | |
+| auth:language.continue | Continue | కొనసాగించండి | | आगे बढ़ें | |
+| auth:phone.title | Your mobile number | మీ మొబైల్ నంబర్ | | आपका मोबाइल नंबर | |
+| auth:phone.label | Mobile number | మొబైల్ నంబర్ | | मोबाइल नंबर | |
+| auth:phone.hint | We will send a 6-digit code to this number by SMS. | ఈ నంబర్‌కు SMS ద్వారా 6 అంకెల కోడ్ పంపుతాము. | | हम इस नंबर पर SMS से 6 अंकों का कोड भेजेंगे। | |
+| auth:phone.invalid | Enter a 10-digit mobile number starting with 6, 7, 8 or 9. | 6, 7, 8 లేదా 9తో మొదలయ్యే 10 అంకెల మొబైల్ నంబర్ ఇవ్వండి. | | 6, 7, 8 या 9 से शुरू होने वाला 10 अंकों का मोबाइल नंबर डालें। | |
+| auth:phone.remember | Keep me logged in on this phone | ఈ ఫోన్‌లో నన్ను లాగిన్‌లో ఉంచండి | | इस फ़ोन पर मुझे लॉगिन रखें | |
+| auth:phone.rememberHint | Turn this off on a shared phone. | ఇతరులతో పంచుకునే ఫోన్ అయితే దీన్ని ఆపివేయండి. | | साझा फ़ोन पर इसे बंद करें। | |
+| auth:phone.submit | Get OTP | OTP పొందండి | | OTP पाएँ | |
+| auth:otp.title | Enter the code | కోడ్ ఇవ్వండి | | कोड डालें | |
+| auth:otp.sentTo | We sent a 6-digit code to {{phone}}. | {{phone}}కు 6 అంకెల కోడ్ పంపాము. | | हमने {{phone}} पर 6 अंकों का कोड भेजा है। | |
+| auth:otp.label | 6-digit code | 6 అంకెల కోడ్ | | 6 अंकों का कोड | |
+| auth:otp.invalidFormat | The code has 6 digits. | కోడ్‌లో 6 అంకెలు ఉంటాయి. | | कोड में 6 अंक होते हैं। | |
+| auth:otp.submit | Verify and continue | నిర్ధారించి కొనసాగించండి | | पुष्टि करें और आगे बढ़ें | |
+| auth:otp.changeNumber | Change number | నంబర్ మార్చండి | | नंबर बदलें | |
+| auth:otp.resendIn | You can ask for a new code in {{seconds}} seconds. | {{seconds}} సెకన్లలో కొత్త కోడ్ అడగవచ్చు. | | {{seconds}} सेकंड में नया कोड माँग सकते हैं। | |
+| auth:otp.resend | Send a new code | కొత్త కోడ్ పంపండి | | नया कोड भेजें | |
+| auth:otp.resent | A new code has been sent. | కొత్త కోడ్ పంపబడింది. | | नया कोड भेज दिया गया है। | |
+| auth:otp.help | Need help? Call AgriConnect support | సహాయం కావాలా? AgriConnect సపోర్ట్‌కు కాల్ చేయండి | | मदद चाहिए? AgriConnect सहायता को कॉल करें | |
+| auth:pin.title | Enter your PIN | మీ PIN ఇవ్వండి | | अपना PIN डालें | |
+| auth:pin.setupTitle | Create your PIN | మీ PIN తయారు చేసుకోండి | | अपना PIN बनाएँ | |
+| auth:pin.intro | Agents and admins use a PIN as a second check. | ఏజెంట్లు, అడ్మిన్లు రెండో తనిఖీగా PIN ఉపయోగిస్తారు. | | एजेंट और एडमिन दूसरी जाँच के लिए PIN का उपयोग करते हैं। | |
+| auth:pin.setupIntro | Choose a 4 to 6 digit PIN. You will enter it after the SMS code every time you log in. | 4 నుండి 6 అంకెల PIN ఎంచుకోండి. ప్రతిసారి లాగిన్ అయ్యేటప్పుడు SMS కోడ్ తర్వాత దీన్ని ఇవ్వాలి. | | 4 से 6 अंकों का PIN चुनें। हर बार लॉगिन करते समय SMS कोड के बाद इसे डालना होगा। | |
+| auth:pin.confirmLabel | Enter the PIN again | PIN మళ్ళీ ఇవ్వండి | | PIN फिर से डालें | |
+| auth:pin.invalidFormat | The PIN has 4 to 6 digits. | PINలో 4 నుండి 6 అంకెలు ఉంటాయి. | | PIN में 4 से 6 अंक होते हैं। | |
+| auth:pin.mismatch | The two PINs do not match. | రెండు PINలు ఒకేలా లేవు. | | दोनों PIN एक जैसे नहीं हैं। | |
+| auth:pin.submit | Log in | లాగిన్ అవ్వండి | | लॉगिन करें | |
+| auth:pin.setupSubmit | Save PIN and log in | PIN సేవ్ చేసి లాగిన్ అవ్వండి | | PIN सेव करें और लॉगिन करें | |
+| auth:errors.OTP_INVALID | That code is not correct. {{count}} tries left. | ఈ కోడ్ సరైనది కాదు. ఇంకా {{count}} ప్రయత్నాలు మిగిలాయి. | | यह कोड सही नहीं है। {{count}} प्रयास बाकी हैं। | |
+| auth:errors.OTP_EXPIRED | This code has expired. Please ask for a new code. | ఈ కోడ్ గడువు ముగిసింది. దయచేసి కొత్త కోడ్ అడగండి. | | इस कोड की समय-सीमा खत्म हो गई। कृपया नया कोड माँगें। | |
+| auth:errors.OTP_NOT_FOUND | Please ask for a new code. | దయచేసి కొత్త కోడ్ అడగండి. | | कृपया नया कोड माँगें। | |
+| auth:errors.OTP_LOCKED | Too many wrong codes. Please ask for a new code. | చాలా తప్పు కోడ్‌లు. దయచేసి కొత్త కోడ్ అడగండి. | | बहुत सारे गलत कोड। कृपया नया कोड माँगें। | |
+| auth:errors.OTP_COOLDOWN | Please wait {{seconds}} seconds before asking for another code. | మరో కోడ్ అడగడానికి ముందు {{seconds}} సెకన్లు ఆగండి. | | दूसरा कोड माँगने से पहले {{seconds}} सेकंड रुकें। | |
+| auth:errors.OTP_LIMIT_REACHED | Too many codes for this number. Please try again in an hour. | ఈ నంబర్‌కు చాలా కోడ్‌లు పంపాము. ఒక గంట తర్వాత ప్రయత్నించండి. | | इस नंबर के लिए बहुत सारे कोड। एक घंटे बाद कोशिश करें। | |
+| auth:errors.SMS_FAILED | We could not send the SMS. Please try again. | SMS పంపలేకపోయాము. దయచేసి మళ్ళీ ప్రయత్నించండి. | | SMS नहीं भेज सके। कृपया फिर से कोशिश करें। | |
+| auth:errors.ACCOUNT_SUSPENDED | This account is suspended. Please contact AgriConnect support. | ఈ ఖాతా నిలిపివేయబడింది. దయచేసి AgriConnect సపోర్ట్‌ను సంప్రదించండి. | | यह खाता निलंबित है। कृपया AgriConnect सहायता से संपर्क करें। | |
+| auth:errors.PIN_INVALID | That PIN is not correct. {{count}} tries left. | ఈ PIN సరైనది కాదు. ఇంకా {{count}} ప్రయత్నాలు మిగిలాయి. | | यह PIN सही नहीं है। {{count}} प्रयास बाकी हैं। | |
+| auth:errors.PIN_LOCKED | Too many wrong PINs. Please try again after {{minutes}} minutes. | చాలా తప్పు PINలు. {{minutes}} నిమిషాల తర్వాత మళ్ళీ ప్రయత్నించండి. | | बहुत सारे गलत PIN। {{minutes}} मिनट बाद फिर से कोशिश करें। | |
+| auth:errors.PIN_TOKEN_INVALID | This login took too long. Please start again. | లాగిన్‌కు చాలా సమయం పట్టింది. దయచేసి మళ్ళీ మొదలుపెట్టండి. | | लॉगिन में बहुत समय लगा। कृपया फिर से शुरू करें। | |
+| auth:errors.PIN_ALREADY_SET | A PIN is already set. Please log in again. | PIN ఇప్పటికే ఉంది. దయచేసి మళ్ళీ లాగిన్ అవ్వండి. | | PIN पहले से बना हुआ है। कृपया फिर से लॉगिन करें। | |
+| onboarding:role.title | How will you use AgriConnect? | AgriConnectను మీరు ఎలా ఉపయోగిస్తారు? | | आप AgriConnect का उपयोग कैसे करेंगे? | |
+| onboarding:role.farmer | I am a farmer | నేను రైతును | | मैं किसान हूँ | |
+| onboarding:role.farmerHint | Sell my vegetables and fruits | నా కూరగాయలు, పండ్లు అమ్ముతాను | | अपनी सब्ज़ियाँ और फल बेचें | |
+| onboarding:role.buyer | I want to buy | నేను కొనాలి | | मुझे खरीदना है | |
+| onboarding:role.buyerHint | Fresh produce for my home | ఇంటికి తాజా కూరగాయలు, పండ్లు | | घर के लिए ताज़ी सब्ज़ियाँ और फल | |
+| onboarding:role.notYou | Not you? Log out | మీరు కాదా? లాగ్ అవుట్ అవ్వండి | | आप नहीं हैं? लॉग आउट करें | |
+| onboarding:farmer.title | Your farm details | మీ పొలం వివరాలు | | आपके खेत की जानकारी | |
+| onboarding:farmer.detailsHeading | About you | మీ గురించి | | आपके बारे में | |
+| onboarding:farmer.locationHeading | Your farm location | మీ పొలం స్థానం | | आपके खेत की जगह | |
+| onboarding:farmer.deliveryHeading | How you deliver | మీరు ఎలా డెలివరీ చేస్తారు | | आप डिलीवरी कैसे करेंगे | |
+| onboarding:farmer.name | Your name | మీ పేరు | | आपका नाम | |
+| onboarding:farmer.state | State | రాష్ట్రం | | राज्य | |
+| onboarding:farmer.district | District | జిల్లా | | ज़िला | |
+| onboarding:farmer.districtSearch | Search district | జిల్లాను వెతకండి | | ज़िला खोजें | |
+| onboarding:farmer.districtNone | No district matches. Check the spelling. | ఏ జిల్లా సరిపోలలేదు. స్పెల్లింగ్ చూడండి. | | कोई ज़िला नहीं मिला। स्पेलिंग जाँचें। | |
+| onboarding:farmer.mandal | Mandal | మండలం | | मंडल | |
+| onboarding:farmer.village | Village | గ్రామం | | गाँव | |
+| onboarding:farmer.pincode | Pincode | పిన్‌కోడ్ | | पिनकोड | |
+| onboarding:farmer.radius | How far will you deliver? | ఎంత దూరం వరకు డెలివరీ చేస్తారు? | | आप कितनी दूर तक डिलीवरी करेंगे? | |
+| onboarding:farmer.deliveryDays | Which days do you deliver? | ఏ రోజుల్లో డెలివరీ చేస్తారు? | | आप किन दिनों डिलीवरी करते हैं? | |
+| onboarding:farmer.cutoff | Latest time to order for next delivery | తదుపరి డెలివరీకి ఆర్డర్ చేయడానికి చివరి సమయం | | अगली डिलीवरी के लिए ऑर्डर का आखिरी समय | |
+| onboarding:farmer.minOrder | Smallest order you accept | మీరు తీసుకునే కనీస ఆర్డర్ | | आप सबसे छोटा कितना ऑर्डर लेंगे | |
+| onboarding:farmer.fee | Delivery charge per order | ఒక్కో ఆర్డర్‌కు డెలివరీ ఛార్జీ | | हर ऑर्डर पर डिलीवरी शुल्क | |
+| onboarding:farmer.servicePincodes | Pincodes you deliver to | మీరు డెలివరీ చేసే పిన్‌కోడ్‌లు | | जिन पिनकोड में आप डिलीवरी करते हैं | |
+| onboarding:farmer.servicePincodesHint | Buyers in these pincodes can order from you. | ఈ పిన్‌కోడ్‌లలోని కొనుగోలుదారులు మీ దగ్గర ఆర్డర్ చేయవచ్చు. | | इन पिनकोड के खरीदार आपसे ऑर्डर कर सकते हैं। | |
+| onboarding:farmer.servicePincodesRequired | Without your location, add at least one pincode you deliver to. | మీ స్థానం లేకుండా, మీరు డెలివరీ చేసే కనీసం ఒక పిన్‌కోడ్ జోడించండి. | | जगह के बिना, कम से कम एक पिनकोड जोड़ें जहाँ आप डिलीवरी करते हैं। | |
+| onboarding:farmer.addPincode | Add pincode | పిన్‌కోడ్ జోడించండి | | पिनकोड जोड़ें | |
+| onboarding:farmer.removePincode | Remove {{pincode}} | {{pincode}} తీసివేయండి | | {{pincode}} हटाएँ | |
+| onboarding:farmer.submit | Save and start selling | సేవ్ చేసి అమ్మడం మొదలుపెట్టండి | | सेव करें और बेचना शुरू करें | |
+| onboarding:buyer.title | Your delivery address | మీ డెలివరీ చిరునామా | | आपका डिलीवरी पता | |
+| onboarding:buyer.name | Your name | మీ పేరు | | आपका नाम | |
+| onboarding:buyer.pincode | Pincode | పిన్‌కోడ్ | | पिनकोड | |
+| onboarding:buyer.landmark | Landmark | గుర్తు (ల్యాండ్‌మార్క్) | | पहचान की जगह (लैंडमार्क) | |
+| onboarding:buyer.landmarkHint | Something the farmer can find, for example "Near Hanuman temple". | రైతు సులభంగా కనుగొనగలిగేది, ఉదాహరణకు "హనుమాన్ గుడి దగ్గర". | | ऐसी जगह जो किसान आसानी से ढूँढ सके, जैसे "हनुमान मंदिर के पास"। | |
+| onboarding:buyer.houseAndStreet | House number and street (optional) | ఇంటి నంబర్, వీధి (ఐచ్ఛికం) | | मकान नंबर और गली (वैकल्पिक) | |
+| onboarding:buyer.area | Area or colony (optional) | ప్రాంతం లేదా కాలనీ (ఐచ్ఛికం) | | इलाका या कॉलोनी (वैकल्पिक) | |
+| onboarding:buyer.submit | Save and start shopping | సేవ్ చేసి కొనడం మొదలుపెట్టండి | | सेव करें और खरीदारी शुरू करें | |
+| onboarding:location.farmerWhy | Sharing your farm location lets nearby buyers find you. Buyers only see the approximate distance, never your exact location. | మీ పొలం స్థానం పంచుకుంటే దగ్గరలోని కొనుగోలుదారులు మిమ్మల్ని కనుగొంటారు. కొనుగోలుదారులకు సుమారు దూరం మాత్రమే కనిపిస్తుంది, మీ ఖచ్చితమైన స్థానం ఎప్పుడూ కనిపించదు. | | खेत की जगह साझा करने से पास के खरीदार आपको ढूँढ पाते हैं। खरीदारों को सिर्फ़ अनुमानित दूरी दिखती है, आपकी सटीक जगह कभी नहीं। | |
+| onboarding:location.buyerWhy | Sharing your location shows you farmers who deliver to you. Farmers see your address only after you order. | మీ స్థానం పంచుకుంటే మీకు డెలివరీ చేసే రైతులు కనిపిస్తారు. మీరు ఆర్డర్ చేసిన తర్వాతే రైతులకు మీ చిరునామా కనిపిస్తుంది. | | अपनी जगह साझा करने से आपको वे किसान दिखते हैं जो आप तक डिलीवरी करते हैं। ऑर्डर करने के बाद ही किसान को आपका पता दिखता है। | |
+| onboarding:location.use | Use my location | నా స్థానం ఉపయోగించండి | | मेरी जगह का उपयोग करें | |
+| onboarding:location.finding | Finding your location… | మీ స్థానం కనుగొంటున్నాము… | | आपकी जगह ढूँढ रहे हैं… | |
+| onboarding:location.saved | Location saved (accurate to about {{meters}} metres). | స్థానం సేవ్ అయింది (సుమారు {{meters}} మీటర్ల ఖచ్చితత్వం). | | जगह सेव हो गई (लगभग {{meters}} मीटर तक सटीक)। | |
+| onboarding:location.remove | Remove location | స్థానం తీసివేయండి | | जगह हटाएँ | |
+| onboarding:location.denied | Location permission is turned off. That is fine, we will use your pincode instead. | స్థానం అనుమతి ఆపివేయబడింది. పరవాలేదు, మీ పిన్‌కోడ్ ఉపయోగిస్తాము. | | जगह की अनुमति बंद है। कोई बात नहीं, हम आपका पिनकोड इस्तेमाल करेंगे। | |
+| onboarding:location.unavailable | We could not find your location. That is fine, we will use your pincode instead. | మీ స్థానం కనుగొనలేకపోయాము. పరవాలేదు, మీ పిన్‌కోడ్ ఉపయోగిస్తాము. | | आपकी जगह नहीं मिल सकी। कोई बात नहीं, हम आपका पिनकोड इस्तेमाल करेंगे। | |
+| onboarding:location.unsupported | This phone cannot share its location. We will use your pincode instead. | ఈ ఫోన్ స్థానాన్ని పంచుకోలేదు. మీ పిన్‌కోడ్ ఉపయోగిస్తాము. | | यह फ़ोन जगह साझा नहीं कर सकता। हम आपका पिनकोड इस्तेमाल करेंगे। | |
+| onboarding:location.skip | Continue without location | స్థానం లేకుండా కొనసాగించండి | | जगह के बिना आगे बढ़ें | |
+| onboarding:km | {{count}} km | {{count}} కి.మీ | | {{count}} किमी | |
+| onboarding:errors.required | Please fill this in. | దయచేసి దీన్ని నింపండి. | | कृपया इसे भरें। | |
+| onboarding:errors.pincode | Enter a 6-digit pincode. | 6 అంకెల పిన్‌కోడ్ ఇవ్వండి. | | 6 अंकों का पिनकोड डालें। | |
+| onboarding:errors.pincodeState | This pincode is not in {{state}}. | ఈ పిన్‌కోడ్ {{state}}లో లేదు. | | यह पिनकोड {{state}} में नहीं है। | |
+| onboarding:errors.pickDistrict | Please choose your district. | దయచేసి మీ జిల్లాను ఎంచుకోండి. | | कृपया अपना ज़िला चुनें। | |
+| onboarding:errors.pickDay | Pick at least one delivery day. | కనీసం ఒక డెలివరీ రోజు ఎంచుకోండి. | | कम से कम एक डिलीवरी दिन चुनें। | |
+| onboarding:errors.saveFailed | We could not save. Your answers are kept, please try again. | సేవ్ చేయలేకపోయాము. మీ సమాధానాలు అలాగే ఉన్నాయి, దయచేసి మళ్ళీ ప్రయత్నించండి. | | सेव नहीं हो सका। आपके जवाब सुरक्षित हैं, कृपया फिर से कोशिश करें। | |
 | devui:title | Component gallery | కాంపోనెంట్ గ్యాలరీ | | कंपोनेंट गैलरी | |
 | devui:intro | Every reusable component, shown in the current language. Switch the language to check the layout. | ప్రతి కాంపోనెంట్ ప్రస్తుత భాషలో చూపబడింది. లేఅవుట్ చూడటానికి భాష మార్చండి. | | हर कंपोनेंट मौजूदा भाषा में दिखाया गया है। लेआउट जाँचने के लिए भाषा बदलें। | |
 | devui:sections.buttons | Big buttons | పెద్ద బటన్లు | | बड़े बटन | |
@@ -174,3 +280,69 @@ Machine-written te and hi for every UI key. The app falls back to English for a 
 | devui:samples.confirmAction | Yes, remove | అవును, తీసివేయండి | | हाँ, हटाएँ | |
 | devui:samples.confirmed | Listing removed | లిస్టింగ్ తీసివేయబడింది | | लिस्टिंग हटा दी गई | |
 | devui:samples.badgeNew | new | కొత్తవి | | नए | |
+
+## District names (backend/src/data/districts.js)
+
+The English name is the stored value; te and hi are display names. Newer districts (2022 AP reorganisation, 2016 TS reorganisation) are the most likely to have unofficial spellings.
+
+| State | English (stored) | Telugu (machine) | te reviewed | Hindi (machine) | hi reviewed |
+| --- | --- | --- | --- | --- | --- |
+| Andhra Pradesh | Srikakulam | శ్రీకాకుళం | | श्रीकाकुलम | |
+| Andhra Pradesh | Vizianagaram | విజయనగరం | | विजयनगरम | |
+| Andhra Pradesh | Parvathipuram Manyam | పార్వతీపురం మన్యం | | पार्वतीपुरम मन्यम | |
+| Andhra Pradesh | Alluri Sitharama Raju | అల్లూరి సీతారామరాజు | | अल्लूरी सीताराम राजू | |
+| Andhra Pradesh | Visakhapatnam | విశాఖపట్నం | | विशाखापत्तनम | |
+| Andhra Pradesh | Anakapalli | అనకాపల్లి | | अनकापल्ली | |
+| Andhra Pradesh | Kakinada | కాకినాడ | | काकीनाडा | |
+| Andhra Pradesh | East Godavari | తూర్పు గోదావరి | | पूर्वी गोदावरी | |
+| Andhra Pradesh | Dr. B.R. Ambedkar Konaseema | డా. బి.ఆర్. అంబేద్కర్ కోనసీమ | | डॉ. बी.आर. आंबेडकर कोनसीमा | |
+| Andhra Pradesh | Eluru | ఏలూరు | | एलुरु | |
+| Andhra Pradesh | West Godavari | పశ్చిమ గోదావరి | | पश्चिमी गोदावरी | |
+| Andhra Pradesh | NTR | ఎన్టీఆర్ | | एनटीआर | |
+| Andhra Pradesh | Krishna | కృష్ణా | | कृष्णा | |
+| Andhra Pradesh | Palnadu | పల్నాడు | | पलनाडु | |
+| Andhra Pradesh | Guntur | గుంటూరు | | गुंटूर | |
+| Andhra Pradesh | Bapatla | బాపట్ల | | बापटला | |
+| Andhra Pradesh | Prakasam | ప్రకాశం | | प्रकाशम | |
+| Andhra Pradesh | Sri Potti Sriramulu Nellore | శ్రీ పొట్టి శ్రీరాములు నెల్లూరు | | श्री पोट्टि श्रीरामुलु नेल्लोर | |
+| Andhra Pradesh | Kurnool | కర్నూలు | | कुरनूल | |
+| Andhra Pradesh | Nandyal | నంద్యాల | | नंद्याल | |
+| Andhra Pradesh | Anantapuramu | అనంతపురం | | अनंतपुरम | |
+| Andhra Pradesh | Sri Sathya Sai | శ్రీ సత్యసాయి | | श्री सत्य साई | |
+| Andhra Pradesh | YSR Kadapa | వైఎస్ఆర్ కడప | | वाईएसआर कडपा | |
+| Andhra Pradesh | Annamayya | అన్నమయ్య | | अन्नमय्या | |
+| Andhra Pradesh | Tirupati | తిరుపతి | | तिरुपति | |
+| Andhra Pradesh | Chittoor | చిత్తూరు | | चित्तूर | |
+| Telangana | Adilabad | ఆదిలాబాద్ | | आदिलाबाद | |
+| Telangana | Komaram Bheem Asifabad | కొమరం భీమ్ ఆసిఫాబాద్ | | कोमरम भीम आसिफाबाद | |
+| Telangana | Mancherial | మంచిర్యాల | | मंचेरियल | |
+| Telangana | Nirmal | నిర్మల్ | | निर्मल | |
+| Telangana | Nizamabad | నిజామాబాద్ | | निज़ामाबाद | |
+| Telangana | Jagtial | జగిత్యాల | | जगतियाल | |
+| Telangana | Peddapalli | పెద్దపల్లి | | पेद्दापल्ली | |
+| Telangana | Kamareddy | కామారెడ్డి | | कामारेड्डी | |
+| Telangana | Rajanna Sircilla | రాజన్న సిరిసిల్ల | | राजन्ना सिरसिल्ला | |
+| Telangana | Karimnagar | కరీంనగర్ | | करीमनगर | |
+| Telangana | Jayashankar Bhupalpally | జయశంకర్ భూపాలపల్లి | | जयशंकर भूपालपल्ली | |
+| Telangana | Sangareddy | సంగారెడ్డి | | संगारेड्डी | |
+| Telangana | Medak | మెదక్ | | मेदक | |
+| Telangana | Siddipet | సిద్దిపేట | | सिद्दीपेट | |
+| Telangana | Jangaon | జనగామ | | जनगांव | |
+| Telangana | Hanumakonda | హనుమకొండ | | हनमकोंडा | |
+| Telangana | Warangal | వరంగల్ | | वरंगल | |
+| Telangana | Mulugu | ములుగు | | मुलुगु | |
+| Telangana | Bhadradri Kothagudem | భద్రాద్రి కొత్తగూడెం | | भद्राद्री कोठागुडेम | |
+| Telangana | Khammam | ఖమ్మం | | खम्मम | |
+| Telangana | Mahabubabad | మహబూబాబాద్ | | महबूबाबाद | |
+| Telangana | Suryapet | సూర్యాపేట | | सूर्यापेट | |
+| Telangana | Nalgonda | నల్గొండ | | नलगोंडा | |
+| Telangana | Yadadri Bhuvanagiri | యాదాద్రి భువనగిరి | | यादाद्री भुवनगिरी | |
+| Telangana | Medchal-Malkajgiri | మేడ్చల్ మల్కాజిగిరి | | मेडचल मलकाजगिरी | |
+| Telangana | Hyderabad | హైదరాబాద్ | | हैदराबाद | |
+| Telangana | Rangareddy | రంగారెడ్డి | | रंगारेड्डी | |
+| Telangana | Vikarabad | వికారాబాద్ | | विकाराबाद | |
+| Telangana | Narayanpet | నారాయణపేట | | नारायणपेट | |
+| Telangana | Mahabubnagar | మహబూబ్‌నగర్ | | महबूबनगर | |
+| Telangana | Nagarkurnool | నాగర్‌కర్నూల్ | | नागरकुरनूल | |
+| Telangana | Wanaparthy | వనపర్తి | | वनपर्ती | |
+| Telangana | Jogulamba Gadwal | జోగులాంబ గద్వాల | | जोगुलाम्बा गदवाल | |

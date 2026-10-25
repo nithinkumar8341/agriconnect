@@ -138,12 +138,14 @@ frontend/src/
 flowchart TD
     Start[App opens] --> I18n[i18n: saved language or te]
     I18n --> Auth[AuthProvider: POST /auth/token/refresh]
-    Auth -->|200| Authed[authenticated: token in memory, user in state]
+    Auth -->|200| Profile[farmer/buyer: GET /profile]
+    Profile --> Authed[authenticated: token in memory, user + profile in state]
     Auth -->|401| Anon[anonymous]
     Authed --> Guard{RequireRole}
     Anon --> Guard
-    Guard -->|anonymous| Login[/login/]
+    Guard -->|anonymous| Login[/login: language, phone, OTP, PIN/]
     Guard -->|role null| Role[/onboarding/role/]
+    Guard -->|profile null| Onboard[/onboarding/farmer or buyer/]
     Guard -->|other role| OwnHome[user's own home]
     Guard -->|allowed| Screen[role layout + screen]
     Screen -->|request fails TOKEN_EXPIRED| Refresh[single-flight refresh, retry once]

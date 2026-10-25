@@ -148,6 +148,65 @@ The frontend must reach the API on its **own origin**: through the Vite proxy in
 - `requireRole('farmer', ...)` uses the role from the database, never from the token.
 - `requireOwnership(loadResource, { ownerField = 'userId', bypassRoles = [] })` returns 404 unless `resource[ownerField]` is the current user. It sets `req.resource`.
 
+## Profile and onboarding
+
+Every route works on the **caller's own** records. The user id always comes from the access token. A `userId`, `verificationLevel` or `agentId` sent in a body is ignored.
+
+| Method | Path | Auth | Body | Success |
+| --- | --- | --- | --- | --- |
+| GET | `/profile` | Bearer | none | `200 { role, profile }`. `profile: null` means a farmer or buyer still needs onboarding; agents and admins always get `null`. |
+| PUT | `/profile/farmer` | Bearer, role farmer | farmer profile (below) | `200 { profile }`: creates, or replaces the editable fields |
+| PUT | `/profile/buyer` | Bearer, role buyer | `{ name, address }` | `200 { profile }`: sets the name and replaces the **default** address; other saved addresses are kept |
+| PATCH | `/users/me` | Bearer | `{ language: 'te' \| 'en' \| 'hi' }` | `200 { user }`. The app calls this whenever the language changes, so SMS follow the screen language. |
+| GET | `/locations/districts?state=` | none | none | `200 { states: [{ state, districts: [{ en, te, hi }] }] }`, `Cache-Control: max-age=86400` |
+
+### Farmer profile body
+
+```json
+{
+  "name": "Ramu",
+  "state": "Andhra Pradesh",
+  "district": "Krishna",
+  "mandal": "Kankipadu",
+  "village": "Kankipadu",
+  "pincode": "521151",
+  "location": { "latitude": 16.4384, "longitude": 80.7826 },
+  "deliveryRadiusKm": 10,
+  "servicePincodes": [],
+  "deliveryDays": ["mon", "wed", "fri"],
+  "cutoffTime": "18:00",
+  "minOrderValue": 10000,
+  "deliveryFee": 2000
+}
+```
+
+**Rules:**
+- `location` is optional (`null` = not shared, and removes any stored point).
+- Locations are sent as **named** `latitude`/`longitude` fields and must fall inside India. The server stores GeoJSON `[lng, lat]`, so clients can never swap the order. The response returns the same named shape.
+- `district` must be one of that state's districts (the English name from `/locations/districts`).
+- `pincode` must belong to the state's postal circle: Telangana `50…`, Andhra Pradesh `51…`–`53…`.
+- With no `location` and a radius above 0, at least one `servicePincodes` entry is required. Without a location, pincodes are the only way buyers can find the farmer.
+- `deliveryDays` must not be empty or repeat a day. `cutoffTime` is `HH:mm`.
+- Money is whole paise: `minOrderValue` ≤ ₹10,000 and `deliveryFee` ≤ ₹500.
+
+### Buyer profile body
+
+```json
+{
+  "name": "Padma",
+  "address": {
+    "label": "Home",
+    "houseAndStreet": "",
+    "landmark": "Near Benz Circle",
+    "area": "",
+    "pincode": "520010",
+    "location": null
+  }
+}
+```
+
+`landmark` and `pincode` are required; everything else is optional.
+
 ## ai-service (internal, called only by the backend)
 
 | Method | Path | Description |
