@@ -1,5 +1,66 @@
 @import 'tailwindcss';
 
-html {
-  font-size: 18px;
+/*
+  Farmer-first design tokens. Every text/background pair used in components has a contrast
+  ratio of at least 4.5:1 (most are 7:1+); see docs/learn/phase-04-frontend-foundation.md.
+  Fonts are the phone's own: Android ships Noto Sans Telugu and Devanagari, so nothing is downloaded.
+*/
+@theme {
+  --font-sans:
+    'Noto Sans', 'Noto Sans Telugu', 'Noto Sans Devanagari', system-ui, -apple-system, 'Segoe UI',
+    Roboto, sans-serif;
+
+  --color-leaf-50: #eef7ec;
+  --color-leaf-100: #d8edd2;
+  --color-leaf-200: #b3dba8;
+  --color-leaf-600: #2b7a33;
+  --color-leaf-700: #1f6a2a;
+  --color-leaf-800: #17541f;
+  --color-leaf-900: #0f3d16;
+
+  --color-soil-50: #faf6ef;
+  --color-soil-100: #f2e8d8;
+  --color-soil-200: #e4d3b6;
+  --color-soil-600: #8a5a2b;
+  --color-soil-700: #6e4520;
+
+  --color-sun-100: #fff3c4;
+  --color-sun-400: #f5b700;
+
+  --color-ink: #1c1917;
+  --color-ink-muted: #4a4540;
+
+  --color-danger-50: #fdeceb;
+  --color-danger-700: #b42318;
+  --color-danger-800: #912018;
+}
+
+@layer base {
+  html {
+    /* 1rem = 18px, so Tailwind's text-base is already farmer-sized. */
+    font-size: 18px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-soil-50 font-sans text-ink antialiased;
+    /* Telugu and Devanagari have tall vowel signs that clip at tighter line heights. */
+    line-height: 1.6;
+  }
+
+  /* A dark ring plus a yellow halo stays visible on cream, white and green backgrounds alike. */
+  :focus-visible {
+    outline: 3px solid var(--color-leaf-900);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 6px var(--color-sun-400);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
 }

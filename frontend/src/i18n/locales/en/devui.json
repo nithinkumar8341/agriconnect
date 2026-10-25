@@ -1,0 +1,39 @@
+{
+  "title": "Component gallery",
+  "intro": "Every reusable component, shown in the current language. Switch the language to check the layout.",
+  "sections": {
+    "buttons": "Big buttons",
+    "tiles": "Icon tiles",
+    "stepper": "Quantity stepper",
+    "presets": "Preset chips",
+    "feedback": "Toast messages",
+    "loading": "Loading skeleton",
+    "empty": "Empty state",
+    "error": "Error state",
+    "confirm": "Confirmation sheet",
+    "nav": "Bottom navigation"
+  },
+  "samples": {
+    "sell": "Sell produce",
+    "myOrders": "My orders",
+    "marketPrices": "Market prices",
+    "assistant": "Ask assistant",
+    "callAgent": "Call my agent",
+    "deleteListing": "Delete listing",
+    "saving": "Saving",
+    "howMuch": "How many kg?",
+    "price": "Price per kg",
+    "toastSaved": "Listing saved",
+    "toastError": "Could not save. Please try again.",
+    "showToast": "Show message",
+    "showErrorToast": "Show error message",
+    "noOrdersTitle": "No orders yet",
+    "noOrdersMessage": "When buyers order your produce, the orders will appear here.",
+    "openConfirm": "Remove tomato listing",
+    "confirmTitle": "Remove this listing?",
+    "confirmMessage": "Buyers will no longer see your tomatoes. You can add them again later.",
+    "confirmAction": "Yes, remove",
+    "confirmed": "Listing removed",
+    "badgeNew": "new"
+  }
+}

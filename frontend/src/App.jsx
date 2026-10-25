@@ -1,27 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { createBrowserRouter, RouterProvider } from 'react-router';
+import { routes } from './app/routes.jsx';
+import { AuthProvider } from './auth/AuthProvider.jsx';
+import { ToastProvider } from './components/ui/ToastProvider.jsx';
 
-// Placeholder screen until Prompt 4; text moves to i18n files there.
-export default function App() {
-  const [health, setHealth] = useState(null);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    fetch('/api/v1/health', { signal: controller.signal })
-      .then((res) => res.json())
-      .then(setHealth)
-      .catch(() => setHealth(null));
-    return () => controller.abort();
-  }, []);
+// Tests pass their own (memory) router and API client; the real app uses browser history.
+export default function App({ router, client }) {
+  const [activeRouter] = useState(() => router ?? createBrowserRouter(routes));
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-green-50 p-4 text-center">
-      <h1 className="text-3xl font-bold text-green-900">AgriConnect</h1>
-      <p className="text-lg text-green-800">Hello from the frontend</p>
-      {health && (
-        <p className="text-base text-green-700">
-          Backend: {health.status}, database: {health.db}
-        </p>
-      )}
-    </main>
+    <AuthProvider client={client}>
+      <ToastProvider>
+        <RouterProvider router={activeRouter} />
+      </ToastProvider>
+    </AuthProvider>
   );
 }

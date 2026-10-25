@@ -1,0 +1,79 @@
+{
+  "app": {
+    "name": "AgriConnect",
+    "tagline": "Fresh vegetables and fruits, straight from nearby farmers"
+  },
+  "actions": {
+    "back": "Back",
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "confirm": "Yes, continue",
+    "close": "Close",
+    "dismiss": "Dismiss",
+    "login": "Log in with phone number",
+    "logout": "Log out",
+    "goHome": "Go to home",
+    "skipToContent": "Skip to main content"
+  },
+  "language": {
+    "label": "Language",
+    "choose": "Choose your language",
+    "change": "Change language"
+  },
+  "nav": {
+    "label": "Main menu",
+    "home": "Home",
+    "products": "My products",
+    "orders": "Orders",
+    "profile": "Profile",
+    "farmers": "Farmers",
+    "users": "Users",
+    "settings": "Settings"
+  },
+  "roles": {
+    "farmer": "Farmer",
+    "buyer": "Buyer",
+    "agent": "Field agent",
+    "admin": "Admin"
+  },
+  "home": {
+    "title": "Home",
+    "welcome": "Welcome",
+    "signedInAs": "Signed in as {{role}}"
+  },
+  "status": {
+    "loading": "Loading…",
+    "offline": "You are offline. Some things may not be up to date.",
+    "backOnline": "You are back online."
+  },
+  "units": {
+    "kg": "kg",
+    "dozen": "dozen",
+    "bunch": "bunch",
+    "piece": "piece"
+  },
+  "stepper": {
+    "decrease": "Decrease {{label}}",
+    "increase": "Increase {{label}}"
+  },
+  "comingSoon": {
+    "title": "Coming soon",
+    "message": "This screen is being built and will be ready in a later update."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "message": "We could not find this page."
+  },
+  "errors": {
+    "title": "Something went wrong",
+    "generic": "Something went wrong. Please try again.",
+    "NETWORK_ERROR": "No internet connection. Please check your network and try again.",
+    "RATE_LIMITED": "Too many attempts. Please wait a moment and try again.",
+    "INTERNAL_ERROR": "Our server had a problem. Please try again.",
+    "AUTH_REQUIRED": "Please log in to continue.",
+    "REFRESH_INVALID": "Your session has ended. Please log in again.",
+    "FORBIDDEN": "You do not have access to this.",
+    "NOT_FOUND": "We could not find what you were looking for.",
+    "VALIDATION_ERROR": "Some details are not correct. Please check and try again."
+  }
+}
