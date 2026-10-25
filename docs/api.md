@@ -324,6 +324,24 @@ A change from any other status, or a listing that changed in between (an order a
 - Sorted by most recently changed.
 - `status=low` is a view, not a stored status: available listings at or below the threshold.
 
+## Buyer marketplace (role buyer only)
+
+| Method | Path | Query | Success |
+| --- | --- | --- | --- |
+| GET | `/market/products` (also `/products/nearby`) | where: `lat`+`lng` and/or `pincode` (one is required); `q` (crop name in te/en/hi), `category`, `crop`, `minPrice`/`maxPrice` (paise), `day` (`mon`…`sun`), `inStock` (`true` default), `sort` (`distance` needs `lat`/`lng`; `price`; `freshness`), `page`, `limit` (1–50, default 20) | `200 { items, page, limit, total, sort }` |
+| GET | `/market/products/:id` | optional `lat`/`lng`/`pincode` | `200 { product }`: card fields plus `photos[]`, `canDeliver`, `deliveryDays`, `cutoffTime`. `404` when paused, removed or the farmer is suspended. |
+| GET | `/market/farmers/:id` | optional `lat`/`lng`/`pincode` | `200 { farmer }`: `firstName`, `village`, `mandal`, `district`, `verificationLevel`, `isNew` (joined < 30 days), delivery terms, `memberSince`, `distanceKm`, `canDeliver`, `nextDeliveryDate`, `products[]` (available, newest harvest first) |
+
+**Who appears:** a farmer is shown only if they can deliver to the buyer: the buyer is within the farmer's own `deliveryRadiusKm` (`$geoNear` on `farmerprofiles`, 2dsphere index), or the buyer's pincode is in the farmer's `servicePincodes`. Suspended farmers, paused and removed listings never appear.
+
+**Card item:** `id`, `crop` (`slug`, `names`, `icon`, `category`, `quantityStep`), `pricePerUnit`, `unit`, `availableQuantity`, `status`, `harvestDate`, `photoUrl`, `distanceKm`, `farmer` (`id`, `firstName`, `village`, `verificationLevel`), `nextDeliveryDate` (`YYYY-MM-DD`), `deliveryFee`, `minOrderValue`.
+
+**Privacy:** `distanceKm` is whole kilometres (`0` means under 1 km) or `null` when either side has no location. Coordinates, full names and phone numbers are never returned.
+
+**Next delivery day:** an order before the farmer's `cutoffTime` (IST) can go out from tomorrow, after it from the day after; the first of the farmer's `deliveryDays` from then on.
+
+**Sorting:** `distance` (default with a location), `price`, `freshness` (default with a pincode only). Farmers without a known distance sort after those with one.
+
 ## Photo uploads (farmer or agent)
 
 | Method | Path | Body | Success |

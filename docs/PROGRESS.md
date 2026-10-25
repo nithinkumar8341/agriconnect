@@ -208,13 +208,24 @@
     - **Real browser, real stack, 360px (Edge):** publish (8 taps, one price typed), then pause, resume, edit, out of stock, sell again and delete on that listing, each checked against the API; offline publish queued, saved, and published by itself on reconnect; every step plus Manage in te and hi; no sideways overflow.
     - Found and fixed in that run: a too-high price said "Please fill this in" (now states the range), and the Telugu status badge squeezed crop names to one letter per line.
 
+- **Prompt 9: Buyer discovery with location** (4 commits, 2026-10-25):
+  - **Market API** (buyer-only): `GET /market/products` (also `/products/nearby`), `/market/products/:id`, `/market/farmers/:id` ([ADR 0010](decisions/0010-buyer-discovery.md)).
+    - Shows only farmers who can deliver: buyer within the farmer's own radius (`$geoNear` on farmer profiles) or buyer pincode in the farmer's service pincodes. Suspended farmers, paused and removed listings never appear.
+    - Filters (search in te/en/hi, category, crop, price, delivery day, in stock), sorting (distance, price, freshness), 20 per page.
+    - Distance in whole km only ("Under 1 km"), never coordinates or phones; next delivery day from delivery days and cutoff (IST).
+  - **Buyer screens:** home (location from saved address, phone or pincode; search, categories, sort, filters; auto-loading list plus Show more), product page, farmer page with a reviews placeholder. Strings in en/te/hi.
+  - **Demo data:** farmer Ramu's radius 15 → 20 km so the Vijayawada demo buyer (16 km away) sees produce.
+  - **Verified:**
+    - 295 backend tests (+14) and 139 frontend tests (+6) pass; lint is clean; the build works.
+    - **Real browser, real stack, 360px:** buyer Padma sees Ramu's 4 listings at 16 km (no coordinates in responses); product and farmer pages open; pincode 500032 shows Venkatesh's 3 listings without distance; te/hi home and product pages; no sideways overflow.
+
 ## In progress
 
 - Nothing.
 
 ## Next
 
-- Prompt 9: Buyer discovery with location (nearby farmers and produce, distance, filters).
+- Prompt 10: Cart and checkout (multi-farmer cart, one order per farmer, atomic stock reservation, COD).
 
 ## Known issues
 
@@ -226,8 +237,8 @@
 - The frontend bundle is 128 KB gzipped in a single chunk. Route-level code splitting is planned for Prompt 23.
 
 - ai-service tests print a `StarletteDeprecationWarning` saying the httpx-backed `TestClient` is deprecated in Starlette 1.x. Tests pass. The suggested replacement package was not installed because it could not be verified during setup; review it before switching.
-- CI has not run on Prompts 1–8: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
-- 335 frontend UI strings in te/hi are machine-written and await native-speaker review.
+- CI has not run on Prompts 1–9: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
+- 403 frontend UI strings in te/hi are machine-written and await native-speaker review.
 - The 59 crop names in te/hi are machine-written and await native-speaker review.
 - Demo phone numbers (`+9199999000xx`) are invented but could belong to real people: never seed demo data where a real SMS gateway is active.
 - AuditLog and LedgerEntry immutability is enforced in Mongoose only; direct database access could still change rows.
@@ -237,3 +248,5 @@
 - Graceful shutdown can't be checked by hand on Windows (no SIGTERM). Press Ctrl+C in a terminal running `npm run dev`; that sends SIGINT, which takes the same shutdown path.
 - Success toasts sit above the bottom navigation for 5 seconds and can cover the lowest card's button. They can be dismissed; revisit in the UI polish pass.
 - The listing-expiry and photo-cleanup jobs run with `setInterval` inside the web process. With more than one backend instance they would run on each (harmless, as both are idempotent updates), but a proper scheduler is better at scale.
+- Buyer search loads the farmer list into memory per request (fine for the pilot). Revisit with many farmers within 50 km.
+- Buyers cannot order yet; the product page says ordering opens in the next update (Prompt 10).

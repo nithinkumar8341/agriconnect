@@ -18,7 +18,7 @@ export const DEMO_FARMERS = [
       state: 'Andhra Pradesh',
       pincode: '521151',
       location: { type: 'Point', coordinates: [80.7826, 16.4384] },
-      deliveryRadiusKm: 15,
+      deliveryRadiusKm: 20,
       deliveryDays: ['mon', 'wed', 'fri', 'sat'],
       verificationLevel: 'agent_verified',
     },

@@ -132,6 +132,74 @@ Machine-written te and hi for every UI key, in all namespaces. The app falls bac
 | auth:errors.PIN_LOCKED | Too many wrong PINs. Please try again after {{minutes}} minutes. | చాలా తప్పు PINలు. {{minutes}} నిమిషాల తర్వాత మళ్ళీ ప్రయత్నించండి. |  | बहुत सारे गलत PIN। {{minutes}} मिनट बाद फिर से कोशिश करें। |  |
 | auth:errors.PIN_TOKEN_INVALID | This login took too long. Please start again. | లాగిన్‌కు చాలా సమయం పట్టింది. దయచేసి మళ్ళీ మొదలుపెట్టండి. |  | लॉगिन में बहुत समय लगा। कृपया फिर से शुरू करें। |  |
 | auth:errors.PIN_ALREADY_SET | A PIN is already set. Please log in again. | PIN ఇప్పటికే ఉంది. దయచేసి మళ్ళీ లాగిన్ అవ్వండి. |  | PIN पहले से बना हुआ है। कृपया फिर से लॉगिन करें। |  |
+| buyer:home.title | Fresh near you | మీ దగ్గర తాజావి |  | आपके पास ताज़ा |  |
+| buyer:home.search | Search vegetables and fruits | కూరగాయలు, పండ్లు వెతకండి |  | सब्ज़ियाँ और फल खोजें |  |
+| buyer:home.categoryLabel | Category | రకం |  | प्रकार |  |
+| buyer:home.sortLabel | Sort by | క్రమం |  | क्रम |  |
+| buyer:home.filters | Filters | ఫిల్టర్లు |  | फ़िल्टर |  |
+| buyer:home.filtersOn | Filters ({{count}}) | ఫిల్టర్లు ({{count}}) |  | फ़िल्टर ({{count}}) |  |
+| buyer:home.showing | Showing {{shown}} of {{total}} | {{total}}లో {{shown}} చూపిస్తున్నాము |  | {{total}} में से {{shown}} दिखा रहे हैं |  |
+| buyer:home.loadMore | Show more | ఇంకా చూపించు |  | और दिखाएँ |  |
+| buyer:home.end | That is everything near you. | మీ దగ్గర ఉన్నవన్నీ ఇవే. |  | आपके पास इतना ही है। |  |
+| buyer:home.emptyTitle | Nothing here yet | ఇక్కడ ఇంకా ఏమీ లేవు |  | यहाँ अभी कुछ नहीं |  |
+| buyer:home.emptyMessage | No farmer delivers here with these choices. Try another pincode or clear the filters. | ఈ ఎంపికలతో ఇక్కడికి డెలివరీ చేసే రైతు లేరు. వేరే పిన్‌కోడ్ ప్రయత్నించండి లేదా ఫిల్టర్లు తీసేయండి. |  | इन विकल्पों के साथ कोई किसान यहाँ डिलीवरी नहीं करता। दूसरा पिनकोड आज़माएँ या फ़िल्टर हटाएँ। |  |
+| buyer:categories.all | All | అన్నీ |  | सभी |  |
+| buyer:categories.vegetable | Vegetables | కూరగాయలు |  | सब्ज़ियाँ |  |
+| buyer:categories.leafy | Leafy greens | ఆకుకూరలు |  | पत्तेदार साग |  |
+| buyer:categories.fruit | Fruits | పండ్లు |  | फल |  |
+| buyer:categories.other | Others | ఇతరాలు |  | अन्य |  |
+| buyer:sort.distance | Nearest | దగ్గరవి |  | सबसे पास |  |
+| buyer:sort.price | Lowest price | తక్కువ ధర |  | सबसे कम भाव |  |
+| buyer:sort.freshness | Freshest | తాజావి |  | सबसे ताज़ा |  |
+| buyer:location.near | Near your location | మీ ప్రాంతం దగ్గర |  | आपकी जगह के पास |  |
+| buyer:location.pincode | Pincode {{pincode}} | పిన్‌కోడ్ {{pincode}} |  | पिनकोड {{pincode}} |  |
+| buyer:location.change | Change | మార్చండి |  | बदलें |  |
+| buyer:location.title | Where should we deliver? | ఎక్కడికి డెలివరీ చేయాలి? |  | डिलीवरी कहाँ करें? |  |
+| buyer:location.why | Used only to find farmers who deliver to you. Farmers never see your location. | మీకు డెలివరీ చేసే రైతులను కనుగొనడానికి మాత్రమే. రైతులకు మీ లొకేషన్ కనిపించదు. |  | सिर्फ़ आपको डिलीवरी करने वाले किसान खोजने के लिए। किसानों को आपकी जगह नहीं दिखती। |  |
+| buyer:location.useLocation | Use my location | నా లొకేషన్ వాడండి |  | मेरी लोकेशन लें |  |
+| buyer:location.denied | Location is off. Enter your pincode instead. | లొకేషన్ ఆఫ్‌లో ఉంది. బదులుగా పిన్‌కోడ్ ఇవ్వండి. |  | लोकेशन बंद है। इसके बदले अपना पिनकोड डालें। |  |
+| buyer:location.pincodeLabel | Or enter your pincode | లేదా మీ పిన్‌కోడ్ ఇవ్వండి |  | या अपना पिनकोड डालें |  |
+| buyer:location.pincodeError | Enter a 6-digit pincode. | 6 అంకెల పిన్‌కోడ్ ఇవ్వండి. |  | 6 अंकों का पिनकोड डालें। |  |
+| buyer:location.save | Show produce | పంటలు చూపించు |  | फ़सलें दिखाएँ |  |
+| buyer:location.needed | Tell us where you are to see farmers who deliver to you. | మీకు డెలివరీ చేసే రైతులను చూడటానికి మీరు ఎక్కడ ఉన్నారో చెప్పండి. |  | आपको डिलीवरी करने वाले किसान देखने के लिए बताएँ कि आप कहाँ हैं। |  |
+| buyer:filter.title | Filters | ఫిల్టర్లు |  | फ़िल्टर |  |
+| buyer:filter.minPrice | Lowest price (₹) | కనీస ధర (₹) |  | सबसे कम भाव (₹) |  |
+| buyer:filter.maxPrice | Highest price (₹) | గరిష్ట ధర (₹) |  | सबसे ज़्यादा भाव (₹) |  |
+| buyer:filter.day | Delivery day | డెలివరీ రోజు |  | डिलीवरी का दिन |  |
+| buyer:filter.anyDay | Any day | ఏ రోజైనా |  | कोई भी दिन |  |
+| buyer:filter.stock | Show | చూపించు |  | दिखाएँ |  |
+| buyer:filter.inStock | In stock only | అందుబాటులో ఉన్నవి |  | सिर्फ़ उपलब्ध |  |
+| buyer:filter.all | Also out of stock | అయిపోయినవి కూడా |  | ख़त्म हुए भी |  |
+| buyer:filter.apply | Show results | ఫలితాలు చూపించు |  | नतीजे दिखाएँ |  |
+| buyer:filter.clear | Clear filters | ఫిల్టర్లు తీసేయండి |  | फ़िल्टर हटाएँ |  |
+| buyer:card.price | {{price}} / {{unit}} | {{price}} / {{unit}} |  | {{price}} / {{unit}} |  |
+| buyer:card.km | {{km}} km away | {{km}} కి.మీ దూరం |  | {{km}} किमी दूर |  |
+| buyer:card.under1 | Under 1 km | 1 కి.మీ లోపు |  | 1 किमी से कम |  |
+| buyer:card.from | {{name}}, {{village}} | {{name}}, {{village}} |  | {{name}}, {{village}} |  |
+| buyer:card.delivery | Delivery {{date}} | డెలివరీ {{date}} |  | डिलीवरी {{date}} |  |
+| buyer:card.outOfStock | Out of stock | అయిపోయింది |  | ख़त्म |  |
+| buyer:product.title | Product details | పంట వివరాలు |  | फ़सल की जानकारी |  |
+| buyer:product.available | {{quantity}} {{unit}} available | {{quantity}} {{unit}} అందుబాటులో ఉంది |  | {{quantity}} {{unit}} उपलब्ध |  |
+| buyer:product.harvested | Harvested {{date}} | {{date}}న కోశారు |  | तुड़ाई {{date}} |  |
+| buyer:product.soldBy | Sold by | అమ్మేవారు |  | बेचने वाले |  |
+| buyer:product.seeFarmer | See farmer | రైతును చూడండి |  | किसान देखें |  |
+| buyer:product.deliveryDays | Delivers on | డెలివరీ రోజులు |  | डिलीवरी के दिन |  |
+| buyer:product.deliveryFee | Delivery fee | డెలివరీ ఛార్జీ |  | डिलीवरी शुल्क |  |
+| buyer:product.minOrder | Minimum order | కనీస ఆర్డర్ |  | न्यूनतम ऑर्डर |  |
+| buyer:product.nextDelivery | Next delivery | తదుపరి డెలివరీ |  | अगली डिलीवरी |  |
+| buyer:product.cannotDeliver | This farmer does not deliver to your location. | ఈ రైతు మీ ప్రాంతానికి డెలివరీ చేయరు. |  | यह किसान आपकी जगह पर डिलीवरी नहीं करते। |  |
+| buyer:product.orderSoon | Ordering opens in the next update. | ఆర్డర్ చేయడం తదుపరి అప్‌డేట్‌లో వస్తుంది. |  | ऑर्डर करना अगले अपडेट में शुरू होगा। |  |
+| buyer:farmer.title | Farmer | రైతు |  | किसान |  |
+| buyer:farmer.new | New | కొత్త |  | नए |  |
+| buyer:farmer.levels.phone_verified | Phone verified | ఫోన్ ధృవీకరించబడింది |  | फ़ोन सत्यापित |  |
+| buyer:farmer.levels.agent_verified | Checked by agent | ఏజెంట్ తనిఖీ చేశారు |  | एजेंट ने जाँचा |  |
+| buyer:farmer.levels.trusted_seller | Trusted seller | నమ్మకమైన అమ్మకందారు |  | भरोसेमंद विक्रेता |  |
+| buyer:farmer.since | On AgriConnect since {{date}} | {{date}} నుండి AgriConnectలో |  | {{date}} से AgriConnect पर |  |
+| buyer:farmer.cutoff | Order before {{time}} for the next delivery | తదుపరి డెలివరీ కోసం {{time}} లోపు ఆర్డర్ చేయండి |  | अगली डिलीवरी के लिए {{time}} से पहले ऑर्डर करें |  |
+| buyer:farmer.selling | Selling now | ఇప్పుడు అమ్ముతున్నవి |  | अभी बिक रहा है |  |
+| buyer:farmer.nothing | Nothing on sale right now. | ప్రస్తుతం అమ్మకానికి ఏమీ లేవు. |  | अभी कुछ बिक्री पर नहीं है। |  |
+| buyer:farmer.reviews | Reviews | రివ్యూలు |  | समीक्षाएँ |  |
+| buyer:farmer.reviewsSoon | Reviews from buyers will appear here after delivered orders. | డెలివరీ అయిన ఆర్డర్ల తర్వాత కొనుగోలుదారుల రివ్యూలు ఇక్కడ కనిపిస్తాయి. |  | डिलीवर हुए ऑर्डर के बाद खरीदारों की समीक्षाएँ यहाँ दिखेंगी। |  |
 | common:app.name | AgriConnect | AgriConnect |  | AgriConnect |  |
 | common:app.tagline | Fresh vegetables and fruits, straight from nearby farmers | దగ్గరలోని రైతుల నుండి నేరుగా తాజా కూరగాయలు, పండ్లు |  | पास के किसानों से सीधे ताज़ी सब्ज़ियाँ और फल |  |
 | common:actions.back | Back | వెనుకకు |  | वापस |  |
