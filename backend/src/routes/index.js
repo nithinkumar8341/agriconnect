@@ -9,6 +9,7 @@ import { createAuthRouter } from './auth.routes.js';
 import { createCropsRouter } from './crops.routes.js';
 import { createFarmerRouter, createProductsRouter } from './farmer.routes.js';
 import { healthRouter } from './health.routes.js';
+import { createMarketRouter } from './market.routes.js';
 import { createLocationsRouter, createProfileRouter, createUsersRouter } from './profile.routes.js';
 import { createUploadsRouter } from './uploads.routes.js';
 
@@ -32,6 +33,7 @@ export function createApiRouter({ config, logger, smsProvider, storage }) {
   router.use('/crops', createCropsRouter());
   router.use('/farmer', createFarmerRouter({ requireAuth }));
   router.use('/products', createProductsRouter({ requireAuth }));
+  router.use('/market', createMarketRouter({ requireAuth }));
   router.use('/uploads', createUploadsRouter({ requireAuth, mediaService }));
   return router;
 }

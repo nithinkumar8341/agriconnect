@@ -3,6 +3,7 @@ import { getDashboard, getMyProducts } from '../controllers/farmer.controller.js
 import * as products from '../controllers/products.controller.js';
 import { requireRole } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
+import { nearbyRoute } from './market.routes.js';
 import { myProductsQuerySchema } from '../validators/farmer.validators.js';
 import {
   createProductSchema,
@@ -27,6 +28,8 @@ export function createProductsRouter({ requireAuth }) {
   const farmer = [requireAuth, requireRole('farmer')];
   const params = validate({ params: productIdParams });
 
+  // The prompt-pack name for the buyer search; same handler as GET /market/products.
+  router.get('/nearby', ...nearbyRoute(requireAuth));
   router.get('/mine', ...farmer, validate({ query: myProductsQuerySchema }), getMyProducts);
   router.get('/last-price', ...farmer, validate({ query: lastPriceQuery }), products.getLastPrice);
   router.post('/', ...farmer, validate({ body: createProductSchema }), products.create);
