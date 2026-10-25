@@ -89,277 +89,341 @@ Machine-written te and hi for every UI key, in all namespaces. The app falls bac
 
 | namespace:key | English | Telugu (machine) | te reviewed | Hindi (machine) | hi reviewed |
 | --- | --- | --- | --- | --- | --- |
-| common:app.tagline | Fresh vegetables and fruits, straight from nearby farmers | దగ్గరలోని రైతుల నుండి నేరుగా తాజా కూరగాయలు, పండ్లు | | पास के किसानों से सीधे ताज़ी सब्ज़ियाँ और फल | |
-| common:actions.back | Back | వెనుకకు | | वापस | |
-| common:actions.retry | Try again | మళ్ళీ ప్రయత్నించండి | | फिर से कोशिश करें | |
-| common:actions.cancel | Cancel | రద్దు చేయండి | | रद्द करें | |
-| common:actions.confirm | Yes, continue | అవును, కొనసాగించండి | | हाँ, आगे बढ़ें | |
-| common:actions.close | Close | మూసివేయండి | | बंद करें | |
-| common:actions.dismiss | Dismiss | తీసివేయండి | | हटाएँ | |
-| common:actions.login | Log in with phone number | ఫోన్ నంబర్‌తో లాగిన్ అవ్వండి | | फ़ोन नंबर से लॉगिन करें | |
-| common:actions.logout | Log out | లాగ్ అవుట్ | | लॉग आउट | |
-| common:actions.goHome | Go to home | హోమ్‌కు వెళ్ళండి | | होम पर जाएँ | |
-| common:actions.skipToContent | Skip to main content | ప్రధాన విషయానికి వెళ్ళండి | | मुख्य सामग्री पर जाएँ | |
-| common:actions.next | Next | తరువాత | | आगे | |
-| common:language.label | Language | భాష | | भाषा | |
-| common:language.choose | Choose your language | మీ భాషను ఎంచుకోండి | | अपनी भाषा चुनें | |
-| common:language.change | Change language | భాష మార్చండి | | भाषा बदलें | |
-| common:nav.label | Main menu | ప్రధాన మెనూ | | मुख्य मेनू | |
-| common:nav.home | Home | హోమ్ | | होम | |
-| common:nav.products | My products | నా పంటలు | | मेरे उत्पाद | |
-| common:nav.orders | Orders | ఆర్డర్లు | | ऑर्डर | |
-| common:nav.profile | Profile | ప్రొఫైల్ | | प्रोफ़ाइल | |
-| common:nav.farmers | Farmers | రైతులు | | किसान | |
-| common:nav.users | Users | వినియోగదారులు | | उपयोगकर्ता | |
-| common:nav.settings | Settings | సెట్టింగ్‌లు | | सेटिंग्स | |
-| common:roles.farmer | Farmer | రైతు | | किसान | |
-| common:roles.buyer | Buyer | కొనుగోలుదారు | | खरीदार | |
-| common:roles.agent | Field agent | ఫీల్డ్ ఏజెంట్ | | फ़ील्ड एजेंट | |
-| common:roles.admin | Admin | అడ్మిన్ | | एडमिन | |
-| common:home.title | Home | హోమ్ | | होम | |
-| common:home.welcome | Welcome | స్వాగతం | | स्वागत है | |
-| common:home.signedInAs | Signed in as {{role}} | {{role}}గా లాగిన్ అయ్యారు | | {{role}} के रूप में लॉगिन | |
-| common:status.loading | Loading… | లోడ్ అవుతోంది… | | लोड हो रहा है… | |
-| common:status.offline | You are offline. Some things may not be up to date. | మీరు ఆఫ్‌లైన్‌లో ఉన్నారు. కొన్ని వివరాలు తాజావి కాకపోవచ్చు. | | आप ऑफ़लाइन हैं। कुछ जानकारी पुरानी हो सकती है। | |
-| common:status.backOnline | You are back online. | మీరు మళ్ళీ ఆన్‌లైన్‌లోకి వచ్చారు. | | आप फिर से ऑनलाइन हैं। | |
-| common:units.kg | kg | కిలో | | किलो | |
-| common:units.dozen | dozen | డజను | | दर्जन | |
-| common:units.bunch | bunch | కట్ట | | गुच्छा | |
-| common:units.piece | piece | ఒక్కటి | | नग | |
-| common:units.km | km | కి.మీ | | किमी | |
-| common:stepper.decrease | Decrease {{label}} | {{label}} తగ్గించండి | | {{label}} घटाएँ | |
-| common:stepper.increase | Increase {{label}} | {{label}} పెంచండి | | {{label}} बढ़ाएँ | |
-| common:comingSoon.title | Coming soon | త్వరలో వస్తుంది | | जल्द आ रहा है | |
-| common:comingSoon.message | This screen is being built and will be ready in a later update. | ఈ స్క్రీన్ తయారవుతోంది, తరువాతి అప్‌డేట్‌లో అందుబాటులోకి వస్తుంది. | | यह स्क्रीन बनाई जा रही है और अगले अपडेट में उपलब्ध होगी। | |
-| common:notFound.title | Page not found | పేజీ కనబడలేదు | | पेज नहीं मिला | |
-| common:notFound.message | We could not find this page. | ఈ పేజీని మేము కనుగొనలేకపోయాము. | | हमें यह पेज नहीं मिला। | |
-| common:errors.title | Something went wrong | ఏదో పొరపాటు జరిగింది | | कुछ गलत हो गया | |
-| common:errors.generic | Something went wrong. Please try again. | ఏదో పొరపాటు జరిగింది. దయచేసి మళ్ళీ ప్రయత్నించండి. | | कुछ गलत हो गया। कृपया फिर से कोशिश करें। | |
-| common:errors.NETWORK_ERROR | No internet connection. Please check your network and try again. | ఇంటర్నెట్ కనెక్షన్ లేదు. మీ నెట్‌వర్క్‌ను చూసి మళ్ళీ ప్రయత్నించండి. | | इंटरनेट कनेक्शन नहीं है। अपना नेटवर्क जाँचें और फिर से कोशिश करें। | |
-| common:errors.RATE_LIMITED | Too many attempts. Please wait a moment and try again. | చాలా ఎక్కువ ప్రయత్నాలు. కొద్దిసేపు ఆగి మళ్ళీ ప్రయత్నించండి. | | बहुत अधिक प्रयास। थोड़ा रुककर फिर से कोशिश करें। | |
-| common:errors.INTERNAL_ERROR | Our server had a problem. Please try again. | మా సర్వర్‌లో సమస్య వచ్చింది. దయచేసి మళ్ళీ ప్రయత్నించండి. | | हमारे सर्वर में समस्या आई। कृपया फिर से कोशिश करें। | |
-| common:errors.AUTH_REQUIRED | Please log in to continue. | కొనసాగడానికి దయచేసి లాగిన్ అవ్వండి. | | आगे बढ़ने के लिए कृपया लॉगिन करें। | |
-| common:errors.REFRESH_INVALID | Your session has ended. Please log in again. | మీ సెషన్ ముగిసింది. దయచేసి మళ్ళీ లాగిన్ అవ్వండి. | | आपका सत्र समाप्त हो गया। कृपया फिर से लॉगिन करें। | |
-| common:errors.FORBIDDEN | You do not have access to this. | దీనికి మీకు అనుమతి లేదు. | | आपको इसकी अनुमति नहीं है। | |
-| common:errors.NOT_FOUND | We could not find what you were looking for. | మీరు వెతుకుతున్నది కనబడలేదు. | | आप जो ढूँढ रहे थे वह नहीं मिला। | |
-| common:errors.VALIDATION_ERROR | Some details are not correct. Please check and try again. | కొన్ని వివరాలు సరిగ్గా లేవు. దయచేసి చూసి మళ్ళీ ప్రయత్నించండి. | | कुछ जानकारी सही नहीं है। कृपया जाँचकर फिर से कोशिश करें। | |
-| common:weekdays.mon | Monday | సోమవారం | | सोमवार | |
-| common:weekdays.tue | Tuesday | మంగళవారం | | मंगलवार | |
-| common:weekdays.wed | Wednesday | బుధవారం | | बुधवार | |
-| common:weekdays.thu | Thursday | గురువారం | | गुरुवार | |
-| common:weekdays.fri | Friday | శుక్రవారం | | शुक्रवार | |
-| common:weekdays.sat | Saturday | శనివారం | | शनिवार | |
-| common:weekdays.sun | Sunday | ఆదివారం | | रविवार | |
-| common:states.andhraPradesh | Andhra Pradesh | ఆంధ్రప్రదేశ్ | | आंध्र प्रदेश | |
-| common:states.telangana | Telangana | తెలంగాణ | | तेलंगाना | |
-| auth:stepOf | Step {{current}} of {{total}} | {{total}}లో {{current}}వ దశ | | चरण {{current}} / {{total}} | |
-| auth:language.title | Choose your language | మీ భాషను ఎంచుకోండి | | अपनी भाषा चुनें | |
-| auth:language.continue | Continue | కొనసాగించండి | | आगे बढ़ें | |
-| auth:phone.title | Your mobile number | మీ మొబైల్ నంబర్ | | आपका मोबाइल नंबर | |
-| auth:phone.label | Mobile number | మొబైల్ నంబర్ | | मोबाइल नंबर | |
-| auth:phone.hint | We will send a 6-digit code to this number by SMS. | ఈ నంబర్‌కు SMS ద్వారా 6 అంకెల కోడ్ పంపుతాము. | | हम इस नंबर पर SMS से 6 अंकों का कोड भेजेंगे। | |
-| auth:phone.invalid | Enter a 10-digit mobile number starting with 6, 7, 8 or 9. | 6, 7, 8 లేదా 9తో మొదలయ్యే 10 అంకెల మొబైల్ నంబర్ ఇవ్వండి. | | 6, 7, 8 या 9 से शुरू होने वाला 10 अंकों का मोबाइल नंबर डालें। | |
-| auth:phone.remember | Keep me logged in on this phone | ఈ ఫోన్‌లో నన్ను లాగిన్‌లో ఉంచండి | | इस फ़ोन पर मुझे लॉगिन रखें | |
-| auth:phone.rememberHint | Turn this off on a shared phone. | ఇతరులతో పంచుకునే ఫోన్ అయితే దీన్ని ఆపివేయండి. | | साझा फ़ोन पर इसे बंद करें। | |
-| auth:phone.submit | Get OTP | OTP పొందండి | | OTP पाएँ | |
-| auth:otp.title | Enter the code | కోడ్ ఇవ్వండి | | कोड डालें | |
-| auth:otp.sentTo | We sent a 6-digit code to {{phone}}. | {{phone}}కు 6 అంకెల కోడ్ పంపాము. | | हमने {{phone}} पर 6 अंकों का कोड भेजा है। | |
-| auth:otp.label | 6-digit code | 6 అంకెల కోడ్ | | 6 अंकों का कोड | |
-| auth:otp.invalidFormat | The code has 6 digits. | కోడ్‌లో 6 అంకెలు ఉంటాయి. | | कोड में 6 अंक होते हैं। | |
-| auth:otp.submit | Verify and continue | నిర్ధారించి కొనసాగించండి | | पुष्टि करें और आगे बढ़ें | |
-| auth:otp.changeNumber | Change number | నంబర్ మార్చండి | | नंबर बदलें | |
-| auth:otp.resendIn | You can ask for a new code in {{seconds}} seconds. | {{seconds}} సెకన్లలో కొత్త కోడ్ అడగవచ్చు. | | {{seconds}} सेकंड में नया कोड माँग सकते हैं। | |
-| auth:otp.resend | Send a new code | కొత్త కోడ్ పంపండి | | नया कोड भेजें | |
-| auth:otp.resent | A new code has been sent. | కొత్త కోడ్ పంపబడింది. | | नया कोड भेज दिया गया है। | |
-| auth:otp.help | Need help? Call AgriConnect support | సహాయం కావాలా? AgriConnect సపోర్ట్‌కు కాల్ చేయండి | | मदद चाहिए? AgriConnect सहायता को कॉल करें | |
-| auth:pin.title | Enter your PIN | మీ PIN ఇవ్వండి | | अपना PIN डालें | |
-| auth:pin.setupTitle | Create your PIN | మీ PIN తయారు చేసుకోండి | | अपना PIN बनाएँ | |
-| auth:pin.intro | Agents and admins use a PIN as a second check. | ఏజెంట్లు, అడ్మిన్లు రెండో తనిఖీగా PIN ఉపయోగిస్తారు. | | एजेंट और एडमिन दूसरी जाँच के लिए PIN का उपयोग करते हैं। | |
-| auth:pin.setupIntro | Choose a 4 to 6 digit PIN. You will enter it after the SMS code every time you log in. | 4 నుండి 6 అంకెల PIN ఎంచుకోండి. ప్రతిసారి లాగిన్ అయ్యేటప్పుడు SMS కోడ్ తర్వాత దీన్ని ఇవ్వాలి. | | 4 से 6 अंकों का PIN चुनें। हर बार लॉगिन करते समय SMS कोड के बाद इसे डालना होगा। | |
-| auth:pin.confirmLabel | Enter the PIN again | PIN మళ్ళీ ఇవ్వండి | | PIN फिर से डालें | |
-| auth:pin.invalidFormat | The PIN has 4 to 6 digits. | PINలో 4 నుండి 6 అంకెలు ఉంటాయి. | | PIN में 4 से 6 अंक होते हैं। | |
-| auth:pin.mismatch | The two PINs do not match. | రెండు PINలు ఒకేలా లేవు. | | दोनों PIN एक जैसे नहीं हैं। | |
-| auth:pin.submit | Log in | లాగిన్ అవ్వండి | | लॉगिन करें | |
-| auth:pin.setupSubmit | Save PIN and log in | PIN సేవ్ చేసి లాగిన్ అవ్వండి | | PIN सेव करें और लॉगिन करें | |
-| auth:errors.OTP_INVALID | That code is not correct. {{count}} tries left. | ఈ కోడ్ సరైనది కాదు. ఇంకా {{count}} ప్రయత్నాలు మిగిలాయి. | | यह कोड सही नहीं है। {{count}} प्रयास बाकी हैं। | |
-| auth:errors.OTP_EXPIRED | This code has expired. Please ask for a new code. | ఈ కోడ్ గడువు ముగిసింది. దయచేసి కొత్త కోడ్ అడగండి. | | इस कोड की समय-सीमा खत्म हो गई। कृपया नया कोड माँगें। | |
-| auth:errors.OTP_NOT_FOUND | Please ask for a new code. | దయచేసి కొత్త కోడ్ అడగండి. | | कृपया नया कोड माँगें। | |
-| auth:errors.OTP_LOCKED | Too many wrong codes. Please ask for a new code. | చాలా తప్పు కోడ్‌లు. దయచేసి కొత్త కోడ్ అడగండి. | | बहुत सारे गलत कोड। कृपया नया कोड माँगें। | |
-| auth:errors.OTP_COOLDOWN | Please wait {{seconds}} seconds before asking for another code. | మరో కోడ్ అడగడానికి ముందు {{seconds}} సెకన్లు ఆగండి. | | दूसरा कोड माँगने से पहले {{seconds}} सेकंड रुकें। | |
-| auth:errors.OTP_LIMIT_REACHED | Too many codes for this number. Please try again in an hour. | ఈ నంబర్‌కు చాలా కోడ్‌లు పంపాము. ఒక గంట తర్వాత ప్రయత్నించండి. | | इस नंबर के लिए बहुत सारे कोड। एक घंटे बाद कोशिश करें। | |
-| auth:errors.SMS_FAILED | We could not send the SMS. Please try again. | SMS పంపలేకపోయాము. దయచేసి మళ్ళీ ప్రయత్నించండి. | | SMS नहीं भेज सके। कृपया फिर से कोशिश करें। | |
-| auth:errors.ACCOUNT_SUSPENDED | This account is suspended. Please contact AgriConnect support. | ఈ ఖాతా నిలిపివేయబడింది. దయచేసి AgriConnect సపోర్ట్‌ను సంప్రదించండి. | | यह खाता निलंबित है। कृपया AgriConnect सहायता से संपर्क करें। | |
-| auth:errors.PIN_INVALID | That PIN is not correct. {{count}} tries left. | ఈ PIN సరైనది కాదు. ఇంకా {{count}} ప్రయత్నాలు మిగిలాయి. | | यह PIN सही नहीं है। {{count}} प्रयास बाकी हैं। | |
-| auth:errors.PIN_LOCKED | Too many wrong PINs. Please try again after {{minutes}} minutes. | చాలా తప్పు PINలు. {{minutes}} నిమిషాల తర్వాత మళ్ళీ ప్రయత్నించండి. | | बहुत सारे गलत PIN। {{minutes}} मिनट बाद फिर से कोशिश करें। | |
-| auth:errors.PIN_TOKEN_INVALID | This login took too long. Please start again. | లాగిన్‌కు చాలా సమయం పట్టింది. దయచేసి మళ్ళీ మొదలుపెట్టండి. | | लॉगिन में बहुत समय लगा। कृपया फिर से शुरू करें। | |
-| auth:errors.PIN_ALREADY_SET | A PIN is already set. Please log in again. | PIN ఇప్పటికే ఉంది. దయచేసి మళ్ళీ లాగిన్ అవ్వండి. | | PIN पहले से बना हुआ है। कृपया फिर से लॉगिन करें। | |
-| onboarding:role.title | How will you use AgriConnect? | AgriConnectను మీరు ఎలా ఉపయోగిస్తారు? | | आप AgriConnect का उपयोग कैसे करेंगे? | |
-| onboarding:role.farmer | I am a farmer | నేను రైతును | | मैं किसान हूँ | |
-| onboarding:role.farmerHint | Sell my vegetables and fruits | నా కూరగాయలు, పండ్లు అమ్ముతాను | | अपनी सब्ज़ियाँ और फल बेचें | |
-| onboarding:role.buyer | I want to buy | నేను కొనాలి | | मुझे खरीदना है | |
-| onboarding:role.buyerHint | Fresh produce for my home | ఇంటికి తాజా కూరగాయలు, పండ్లు | | घर के लिए ताज़ी सब्ज़ियाँ और फल | |
-| onboarding:role.notYou | Not you? Log out | మీరు కాదా? లాగ్ అవుట్ అవ్వండి | | आप नहीं हैं? लॉग आउट करें | |
-| onboarding:farmer.title | Your farm details | మీ పొలం వివరాలు | | आपके खेत की जानकारी | |
-| onboarding:farmer.detailsHeading | About you | మీ గురించి | | आपके बारे में | |
-| onboarding:farmer.locationHeading | Your farm location | మీ పొలం స్థానం | | आपके खेत की जगह | |
-| onboarding:farmer.deliveryHeading | How you deliver | మీరు ఎలా డెలివరీ చేస్తారు | | आप डिलीवरी कैसे करेंगे | |
-| onboarding:farmer.name | Your name | మీ పేరు | | आपका नाम | |
-| onboarding:farmer.state | State | రాష్ట్రం | | राज्य | |
-| onboarding:farmer.district | District | జిల్లా | | ज़िला | |
-| onboarding:farmer.districtSearch | Search district | జిల్లాను వెతకండి | | ज़िला खोजें | |
-| onboarding:farmer.districtNone | No district matches. Check the spelling. | ఏ జిల్లా సరిపోలలేదు. స్పెల్లింగ్ చూడండి. | | कोई ज़िला नहीं मिला। स्पेलिंग जाँचें। | |
-| onboarding:farmer.mandal | Mandal | మండలం | | मंडल | |
-| onboarding:farmer.village | Village | గ్రామం | | गाँव | |
-| onboarding:farmer.pincode | Pincode | పిన్‌కోడ్ | | पिनकोड | |
-| onboarding:farmer.radius | How far will you deliver? | ఎంత దూరం వరకు డెలివరీ చేస్తారు? | | आप कितनी दूर तक डिलीवरी करेंगे? | |
-| onboarding:farmer.deliveryDays | Which days do you deliver? | ఏ రోజుల్లో డెలివరీ చేస్తారు? | | आप किन दिनों डिलीवरी करते हैं? | |
-| onboarding:farmer.cutoff | Latest time to order for next delivery | తదుపరి డెలివరీకి ఆర్డర్ చేయడానికి చివరి సమయం | | अगली डिलीवरी के लिए ऑर्डर का आखिरी समय | |
-| onboarding:farmer.minOrder | Smallest order you accept | మీరు తీసుకునే కనీస ఆర్డర్ | | आप सबसे छोटा कितना ऑर्डर लेंगे | |
-| onboarding:farmer.fee | Delivery charge per order | ఒక్కో ఆర్డర్‌కు డెలివరీ ఛార్జీ | | हर ऑर्डर पर डिलीवरी शुल्क | |
-| onboarding:farmer.servicePincodes | Pincodes you deliver to | మీరు డెలివరీ చేసే పిన్‌కోడ్‌లు | | जिन पिनकोड में आप डिलीवरी करते हैं | |
-| onboarding:farmer.servicePincodesHint | Buyers in these pincodes can order from you. | ఈ పిన్‌కోడ్‌లలోని కొనుగోలుదారులు మీ దగ్గర ఆర్డర్ చేయవచ్చు. | | इन पिनकोड के खरीदार आपसे ऑर्डर कर सकते हैं। | |
-| onboarding:farmer.servicePincodesRequired | Without your location, add at least one pincode you deliver to. | మీ స్థానం లేకుండా, మీరు డెలివరీ చేసే కనీసం ఒక పిన్‌కోడ్ జోడించండి. | | जगह के बिना, कम से कम एक पिनकोड जोड़ें जहाँ आप डिलीवरी करते हैं। | |
-| onboarding:farmer.addPincode | Add pincode | పిన్‌కోడ్ జోడించండి | | पिनकोड जोड़ें | |
-| onboarding:farmer.removePincode | Remove {{pincode}} | {{pincode}} తీసివేయండి | | {{pincode}} हटाएँ | |
-| onboarding:farmer.submit | Save and start selling | సేవ్ చేసి అమ్మడం మొదలుపెట్టండి | | सेव करें और बेचना शुरू करें | |
-| onboarding:buyer.title | Your delivery address | మీ డెలివరీ చిరునామా | | आपका डिलीवरी पता | |
-| onboarding:buyer.name | Your name | మీ పేరు | | आपका नाम | |
-| onboarding:buyer.pincode | Pincode | పిన్‌కోడ్ | | पिनकोड | |
-| onboarding:buyer.landmark | Landmark | గుర్తు (ల్యాండ్‌మార్క్) | | पहचान की जगह (लैंडमार्क) | |
-| onboarding:buyer.landmarkHint | Something the farmer can find, for example "Near Hanuman temple". | రైతు సులభంగా కనుగొనగలిగేది, ఉదాహరణకు "హనుమాన్ గుడి దగ్గర". | | ऐसी जगह जो किसान आसानी से ढूँढ सके, जैसे "हनुमान मंदिर के पास"। | |
-| onboarding:buyer.houseAndStreet | House number and street (optional) | ఇంటి నంబర్, వీధి (ఐచ్ఛికం) | | मकान नंबर और गली (वैकल्पिक) | |
-| onboarding:buyer.area | Area or colony (optional) | ప్రాంతం లేదా కాలనీ (ఐచ్ఛికం) | | इलाका या कॉलोनी (वैकल्पिक) | |
-| onboarding:buyer.submit | Save and start shopping | సేవ్ చేసి కొనడం మొదలుపెట్టండి | | सेव करें और खरीदारी शुरू करें | |
-| onboarding:location.farmerWhy | Sharing your farm location lets nearby buyers find you. Buyers only see the approximate distance, never your exact location. | మీ పొలం స్థానం పంచుకుంటే దగ్గరలోని కొనుగోలుదారులు మిమ్మల్ని కనుగొంటారు. కొనుగోలుదారులకు సుమారు దూరం మాత్రమే కనిపిస్తుంది, మీ ఖచ్చితమైన స్థానం ఎప్పుడూ కనిపించదు. | | खेत की जगह साझा करने से पास के खरीदार आपको ढूँढ पाते हैं। खरीदारों को सिर्फ़ अनुमानित दूरी दिखती है, आपकी सटीक जगह कभी नहीं। | |
-| onboarding:location.buyerWhy | Sharing your location shows you farmers who deliver to you. Farmers see your address only after you order. | మీ స్థానం పంచుకుంటే మీకు డెలివరీ చేసే రైతులు కనిపిస్తారు. మీరు ఆర్డర్ చేసిన తర్వాతే రైతులకు మీ చిరునామా కనిపిస్తుంది. | | अपनी जगह साझा करने से आपको वे किसान दिखते हैं जो आप तक डिलीवरी करते हैं। ऑर्डर करने के बाद ही किसान को आपका पता दिखता है। | |
-| onboarding:location.use | Use my location | నా స్థానం ఉపయోగించండి | | मेरी जगह का उपयोग करें | |
-| onboarding:location.finding | Finding your location… | మీ స్థానం కనుగొంటున్నాము… | | आपकी जगह ढूँढ रहे हैं… | |
-| onboarding:location.saved | Location saved (accurate to about {{meters}} metres). | స్థానం సేవ్ అయింది (సుమారు {{meters}} మీటర్ల ఖచ్చితత్వం). | | जगह सेव हो गई (लगभग {{meters}} मीटर तक सटीक)। | |
-| onboarding:location.remove | Remove location | స్థానం తీసివేయండి | | जगह हटाएँ | |
-| onboarding:location.denied | Location permission is turned off. That is fine, we will use your pincode instead. | స్థానం అనుమతి ఆపివేయబడింది. పరవాలేదు, మీ పిన్‌కోడ్ ఉపయోగిస్తాము. | | जगह की अनुमति बंद है। कोई बात नहीं, हम आपका पिनकोड इस्तेमाल करेंगे। | |
-| onboarding:location.unavailable | We could not find your location. That is fine, we will use your pincode instead. | మీ స్థానం కనుగొనలేకపోయాము. పరవాలేదు, మీ పిన్‌కోడ్ ఉపయోగిస్తాము. | | आपकी जगह नहीं मिल सकी। कोई बात नहीं, हम आपका पिनकोड इस्तेमाल करेंगे। | |
-| onboarding:location.unsupported | This phone cannot share its location. We will use your pincode instead. | ఈ ఫోన్ స్థానాన్ని పంచుకోలేదు. మీ పిన్‌కోడ్ ఉపయోగిస్తాము. | | यह फ़ोन जगह साझा नहीं कर सकता। हम आपका पिनकोड इस्तेमाल करेंगे। | |
-| onboarding:location.skip | Continue without location | స్థానం లేకుండా కొనసాగించండి | | जगह के बिना आगे बढ़ें | |
-| onboarding:location.savedNoAccuracy | Location saved. | స్థానం సేవ్ అయింది. | | जगह सेव हो गई। | |
-| onboarding:km | {{count}} km | {{count}} కి.మీ | | {{count}} किमी | |
-| onboarding:errors.required | Please fill this in. | దయచేసి దీన్ని నింపండి. | | कृपया इसे भरें। | |
-| onboarding:errors.pincode | Enter a 6-digit pincode. | 6 అంకెల పిన్‌కోడ్ ఇవ్వండి. | | 6 अंकों का पिनकोड डालें। | |
-| onboarding:errors.pincodeState | This pincode is not in {{state}}. | ఈ పిన్‌కోడ్ {{state}}లో లేదు. | | यह पिनकोड {{state}} में नहीं है। | |
-| onboarding:errors.pickDistrict | Please choose your district. | దయచేసి మీ జిల్లాను ఎంచుకోండి. | | कृपया अपना ज़िला चुनें। | |
-| onboarding:errors.pickDay | Pick at least one delivery day. | కనీసం ఒక డెలివరీ రోజు ఎంచుకోండి. | | कम से कम एक डिलीवरी दिन चुनें। | |
-| onboarding:errors.saveFailed | We could not save. Your answers are kept, please try again. | సేవ్ చేయలేకపోయాము. మీ సమాధానాలు అలాగే ఉన్నాయి, దయచేసి మళ్ళీ ప్రయత్నించండి. | | सेव नहीं हो सका। आपके जवाब सुरक्षित हैं, कृपया फिर से कोशिश करें। | |
-| farmer:home.greeting | Namaste, {{name}} | నమస్కారం, {{name}} | | नमस्ते, {{name}} | |
-| farmer:home.greetingNoName | Namaste | నమస్కారం | | नमस्ते | |
-| farmer:home.glance | Today at a glance | ఈరోజు ఒక్క చూపులో | | आज एक नज़र में | |
-| farmer:home.todayOrders | Orders today | ఈరోజు ఆర్డర్లు | | आज के ऑर्डर | |
-| farmer:home.pendingDeliveries | Waiting to deliver | డెలివరీ చేయాల్సినవి | | डिलीवरी बाकी | |
-| farmer:home.lowStock | Running low | తక్కువగా ఉన్నవి | | कम बचा है | |
-| farmer:home.lowItem | {{crop}}: {{left}} {{unit}} left | {{crop}}: ఇంకా {{left}} {{unit}} మిగిలింది | | {{crop}}: {{left}} {{unit}} बचा है | |
-| farmer:home.tasks | What do you want to do? | మీరు ఏమి చేయాలనుకుంటున్నారు? | | आप क्या करना चाहते हैं? | |
-| farmer:tiles.sell | Sell produce | పంట అమ్మండి | | फ़सल बेचें | |
-| farmer:tiles.products | My products | నా పంటలు | | मेरे उत्पाद | |
-| farmer:tiles.orders | My orders | నా ఆర్డర్లు | | मेरे ऑर्डर | |
-| farmer:tiles.prices | Market prices | మార్కెట్ ధరలు | | मंडी भाव | |
-| farmer:tiles.assistant | Ask assistant | సహాయం అడగండి | | सहायक से पूछें | |
-| farmer:tiles.callAgent | Call my agent | నా ఏజెంట్‌కు కాల్ | | मेरे एजेंट को कॉल | |
-| farmer:tiles.callSupport | Call support | సపోర్ట్‌కు కాల్ | | सहायता को कॉल | |
-| farmer:tiles.noAgent | No agent yet | ఇంకా ఏజెంట్ లేరు | | अभी कोई एजेंट नहीं | |
-| farmer:tiles.newOrders | new | కొత్తవి | | नए | |
-| farmer:products.title | My products | నా పంటలు | | मेरे उत्पाद | |
-| farmer:products.filterLabel | Show | చూపించు | | दिखाएँ | |
-| farmer:products.filters.all | All | అన్నీ | | सभी | |
-| farmer:products.filters.available | Selling | అమ్ముతున్నవి | | बिक रहे | |
-| farmer:products.filters.low | Running low | తక్కువగా ఉన్నవి | | कम बचे | |
-| farmer:products.filters.out_of_stock | Out of stock | అయిపోయినవి | | खत्म | |
-| farmer:products.filters.paused | Paused | ఆపినవి | | रोके गए | |
-| farmer:products.status.available | Selling | అమ్ముతున్నారు | | बिक रहा है | |
-| farmer:products.status.out_of_stock | Out of stock | అయిపోయింది | | खत्म | |
-| farmer:products.status.paused | Paused | ఆపారు | | रोका गया | |
-| farmer:products.left | {{left}} of {{total}} {{unit}} left | {{total}} {{unit}}లో {{left}} మిగిలింది | | {{total}} {{unit}} में से {{left}} बचा है | |
-| farmer:products.price | {{price}} per {{unit}} | {{unit}}కు {{price}} | | {{price}} प्रति {{unit}} | |
-| farmer:products.harvested | Harvested {{date}} | {{date}}న కోశారు | | {{date}} को तोड़ा | |
-| farmer:products.lowBadge | Running low | తక్కువగా ఉంది | | कम बचा है | |
-| farmer:products.oldWarning | Harvested long ago. Check it is still fresh. | చాలా రోజుల క్రితం కోశారు. ఇంకా తాజాగా ఉందో చూడండి. | | काफ़ी पहले तोड़ा गया। देख लें कि अभी भी ताज़ा है। | |
-| farmer:products.emptyTitle | No products yet | ఇంకా ఉత్పత్తులు లేవు | | अभी कोई उत्पाद नहीं | |
-| farmer:products.emptyMessage | Add your first crop and nearby buyers will see it. | మీ మొదటి పంటను జోడించండి, దగ్గరలోని కొనుగోలుదారులకు కనిపిస్తుంది. | | अपनी पहली फ़सल जोड़ें, पास के खरीदारों को दिखेगी। | |
-| farmer:products.emptyFilteredTitle | Nothing here | ఇక్కడ ఏమీ లేదు | | यहाँ कुछ नहीं | |
-| farmer:products.emptyFilteredMessage | None of your products match this filter. | ఈ ఎంపికకు సరిపోయే ఉత్పత్తులు లేవు. | | इस विकल्प से कोई उत्पाद मेल नहीं खाता। | |
-| farmer:products.showing | Showing {{shown}} of {{total}} | {{total}}లో {{shown}} చూపిస్తున్నాము | | {{total}} में से {{shown}} दिखा रहे हैं | |
-| farmer:products.loadMore | Show more | మరిన్ని చూపించు | | और दिखाएँ | |
-| farmer:profile.title | My profile | నా ప్రొఫైల్ | | मेरी प्रोफ़ाइल | |
-| farmer:profile.farm | Farm details | పొలం వివరాలు | | खेत की जानकारी | |
-| farmer:profile.location | Farm location | పొలం స్థానం | | खेत की जगह | |
-| farmer:profile.delivery | Delivery | డెలివరీ | | डिलीवरी | |
-| farmer:profile.language | Language | భాష | | भाषा | |
-| farmer:profile.account | Account | ఖాతా | | खाता | |
-| farmer:profile.edit | Edit | మార్చండి | | बदलें | |
-| farmer:profile.editTitle | Edit farm details | పొలం వివరాలు మార్చండి | | खेत की जानकारी बदलें | |
-| farmer:profile.save | Save changes | మార్పులు సేవ్ చేయండి | | बदलाव सेव करें | |
-| farmer:profile.saved | Your details are saved. | మీ వివరాలు సేవ్ అయ్యాయి. | | आपकी जानकारी सेव हो गई। | |
-| farmer:profile.noLocation | Not shared. Buyers find you by pincode. | పంచుకోలేదు. కొనుగోలుదారులు పిన్‌కోడ్ ద్వారా మిమ్మల్ని కనుగొంటారు. | | साझा नहीं की। खरीदार पिनकोड से आपको ढूँढेंगे। | |
-| farmer:profile.locationShared | Shared. Buyers only see the approximate distance. | పంచుకున్నారు. కొనుగోలుదారులకు సుమారు దూరం మాత్రమే కనిపిస్తుంది. | | साझा की। खरीदारों को सिर्फ़ अनुमानित दूरी दिखती है। | |
-| farmer:profile.days | Delivery days | డెలివరీ రోజులు | | डिलीवरी के दिन | |
-| farmer:profile.cutoff | Order until {{time}} for the next delivery | తదుపరి డెలివరీకి {{time}} వరకు ఆర్డర్ చేయవచ్చు | | अगली डिलीवरी के लिए {{time}} तक ऑर्डर | |
-| farmer:profile.radius | Up to {{km}} km | {{km}} కి.మీ వరకు | | {{km}} किमी तक | |
-| farmer:profile.minOrder | Smallest order: {{amount}} | కనీస ఆర్డర్: {{amount}} | | सबसे छोटा ऑर्डर: {{amount}} | |
-| farmer:profile.fee | Delivery charge: {{amount}} | డెలివరీ ఛార్జీ: {{amount}} | | डिलीवरी शुल्क: {{amount}} | |
-| farmer:profile.pincodes | Delivers to: {{list}} | డెలివరీ చేసేది: {{list}} | | यहाँ डिलीवरी: {{list}} | |
-| farmer:profile.phone | Phone | ఫోన్ | | फ़ोन | |
-| farmer:profile.logoutAll | Log out on all phones | అన్ని ఫోన్లలో లాగ్ అవుట్ | | सभी फ़ोन पर लॉग आउट | |
-| farmer:profile.logoutAllTitle | Log out on all phones? | అన్ని ఫోన్లలో లాగ్ అవుట్ చేయాలా? | | सभी फ़ोन पर लॉग आउट करें? | |
-| farmer:profile.logoutAllMessage | You will need an SMS code to log in again on every phone, including this one. | ఈ ఫోన్‌తో సహా ప్రతి ఫోన్‌లో మళ్ళీ లాగిన్ అవ్వడానికి SMS కోడ్ కావాలి. | | इस फ़ोन समेत हर फ़ोन पर फिर से लॉगिन करने के लिए SMS कोड चाहिए होगा। | |
-| farmer:profile.logoutAllConfirm | Yes, log out everywhere | అవును, అన్నిచోట్లా లాగ్ అవుట్ | | हाँ, हर जगह लॉग आउट करें | |
-| farmer:sell.title | Sell produce | పంట అమ్మండి | | फ़सल बेचें | |
-| farmer:sell.photosHeading | Step 1: Photos of your produce | దశ 1: మీ పంట ఫోటోలు | | चरण 1: आपकी फ़सल की फ़ोटो | |
-| farmer:sell.photosHint | Take a clear photo in daylight, close to the produce. Up to {{max}} photos. | పగటి వెలుతురులో, పంటకు దగ్గరగా స్పష్టమైన ఫోటో తీయండి. గరిష్టంగా {{max}} ఫోటోలు. | | दिन की रोशनी में, फ़सल के पास से साफ़ फ़ोटो लें। ज़्यादा से ज़्यादा {{max}} फ़ोटो। | |
-| farmer:sell.count | {{count}} of {{max}} photos | {{max}}లో {{count}} ఫోటోలు | | {{max}} में से {{count}} फ़ोटो | |
-| farmer:sell.takePhoto | Take photo | ఫోటో తీయండి | | फ़ोटो लें | |
-| farmer:sell.gallery | Choose from gallery | గ్యాలరీ నుండి ఎంచుకోండి | | गैलरी से चुनें | |
-| farmer:sell.remove | Remove photo | ఫోటో తీసివేయండి | | फ़ोटो हटाएँ | |
-| farmer:sell.retry | Try again | మళ్ళీ ప్రయత్నించండి | | फिर से कोशिश करें | |
-| farmer:sell.status.preparing | Preparing… | సిద్ధం చేస్తున్నాము… | | तैयार कर रहे हैं… | |
-| farmer:sell.status.uploading | Uploading {{percent}}% | అప్‌లోడ్ అవుతోంది {{percent}}% | | अपलोड हो रहा है {{percent}}% | |
-| farmer:sell.status.waiting | Waiting for internet | ఇంటర్నెట్ కోసం వేచి ఉంది | | इंटरनेट का इंतज़ार | |
-| farmer:sell.status.uploaded | Uploaded | అప్‌లోడ్ అయింది | | अपलोड हो गया | |
-| farmer:sell.status.failed | Upload failed | అప్‌లోడ్ కాలేదు | | अपलोड नहीं हुआ | |
-| farmer:sell.errors.PHOTO_UNREADABLE | This photo could not be opened. Please take it again. | ఈ ఫోటో తెరవలేకపోయాము. దయచేసి మళ్ళీ తీయండి. | | यह फ़ोटो खुल नहीं सकी। कृपया फिर से लें। | |
-| farmer:sell.errors.INVALID_IMAGE | This file is not a photo we can use. | ఈ ఫైల్ మేము ఉపయోగించగలిగే ఫోటో కాదు. | | यह फ़ाइल ऐसी फ़ोटो नहीं है जिसका हम उपयोग कर सकें। | |
-| farmer:sell.errors.PAYLOAD_TOO_LARGE | This photo is too large. | ఈ ఫోటో చాలా పెద్దది. | | यह फ़ोटो बहुत बड़ी है। | |
-| farmer:sell.waitingNote | You are offline. Photos are saved on this phone and will upload by themselves when the internet is back. | మీరు ఆఫ్‌లైన్‌లో ఉన్నారు. ఫోటోలు ఈ ఫోన్‌లో సేవ్ అయ్యాయి, ఇంటర్నెట్ వచ్చినప్పుడు వాటంతట అవే అప్‌లోడ్ అవుతాయి. | | आप ऑफ़लाइन हैं। फ़ोटो इस फ़ोन पर सेव हैं और इंटरनेट आने पर अपने आप अपलोड हो जाएँगी। | |
-| farmer:sell.nextSoon | Next you will choose the crop, quantity and price. That part arrives in the next update. | తరువాత మీరు పంట, పరిమాణం, ధర ఎంచుకుంటారు. ఆ భాగం తదుపరి అప్‌డేట్‌లో వస్తుంది. | | इसके बाद आप फ़सल, मात्रा और भाव चुनेंगे। यह हिस्सा अगले अपडेट में आएगा। | |
-| devui:title | Component gallery | కాంపోనెంట్ గ్యాలరీ | | कंपोनेंट गैलरी | |
-| devui:intro | Every reusable component, shown in the current language. Switch the language to check the layout. | ప్రతి కాంపోనెంట్ ప్రస్తుత భాషలో చూపబడింది. లేఅవుట్ చూడటానికి భాష మార్చండి. | | हर कंपोनेंट मौजूदा भाषा में दिखाया गया है। लेआउट जाँचने के लिए भाषा बदलें। | |
-| devui:sections.buttons | Big buttons | పెద్ద బటన్లు | | बड़े बटन | |
-| devui:sections.tiles | Icon tiles | ఐకాన్ టైల్స్ | | आइकन टाइल | |
-| devui:sections.stepper | Quantity stepper | పరిమాణం మార్చే బటన్లు | | मात्रा बदलने के बटन | |
-| devui:sections.presets | Preset chips | త్వరిత ఎంపికలు | | झटपट विकल्प | |
-| devui:sections.feedback | Toast messages | సందేశాలు | | संदेश | |
-| devui:sections.loading | Loading skeleton | లోడ్ అవుతున్న రూపం | | लोड होता हुआ रूप | |
-| devui:sections.empty | Empty state | ఖాళీ స్థితి | | खाली स्थिति | |
-| devui:sections.error | Error state | పొరపాటు స్థితి | | त्रुटि स्थिति | |
-| devui:sections.confirm | Confirmation sheet | నిర్ధారణ షీట్ | | पुष्टि शीट | |
-| devui:sections.nav | Bottom navigation | కింది మెనూ | | नीचे का मेनू | |
-| devui:samples.sell | Sell produce | పంట అమ్మండి | | फ़सल बेचें | |
-| devui:samples.myOrders | My orders | నా ఆర్డర్లు | | मेरे ऑर्डर | |
-| devui:samples.marketPrices | Market prices | మార్కెట్ ధరలు | | मंडी भाव | |
-| devui:samples.assistant | Ask assistant | సహాయకుడిని అడగండి | | सहायक से पूछें | |
-| devui:samples.callAgent | Call my agent | నా ఏజెంట్‌కు కాల్ చేయండి | | मेरे एजेंट को कॉल करें | |
-| devui:samples.deleteListing | Delete listing | లిస్టింగ్ తొలగించండి | | लिस्टिंग हटाएँ | |
-| devui:samples.saving | Saving | సేవ్ అవుతోంది | | सेव हो रहा है | |
-| devui:samples.howMuch | How many kg? | ఎన్ని కిలోలు? | | कितने किलो? | |
-| devui:samples.price | Price per kg | కిలో ధర | | प्रति किलो भाव | |
-| devui:samples.toastSaved | Listing saved | లిస్టింగ్ సేవ్ అయింది | | लिस्टिंग सेव हो गई | |
-| devui:samples.toastError | Could not save. Please try again. | సేవ్ కాలేదు. దయచేసి మళ్ళీ ప్రయత్నించండి. | | सेव नहीं हो सका। कृपया फिर से कोशिश करें। | |
-| devui:samples.showToast | Show message | సందేశం చూపించండి | | संदेश दिखाएँ | |
-| devui:samples.showErrorToast | Show error message | పొరపాటు సందేశం చూపించండి | | त्रुटि संदेश दिखाएँ | |
-| devui:samples.noOrdersTitle | No orders yet | ఇంకా ఆర్డర్లు లేవు | | अभी कोई ऑर्डर नहीं | |
-| devui:samples.noOrdersMessage | When buyers order your produce, the orders will appear here. | కొనుగోలుదారులు మీ పంటను ఆర్డర్ చేసినప్పుడు, ఆర్డర్లు ఇక్కడ కనిపిస్తాయి. | | जब खरीदार आपकी फ़सल ऑर्डर करेंगे, ऑर्डर यहाँ दिखेंगे। | |
-| devui:samples.openConfirm | Remove tomato listing | టమాటా లిస్టింగ్ తీసివేయండి | | टमाटर लिस्टिंग हटाएँ | |
-| devui:samples.confirmTitle | Remove this listing? | ఈ లిస్టింగ్ తీసివేయాలా? | | यह लिस्टिंग हटाएँ? | |
-| devui:samples.confirmMessage | Buyers will no longer see your tomatoes. You can add them again later. | కొనుగోలుదారులకు మీ టమాటాలు ఇక కనిపించవు. తరువాత మళ్ళీ జోడించవచ్చు. | | खरीदारों को अब आपके टमाटर नहीं दिखेंगे। आप बाद में फिर से जोड़ सकते हैं। | |
-| devui:samples.confirmAction | Yes, remove | అవును, తీసివేయండి | | हाँ, हटाएँ | |
-| devui:samples.confirmed | Listing removed | లిస్టింగ్ తీసివేయబడింది | | लिस्टिंग हटा दी गई | |
-| devui:samples.badgeNew | new | కొత్తవి | | नए | |
+| auth:stepOf | Step {{current}} of {{total}} | {{total}}లో {{current}}వ దశ |  | चरण {{current}} / {{total}} |  |
+| auth:language.title | Choose your language | మీ భాషను ఎంచుకోండి |  | अपनी भाषा चुनें |  |
+| auth:language.continue | Continue | కొనసాగించండి |  | आगे बढ़ें |  |
+| auth:phone.title | Your mobile number | మీ మొబైల్ నంబర్ |  | आपका मोबाइल नंबर |  |
+| auth:phone.label | Mobile number | మొబైల్ నంబర్ |  | मोबाइल नंबर |  |
+| auth:phone.hint | We will send a 6-digit code to this number by SMS. | ఈ నంబర్‌కు SMS ద్వారా 6 అంకెల కోడ్ పంపుతాము. |  | हम इस नंबर पर SMS से 6 अंकों का कोड भेजेंगे। |  |
+| auth:phone.countryCode | +91 | +91 |  | +91 |  |
+| auth:phone.invalid | Enter a 10-digit mobile number starting with 6, 7, 8 or 9. | 6, 7, 8 లేదా 9తో మొదలయ్యే 10 అంకెల మొబైల్ నంబర్ ఇవ్వండి. |  | 6, 7, 8 या 9 से शुरू होने वाला 10 अंकों का मोबाइल नंबर डालें। |  |
+| auth:phone.remember | Keep me logged in on this phone | ఈ ఫోన్‌లో నన్ను లాగిన్‌లో ఉంచండి |  | इस फ़ोन पर मुझे लॉगिन रखें |  |
+| auth:phone.rememberHint | Turn this off on a shared phone. | ఇతరులతో పంచుకునే ఫోన్ అయితే దీన్ని ఆపివేయండి. |  | साझा फ़ोन पर इसे बंद करें। |  |
+| auth:phone.submit | Get OTP | OTP పొందండి |  | OTP पाएँ |  |
+| auth:otp.title | Enter the code | కోడ్ ఇవ్వండి |  | कोड डालें |  |
+| auth:otp.sentTo | We sent a 6-digit code to {{phone}}. | {{phone}}కు 6 అంకెల కోడ్ పంపాము. |  | हमने {{phone}} पर 6 अंकों का कोड भेजा है। |  |
+| auth:otp.label | 6-digit code | 6 అంకెల కోడ్ |  | 6 अंकों का कोड |  |
+| auth:otp.invalidFormat | The code has 6 digits. | కోడ్‌లో 6 అంకెలు ఉంటాయి. |  | कोड में 6 अंक होते हैं। |  |
+| auth:otp.submit | Verify and continue | నిర్ధారించి కొనసాగించండి |  | पुष्टि करें और आगे बढ़ें |  |
+| auth:otp.changeNumber | Change number | నంబర్ మార్చండి |  | नंबर बदलें |  |
+| auth:otp.resendIn | You can ask for a new code in {{seconds}} seconds. | {{seconds}} సెకన్లలో కొత్త కోడ్ అడగవచ్చు. |  | {{seconds}} सेकंड में नया कोड माँग सकते हैं। |  |
+| auth:otp.resend | Send a new code | కొత్త కోడ్ పంపండి |  | नया कोड भेजें |  |
+| auth:otp.resent | A new code has been sent. | కొత్త కోడ్ పంపబడింది. |  | नया कोड भेज दिया गया है। |  |
+| auth:otp.help | Need help? Call AgriConnect support | సహాయం కావాలా? AgriConnect సపోర్ట్‌కు కాల్ చేయండి |  | मदद चाहिए? AgriConnect सहायता को कॉल करें |  |
+| auth:pin.title | Enter your PIN | మీ PIN ఇవ్వండి |  | अपना PIN डालें |  |
+| auth:pin.setupTitle | Create your PIN | మీ PIN తయారు చేసుకోండి |  | अपना PIN बनाएँ |  |
+| auth:pin.intro | Agents and admins use a PIN as a second check. | ఏజెంట్లు, అడ్మిన్లు రెండో తనిఖీగా PIN ఉపయోగిస్తారు. |  | एजेंट और एडमिन दूसरी जाँच के लिए PIN का उपयोग करते हैं। |  |
+| auth:pin.setupIntro | Choose a 4 to 6 digit PIN. You will enter it after the SMS code every time you log in. | 4 నుండి 6 అంకెల PIN ఎంచుకోండి. ప్రతిసారి లాగిన్ అయ్యేటప్పుడు SMS కోడ్ తర్వాత దీన్ని ఇవ్వాలి. |  | 4 से 6 अंकों का PIN चुनें। हर बार लॉगिन करते समय SMS कोड के बाद इसे डालना होगा। |  |
+| auth:pin.label | PIN | PIN |  | PIN |  |
+| auth:pin.confirmLabel | Enter the PIN again | PIN మళ్ళీ ఇవ్వండి |  | PIN फिर से डालें |  |
+| auth:pin.invalidFormat | The PIN has 4 to 6 digits. | PINలో 4 నుండి 6 అంకెలు ఉంటాయి. |  | PIN में 4 से 6 अंक होते हैं। |  |
+| auth:pin.mismatch | The two PINs do not match. | రెండు PINలు ఒకేలా లేవు. |  | दोनों PIN एक जैसे नहीं हैं। |  |
+| auth:pin.submit | Log in | లాగిన్ అవ్వండి |  | लॉगिन करें |  |
+| auth:pin.setupSubmit | Save PIN and log in | PIN సేవ్ చేసి లాగిన్ అవ్వండి |  | PIN सेव करें और लॉगिन करें |  |
+| auth:errors.OTP_INVALID | That code is not correct. {{count}} tries left. | ఈ కోడ్ సరైనది కాదు. ఇంకా {{count}} ప్రయత్నాలు మిగిలాయి. |  | यह कोड सही नहीं है। {{count}} प्रयास बाकी हैं। |  |
+| auth:errors.OTP_EXPIRED | This code has expired. Please ask for a new code. | ఈ కోడ్ గడువు ముగిసింది. దయచేసి కొత్త కోడ్ అడగండి. |  | इस कोड की समय-सीमा खत्म हो गई। कृपया नया कोड माँगें। |  |
+| auth:errors.OTP_NOT_FOUND | Please ask for a new code. | దయచేసి కొత్త కోడ్ అడగండి. |  | कृपया नया कोड माँगें। |  |
+| auth:errors.OTP_LOCKED | Too many wrong codes. Please ask for a new code. | చాలా తప్పు కోడ్‌లు. దయచేసి కొత్త కోడ్ అడగండి. |  | बहुत सारे गलत कोड। कृपया नया कोड माँगें। |  |
+| auth:errors.OTP_COOLDOWN | Please wait {{seconds}} seconds before asking for another code. | మరో కోడ్ అడగడానికి ముందు {{seconds}} సెకన్లు ఆగండి. |  | दूसरा कोड माँगने से पहले {{seconds}} सेकंड रुकें। |  |
+| auth:errors.OTP_LIMIT_REACHED | Too many codes for this number. Please try again in an hour. | ఈ నంబర్‌కు చాలా కోడ్‌లు పంపాము. ఒక గంట తర్వాత ప్రయత్నించండి. |  | इस नंबर के लिए बहुत सारे कोड। एक घंटे बाद कोशिश करें। |  |
+| auth:errors.SMS_FAILED | We could not send the SMS. Please try again. | SMS పంపలేకపోయాము. దయచేసి మళ్ళీ ప్రయత్నించండి. |  | SMS नहीं भेज सके। कृपया फिर से कोशिश करें। |  |
+| auth:errors.ACCOUNT_SUSPENDED | This account is suspended. Please contact AgriConnect support. | ఈ ఖాతా నిలిపివేయబడింది. దయచేసి AgriConnect సపోర్ట్‌ను సంప్రదించండి. |  | यह खाता निलंबित है। कृपया AgriConnect सहायता से संपर्क करें। |  |
+| auth:errors.PIN_INVALID | That PIN is not correct. {{count}} tries left. | ఈ PIN సరైనది కాదు. ఇంకా {{count}} ప్రయత్నాలు మిగిలాయి. |  | यह PIN सही नहीं है। {{count}} प्रयास बाकी हैं। |  |
+| auth:errors.PIN_LOCKED | Too many wrong PINs. Please try again after {{minutes}} minutes. | చాలా తప్పు PINలు. {{minutes}} నిమిషాల తర్వాత మళ్ళీ ప్రయత్నించండి. |  | बहुत सारे गलत PIN। {{minutes}} मिनट बाद फिर से कोशिश करें। |  |
+| auth:errors.PIN_TOKEN_INVALID | This login took too long. Please start again. | లాగిన్‌కు చాలా సమయం పట్టింది. దయచేసి మళ్ళీ మొదలుపెట్టండి. |  | लॉगिन में बहुत समय लगा। कृपया फिर से शुरू करें। |  |
+| auth:errors.PIN_ALREADY_SET | A PIN is already set. Please log in again. | PIN ఇప్పటికే ఉంది. దయచేసి మళ్ళీ లాగిన్ అవ్వండి. |  | PIN पहले से बना हुआ है। कृपया फिर से लॉगिन करें। |  |
+| common:app.name | AgriConnect | AgriConnect |  | AgriConnect |  |
+| common:app.tagline | Fresh vegetables and fruits, straight from nearby farmers | దగ్గరలోని రైతుల నుండి నేరుగా తాజా కూరగాయలు, పండ్లు |  | पास के किसानों से सीधे ताज़ी सब्ज़ियाँ और फल |  |
+| common:actions.back | Back | వెనుకకు |  | वापस |  |
+| common:actions.retry | Try again | మళ్ళీ ప్రయత్నించండి |  | फिर से कोशिश करें |  |
+| common:actions.cancel | Cancel | రద్దు చేయండి |  | रद्द करें |  |
+| common:actions.confirm | Yes, continue | అవును, కొనసాగించండి |  | हाँ, आगे बढ़ें |  |
+| common:actions.close | Close | మూసివేయండి |  | बंद करें |  |
+| common:actions.dismiss | Dismiss | తీసివేయండి |  | हटाएँ |  |
+| common:actions.login | Log in with phone number | ఫోన్ నంబర్‌తో లాగిన్ అవ్వండి |  | फ़ोन नंबर से लॉगिन करें |  |
+| common:actions.logout | Log out | లాగ్ అవుట్ |  | लॉग आउट |  |
+| common:actions.goHome | Go to home | హోమ్‌కు వెళ్ళండి |  | होम पर जाएँ |  |
+| common:actions.skipToContent | Skip to main content | ప్రధాన విషయానికి వెళ్ళండి |  | मुख्य सामग्री पर जाएँ |  |
+| common:actions.next | Next | తరువాత |  | आगे |  |
+| common:language.label | Language | భాష |  | भाषा |  |
+| common:language.choose | Choose your language | మీ భాషను ఎంచుకోండి |  | अपनी भाषा चुनें |  |
+| common:language.change | Change language | భాష మార్చండి |  | भाषा बदलें |  |
+| common:nav.label | Main menu | ప్రధాన మెనూ |  | मुख्य मेनू |  |
+| common:nav.home | Home | హోమ్ |  | होम |  |
+| common:nav.products | My products | నా పంటలు |  | मेरे उत्पाद |  |
+| common:nav.orders | Orders | ఆర్డర్లు |  | ऑर्डर |  |
+| common:nav.profile | Profile | ప్రొఫైల్ |  | प्रोफ़ाइल |  |
+| common:nav.farmers | Farmers | రైతులు |  | किसान |  |
+| common:nav.users | Users | వినియోగదారులు |  | उपयोगकर्ता |  |
+| common:nav.settings | Settings | సెట్టింగ్‌లు |  | सेटिंग्स |  |
+| common:roles.farmer | Farmer | రైతు |  | किसान |  |
+| common:roles.buyer | Buyer | కొనుగోలుదారు |  | खरीदार |  |
+| common:roles.agent | Field agent | ఫీల్డ్ ఏజెంట్ |  | फ़ील्ड एजेंट |  |
+| common:roles.admin | Admin | అడ్మిన్ |  | एडमिन |  |
+| common:home.title | Home | హోమ్ |  | होम |  |
+| common:home.welcome | Welcome | స్వాగతం |  | स्वागत है |  |
+| common:home.signedInAs | Signed in as {{role}} | {{role}}గా లాగిన్ అయ్యారు |  | {{role}} के रूप में लॉगिन |  |
+| common:status.loading | Loading… | లోడ్ అవుతోంది… |  | लोड हो रहा है… |  |
+| common:status.offline | You are offline. Some things may not be up to date. | మీరు ఆఫ్‌లైన్‌లో ఉన్నారు. కొన్ని వివరాలు తాజావి కాకపోవచ్చు. |  | आप ऑफ़लाइन हैं। कुछ जानकारी पुरानी हो सकती है। |  |
+| common:status.backOnline | You are back online. | మీరు మళ్ళీ ఆన్‌లైన్‌లోకి వచ్చారు. |  | आप फिर से ऑनलाइन हैं। |  |
+| common:units.kg | kg | కిలో |  | किलो |  |
+| common:units.dozen | dozen | డజను |  | दर्जन |  |
+| common:units.bunch | bunch | కట్ట |  | गुच्छा |  |
+| common:units.piece | piece | ఒక్కటి |  | नग |  |
+| common:units.km | km | కి.మీ |  | किमी |  |
+| common:stepper.decrease | Decrease {{label}} | {{label}} తగ్గించండి |  | {{label}} घटाएँ |  |
+| common:stepper.increase | Increase {{label}} | {{label}} పెంచండి |  | {{label}} बढ़ाएँ |  |
+| common:comingSoon.title | Coming soon | త్వరలో వస్తుంది |  | जल्द आ रहा है |  |
+| common:comingSoon.message | This screen is being built and will be ready in a later update. | ఈ స్క్రీన్ తయారవుతోంది, తరువాతి అప్‌డేట్‌లో అందుబాటులోకి వస్తుంది. |  | यह स्क्रीन बनाई जा रही है और अगले अपडेट में उपलब्ध होगी। |  |
+| common:notFound.title | Page not found | పేజీ కనబడలేదు |  | पेज नहीं मिला |  |
+| common:notFound.message | We could not find this page. | ఈ పేజీని మేము కనుగొనలేకపోయాము. |  | हमें यह पेज नहीं मिला। |  |
+| common:errors.title | Something went wrong | ఏదో పొరపాటు జరిగింది |  | कुछ गलत हो गया |  |
+| common:errors.generic | Something went wrong. Please try again. | ఏదో పొరపాటు జరిగింది. దయచేసి మళ్ళీ ప్రయత్నించండి. |  | कुछ गलत हो गया। कृपया फिर से कोशिश करें। |  |
+| common:errors.NETWORK_ERROR | No internet connection. Please check your network and try again. | ఇంటర్నెట్ కనెక్షన్ లేదు. మీ నెట్‌వర్క్‌ను చూసి మళ్ళీ ప్రయత్నించండి. |  | इंटरनेट कनेक्शन नहीं है। अपना नेटवर्क जाँचें और फिर से कोशिश करें। |  |
+| common:errors.RATE_LIMITED | Too many attempts. Please wait a moment and try again. | చాలా ఎక్కువ ప్రయత్నాలు. కొద్దిసేపు ఆగి మళ్ళీ ప్రయత్నించండి. |  | बहुत अधिक प्रयास। थोड़ा रुककर फिर से कोशिश करें। |  |
+| common:errors.INTERNAL_ERROR | Our server had a problem. Please try again. | మా సర్వర్‌లో సమస్య వచ్చింది. దయచేసి మళ్ళీ ప్రయత్నించండి. |  | हमारे सर्वर में समस्या आई। कृपया फिर से कोशिश करें। |  |
+| common:errors.AUTH_REQUIRED | Please log in to continue. | కొనసాగడానికి దయచేసి లాగిన్ అవ్వండి. |  | आगे बढ़ने के लिए कृपया लॉगिन करें। |  |
+| common:errors.REFRESH_INVALID | Your session has ended. Please log in again. | మీ సెషన్ ముగిసింది. దయచేసి మళ్ళీ లాగిన్ అవ్వండి. |  | आपका सत्र समाप्त हो गया। कृपया फिर से लॉगिन करें। |  |
+| common:errors.FORBIDDEN | You do not have access to this. | దీనికి మీకు అనుమతి లేదు. |  | आपको इसकी अनुमति नहीं है। |  |
+| common:errors.NOT_FOUND | We could not find what you were looking for. | మీరు వెతుకుతున్నది కనబడలేదు. |  | आप जो ढूँढ रहे थे वह नहीं मिला। |  |
+| common:errors.VALIDATION_ERROR | Some details are not correct. Please check and try again. | కొన్ని వివరాలు సరిగ్గా లేవు. దయచేసి చూసి మళ్ళీ ప్రయత్నించండి. |  | कुछ जानकारी सही नहीं है। कृपया जाँचकर फिर से कोशिश करें। |  |
+| common:weekdays.mon | Monday | సోమవారం |  | सोमवार |  |
+| common:weekdays.tue | Tuesday | మంగళవారం |  | मंगलवार |  |
+| common:weekdays.wed | Wednesday | బుధవారం |  | बुधवार |  |
+| common:weekdays.thu | Thursday | గురువారం |  | गुरुवार |  |
+| common:weekdays.fri | Friday | శుక్రవారం |  | शुक्रवार |  |
+| common:weekdays.sat | Saturday | శనివారం |  | शनिवार |  |
+| common:weekdays.sun | Sunday | ఆదివారం |  | रविवार |  |
+| common:states.andhraPradesh | Andhra Pradesh | ఆంధ్రప్రదేశ్ |  | आंध्र प्रदेश |  |
+| common:states.telangana | Telangana | తెలంగాణ |  | तेलंगाना |  |
+| devui:title | Component gallery | కాంపోనెంట్ గ్యాలరీ |  | कंपोनेंट गैलरी |  |
+| devui:intro | Every reusable component, shown in the current language. Switch the language to check the layout. | ప్రతి కాంపోనెంట్ ప్రస్తుత భాషలో చూపబడింది. లేఅవుట్ చూడటానికి భాష మార్చండి. |  | हर कंपोनेंट मौजूदा भाषा में दिखाया गया है। लेआउट जाँचने के लिए भाषा बदलें। |  |
+| devui:sections.buttons | Big buttons | పెద్ద బటన్లు |  | बड़े बटन |  |
+| devui:sections.tiles | Icon tiles | ఐకాన్ టైల్స్ |  | आइकन टाइल |  |
+| devui:sections.stepper | Quantity stepper | పరిమాణం మార్చే బటన్లు |  | मात्रा बदलने के बटन |  |
+| devui:sections.presets | Preset chips | త్వరిత ఎంపికలు |  | झटपट विकल्प |  |
+| devui:sections.feedback | Toast messages | సందేశాలు |  | संदेश |  |
+| devui:sections.loading | Loading skeleton | లోడ్ అవుతున్న రూపం |  | लोड होता हुआ रूप |  |
+| devui:sections.empty | Empty state | ఖాళీ స్థితి |  | खाली स्थिति |  |
+| devui:sections.error | Error state | పొరపాటు స్థితి |  | त्रुटि स्थिति |  |
+| devui:sections.confirm | Confirmation sheet | నిర్ధారణ షీట్ |  | पुष्टि शीट |  |
+| devui:sections.nav | Bottom navigation | కింది మెనూ |  | नीचे का मेनू |  |
+| devui:samples.sell | Sell produce | పంట అమ్మండి |  | फ़सल बेचें |  |
+| devui:samples.myOrders | My orders | నా ఆర్డర్లు |  | मेरे ऑर्डर |  |
+| devui:samples.marketPrices | Market prices | మార్కెట్ ధరలు |  | मंडी भाव |  |
+| devui:samples.assistant | Ask assistant | సహాయకుడిని అడగండి |  | सहायक से पूछें |  |
+| devui:samples.callAgent | Call my agent | నా ఏజెంట్‌కు కాల్ చేయండి |  | मेरे एजेंट को कॉल करें |  |
+| devui:samples.deleteListing | Delete listing | లిస్టింగ్ తొలగించండి |  | लिस्टिंग हटाएँ |  |
+| devui:samples.saving | Saving | సేవ్ అవుతోంది |  | सेव हो रहा है |  |
+| devui:samples.howMuch | How many kg? | ఎన్ని కిలోలు? |  | कितने किलो? |  |
+| devui:samples.price | Price per kg | కిలో ధర |  | प्रति किलो भाव |  |
+| devui:samples.toastSaved | Listing saved | లిస్టింగ్ సేవ్ అయింది |  | लिस्टिंग सेव हो गई |  |
+| devui:samples.toastError | Could not save. Please try again. | సేవ్ కాలేదు. దయచేసి మళ్ళీ ప్రయత్నించండి. |  | सेव नहीं हो सका। कृपया फिर से कोशिश करें। |  |
+| devui:samples.showToast | Show message | సందేశం చూపించండి |  | संदेश दिखाएँ |  |
+| devui:samples.showErrorToast | Show error message | పొరపాటు సందేశం చూపించండి |  | त्रुटि संदेश दिखाएँ |  |
+| devui:samples.noOrdersTitle | No orders yet | ఇంకా ఆర్డర్లు లేవు |  | अभी कोई ऑर्डर नहीं |  |
+| devui:samples.noOrdersMessage | When buyers order your produce, the orders will appear here. | కొనుగోలుదారులు మీ పంటను ఆర్డర్ చేసినప్పుడు, ఆర్డర్లు ఇక్కడ కనిపిస్తాయి. |  | जब खरीदार आपकी फ़सल ऑर्डर करेंगे, ऑर्डर यहाँ दिखेंगे। |  |
+| devui:samples.openConfirm | Remove tomato listing | టమాటా లిస్టింగ్ తీసివేయండి |  | टमाटर लिस्टिंग हटाएँ |  |
+| devui:samples.confirmTitle | Remove this listing? | ఈ లిస్టింగ్ తీసివేయాలా? |  | यह लिस्टिंग हटाएँ? |  |
+| devui:samples.confirmMessage | Buyers will no longer see your tomatoes. You can add them again later. | కొనుగోలుదారులకు మీ టమాటాలు ఇక కనిపించవు. తరువాత మళ్ళీ జోడించవచ్చు. |  | खरीदारों को अब आपके टमाटर नहीं दिखेंगे। आप बाद में फिर से जोड़ सकते हैं। |  |
+| devui:samples.confirmAction | Yes, remove | అవును, తీసివేయండి |  | हाँ, हटाएँ |  |
+| devui:samples.confirmed | Listing removed | లిస్టింగ్ తీసివేయబడింది |  | लिस्टिंग हटा दी गई |  |
+| devui:samples.badgeNew | new | కొత్తవి |  | नए |  |
+| farmer:home.greeting | Namaste, {{name}} | నమస్కారం, {{name}} |  | नमस्ते, {{name}} |  |
+| farmer:home.greetingNoName | Namaste | నమస్కారం |  | नमस्ते |  |
+| farmer:home.glance | Today at a glance | ఈరోజు ఒక్క చూపులో |  | आज एक नज़र में |  |
+| farmer:home.todayOrders | Orders today | ఈరోజు ఆర్డర్లు |  | आज के ऑर्डर |  |
+| farmer:home.pendingDeliveries | Waiting to deliver | డెలివరీ చేయాల్సినవి |  | डिलीवरी बाकी |  |
+| farmer:home.lowStock | Running low | తక్కువగా ఉన్నవి |  | कम बचा है |  |
+| farmer:home.lowItem | {{crop}}: {{left}} {{unit}} left | {{crop}}: ఇంకా {{left}} {{unit}} మిగిలింది |  | {{crop}}: {{left}} {{unit}} बचा है |  |
+| farmer:home.tasks | What do you want to do? | మీరు ఏమి చేయాలనుకుంటున్నారు? |  | आप क्या करना चाहते हैं? |  |
+| farmer:tiles.sell | Sell produce | పంట అమ్మండి |  | फ़सल बेचें |  |
+| farmer:tiles.products | My products | నా పంటలు |  | मेरे उत्पाद |  |
+| farmer:tiles.orders | My orders | నా ఆర్డర్లు |  | मेरे ऑर्डर |  |
+| farmer:tiles.prices | Market prices | మార్కెట్ ధరలు |  | मंडी भाव |  |
+| farmer:tiles.assistant | Ask assistant | సహాయం అడగండి |  | सहायक से पूछें |  |
+| farmer:tiles.callAgent | Call my agent | నా ఏజెంట్‌కు కాల్ |  | मेरे एजेंट को कॉल |  |
+| farmer:tiles.callSupport | Call support | సపోర్ట్‌కు కాల్ |  | सहायता को कॉल |  |
+| farmer:tiles.noAgent | No agent yet | ఇంకా ఏజెంట్ లేరు |  | अभी कोई एजेंट नहीं |  |
+| farmer:tiles.newOrders | new | కొత్తవి |  | नए |  |
+| farmer:products.title | My products | నా పంటలు |  | मेरे उत्पाद |  |
+| farmer:products.filterLabel | Show | చూపించు |  | दिखाएँ |  |
+| farmer:products.filters.all | All | అన్నీ |  | सभी |  |
+| farmer:products.filters.available | Selling | అమ్ముతున్నవి |  | बिक रहे |  |
+| farmer:products.filters.low | Running low | తక్కువగా ఉన్నవి |  | कम बचे |  |
+| farmer:products.filters.out_of_stock | Out of stock | అయిపోయినవి |  | खत्म |  |
+| farmer:products.filters.paused | Paused | ఆపినవి |  | रोके गए |  |
+| farmer:products.status.available | Selling | అమ్ముతున్నారు |  | बिक रहा है |  |
+| farmer:products.status.out_of_stock | Out of stock | అయిపోయింది |  | खत्म |  |
+| farmer:products.status.paused | Paused | ఆపారు |  | रोका गया |  |
+| farmer:products.left | {{left}} of {{total}} {{unit}} left | {{total}} {{unit}}లో {{left}} మిగిలింది |  | {{total}} {{unit}} में से {{left}} बचा है |  |
+| farmer:products.price | {{price}} per {{unit}} | {{unit}}కు {{price}} |  | {{price}} प्रति {{unit}} |  |
+| farmer:products.harvested | Harvested {{date}} | {{date}}న కోశారు |  | {{date}} को तोड़ा |  |
+| farmer:products.lowBadge | Running low | తక్కువగా ఉంది |  | कम बचा है |  |
+| farmer:products.oldWarning | Harvested long ago. Check it is still fresh. | చాలా రోజుల క్రితం కోశారు. ఇంకా తాజాగా ఉందో చూడండి. |  | काफ़ी पहले तोड़ा गया। देख लें कि अभी भी ताज़ा है। |  |
+| farmer:products.emptyTitle | No products yet | ఇంకా ఉత్పత్తులు లేవు |  | अभी कोई उत्पाद नहीं |  |
+| farmer:products.emptyMessage | Add your first crop and nearby buyers will see it. | మీ మొదటి పంటను జోడించండి, దగ్గరలోని కొనుగోలుదారులకు కనిపిస్తుంది. |  | अपनी पहली फ़सल जोड़ें, पास के खरीदारों को दिखेगी। |  |
+| farmer:products.emptyFilteredTitle | Nothing here | ఇక్కడ ఏమీ లేదు |  | यहाँ कुछ नहीं |  |
+| farmer:products.emptyFilteredMessage | None of your products match this filter. | ఈ ఎంపికకు సరిపోయే ఉత్పత్తులు లేవు. |  | इस विकल्प से कोई उत्पाद मेल नहीं खाता। |  |
+| farmer:products.showing | Showing {{shown}} of {{total}} | {{total}}లో {{shown}} చూపిస్తున్నాము |  | {{total}} में से {{shown}} दिखा रहे हैं |  |
+| farmer:products.loadMore | Show more | మరిన్ని చూపించు |  | और दिखाएँ |  |
+| farmer:products.manage | Manage | నిర్వహించండి |  | प्रबंधित करें |  |
+| farmer:products.manageTitle | {{crop}}: what do you want to do? | {{crop}}: మీరు ఏమి చేయాలనుకుంటున్నారు? |  | {{crop}}: आप क्या करना चाहते हैं? |  |
+| farmer:products.actions.edit | Edit price or quantity | ధర లేదా పరిమాణం మార్చండి |  | भाव या मात्रा बदलें |  |
+| farmer:products.actions.pause | Pause selling | అమ్మకం ఆపండి |  | बिक्री रोकें |  |
+| farmer:products.actions.resume | Start selling again | మళ్ళీ అమ్మడం మొదలుపెట్టండి |  | फिर से बेचना शुरू करें |  |
+| farmer:products.actions.outOfStock | Mark out of stock | అయిపోయింది అని గుర్తించండి |  | खत्म के रूप में चिह्नित करें |  |
+| farmer:products.actions.sellAgain | Sell again | మళ్ళీ అమ్మండి |  | फिर से बेचें |  |
+| farmer:products.actions.delete | Delete listing | లిస్టింగ్ తొలగించండి |  | लिस्टिंग हटाएँ |  |
+| farmer:products.editTitle | Edit listing | లిస్టింగ్ మార్చండి |  | लिस्टिंग बदलें |  |
+| farmer:products.save | Save | సేవ్ చేయండి |  | सेव करें |  |
+| farmer:products.harvestKeep | Keep harvest date | కోత తేదీ అలాగే ఉంచండి |  | तुड़ाई की तारीख वही रखें |  |
+| farmer:products.harvestToday | Harvested today | ఈరోజు కోశాను |  | आज तोड़ा |  |
+| farmer:products.sellAgainTitle | Sell {{crop}} again | {{crop}} మళ్ళీ అమ్మండి |  | {{crop}} फिर से बेचें |  |
+| farmer:products.sellAgainHint | Same crop, price and photos, harvested today. | అదే పంట, ధర, ఫోటోలు; ఈరోజు కోసినట్లు. |  | वही फ़सल, भाव और फ़ोटो; आज तोड़ी हुई। |  |
+| farmer:products.deleteTitle | Delete this listing? | ఈ లిస్టింగ్ తొలగించాలా? |  | यह लिस्टिंग हटाएँ? |  |
+| farmer:products.deleteMessage | Buyers will no longer see it. Past orders are kept. | కొనుగోలుదారులకు ఇక కనిపించదు. పాత ఆర్డర్లు అలాగే ఉంటాయి. |  | खरीदारों को अब यह नहीं दिखेगी। पुराने ऑर्डर बने रहेंगे। |  |
+| farmer:products.deleteConfirm | Yes, delete | అవును, తొలగించండి |  | हाँ, हटाएँ |  |
+| farmer:products.done.edit | Listing updated. | లిస్టింగ్ మార్చబడింది. |  | लिस्टिंग बदल दी गई। |  |
+| farmer:products.done.pause | Listing paused. | లిస్టింగ్ ఆపబడింది. |  | लिस्टिंग रोकी गई। |  |
+| farmer:products.done.resume | Selling again. | మళ్ళీ అమ్ముతున్నారు. |  | फिर से बिक रही है। |  |
+| farmer:products.done.outOfStock | Marked out of stock. | అయిపోయింది అని గుర్తించాము. |  | खत्म के रूप में चिह्नित। |  |
+| farmer:products.done.sellAgain | New listing published. | కొత్త లిస్టింగ్ ప్రచురించబడింది. |  | नई लिस्टिंग प्रकाशित हुई। |  |
+| farmer:products.done.delete | Listing deleted. | లిస్టింగ్ తొలగించబడింది. |  | लिस्टिंग हटा दी गई। |  |
+| farmer:products.pausedExpired | Paused automatically: harvested too long ago. Edit the harvest date to sell again. | చాలా రోజుల క్రితం కోసినందున దానంతట అదే ఆపబడింది. మళ్ళీ అమ్మడానికి కోత తేదీ మార్చండి. |  | बहुत पहले तोड़ी गई थी, इसलिए अपने आप रोकी गई। फिर से बेचने के लिए तुड़ाई की तारीख बदलें। |  |
+| farmer:products.errors.QUANTITY_BELOW_SOLD | Buyers already ordered more than this. Choose a bigger quantity. | కొనుగోలుదారులు ఇప్పటికే ఇంతకంటే ఎక్కువ ఆర్డర్ చేశారు. పెద్ద పరిమాణం ఎంచుకోండి. |  | खरीदार पहले ही इससे ज़्यादा ऑर्डर कर चुके हैं। बड़ी मात्रा चुनें। |  |
+| farmer:products.errors.LISTING_EXPIRED | Harvested too long ago. Edit the harvest date first. | చాలా రోజుల క్రితం కోశారు. ముందుగా కోత తేదీ మార్చండి. |  | बहुत पहले तोड़ी गई। पहले तुड़ाई की तारीख बदलें। |  |
+| farmer:products.errors.INVALID_STATUS_CHANGE | This listing just changed. Please try again. | ఈ లిస్టింగ్ ఇప్పుడే మారింది. దయచేసి మళ్ళీ ప్రయత్నించండి. |  | यह लिस्टिंग अभी बदली है। कृपया फिर से कोशिश करें। |  |
+| farmer:profile.title | My profile | నా ప్రొఫైల్ |  | मेरी प्रोफ़ाइल |  |
+| farmer:profile.farm | Farm details | పొలం వివరాలు |  | खेत की जानकारी |  |
+| farmer:profile.location | Farm location | పొలం స్థానం |  | खेत की जगह |  |
+| farmer:profile.delivery | Delivery | డెలివరీ |  | डिलीवरी |  |
+| farmer:profile.language | Language | భాష |  | भाषा |  |
+| farmer:profile.account | Account | ఖాతా |  | खाता |  |
+| farmer:profile.edit | Edit | మార్చండి |  | बदलें |  |
+| farmer:profile.editTitle | Edit farm details | పొలం వివరాలు మార్చండి |  | खेत की जानकारी बदलें |  |
+| farmer:profile.save | Save changes | మార్పులు సేవ్ చేయండి |  | बदलाव सेव करें |  |
+| farmer:profile.saved | Your details are saved. | మీ వివరాలు సేవ్ అయ్యాయి. |  | आपकी जानकारी सेव हो गई। |  |
+| farmer:profile.noLocation | Not shared. Buyers find you by pincode. | పంచుకోలేదు. కొనుగోలుదారులు పిన్‌కోడ్ ద్వారా మిమ్మల్ని కనుగొంటారు. |  | साझा नहीं की। खरीदार पिनकोड से आपको ढूँढेंगे। |  |
+| farmer:profile.locationShared | Shared. Buyers only see the approximate distance. | పంచుకున్నారు. కొనుగోలుదారులకు సుమారు దూరం మాత్రమే కనిపిస్తుంది. |  | साझा की। खरीदारों को सिर्फ़ अनुमानित दूरी दिखती है। |  |
+| farmer:profile.days | Delivery days | డెలివరీ రోజులు |  | डिलीवरी के दिन |  |
+| farmer:profile.cutoff | Order until {{time}} for the next delivery | తదుపరి డెలివరీకి {{time}} వరకు ఆర్డర్ చేయవచ్చు |  | अगली डिलीवरी के लिए {{time}} तक ऑर्डर |  |
+| farmer:profile.radius | Up to {{km}} km | {{km}} కి.మీ వరకు |  | {{km}} किमी तक |  |
+| farmer:profile.minOrder | Smallest order: {{amount}} | కనీస ఆర్డర్: {{amount}} |  | सबसे छोटा ऑर्डर: {{amount}} |  |
+| farmer:profile.fee | Delivery charge: {{amount}} | డెలివరీ ఛార్జీ: {{amount}} |  | डिलीवरी शुल्क: {{amount}} |  |
+| farmer:profile.pincodes | Delivers to: {{list}} | డెలివరీ చేసేది: {{list}} |  | यहाँ डिलीवरी: {{list}} |  |
+| farmer:profile.phone | Phone | ఫోన్ |  | फ़ोन |  |
+| farmer:profile.logoutAll | Log out on all phones | అన్ని ఫోన్లలో లాగ్ అవుట్ |  | सभी फ़ोन पर लॉग आउट |  |
+| farmer:profile.logoutAllTitle | Log out on all phones? | అన్ని ఫోన్లలో లాగ్ అవుట్ చేయాలా? |  | सभी फ़ोन पर लॉग आउट करें? |  |
+| farmer:profile.logoutAllMessage | You will need an SMS code to log in again on every phone, including this one. | ఈ ఫోన్‌తో సహా ప్రతి ఫోన్‌లో మళ్ళీ లాగిన్ అవ్వడానికి SMS కోడ్ కావాలి. |  | इस फ़ोन समेत हर फ़ोन पर फिर से लॉगिन करने के लिए SMS कोड चाहिए होगा। |  |
+| farmer:profile.logoutAllConfirm | Yes, log out everywhere | అవును, అన్నిచోట్లా లాగ్ అవుట్ |  | हाँ, हर जगह लॉग आउट करें |  |
+| farmer:sell.title | Sell produce | పంట అమ్మండి |  | फ़सल बेचें |  |
+| farmer:sell.photosHeading | Photos of your produce | మీ పంట ఫోటోలు |  | आपकी फ़सल की फ़ोटो |  |
+| farmer:sell.photosHint | Take a clear photo in daylight, close to the produce. Up to {{max}} photos. | పగటి వెలుతురులో, పంటకు దగ్గరగా స్పష్టమైన ఫోటో తీయండి. గరిష్టంగా {{max}} ఫోటోలు. |  | दिन की रोशनी में, फ़सल के पास से साफ़ फ़ोटो लें। ज़्यादा से ज़्यादा {{max}} फ़ोटो। |  |
+| farmer:sell.count | {{count}} of {{max}} photos | {{max}}లో {{count}} ఫోటోలు |  | {{max}} में से {{count}} फ़ोटो |  |
+| farmer:sell.takePhoto | Take photo | ఫోటో తీయండి |  | फ़ोटो लें |  |
+| farmer:sell.gallery | Choose from gallery | గ్యాలరీ నుండి ఎంచుకోండి |  | गैलरी से चुनें |  |
+| farmer:sell.remove | Remove photo | ఫోటో తీసివేయండి |  | फ़ोटो हटाएँ |  |
+| farmer:sell.retry | Try again | మళ్ళీ ప్రయత్నించండి |  | फिर से कोशिश करें |  |
+| farmer:sell.status.preparing | Preparing… | సిద్ధం చేస్తున్నాము… |  | तैयार कर रहे हैं… |  |
+| farmer:sell.status.uploading | Uploading {{percent}}% | అప్‌లోడ్ అవుతోంది {{percent}}% |  | अपलोड हो रहा है {{percent}}% |  |
+| farmer:sell.status.waiting | Waiting for internet | ఇంటర్నెట్ కోసం వేచి ఉంది |  | इंटरनेट का इंतज़ार |  |
+| farmer:sell.status.uploaded | Uploaded | అప్‌లోడ్ అయింది |  | अपलोड हो गया |  |
+| farmer:sell.status.failed | Upload failed | అప్‌లోడ్ కాలేదు |  | अपलोड नहीं हुआ |  |
+| farmer:sell.errors.UNKNOWN_CROP | This crop is not available. Choose another. | ఈ పంట అందుబాటులో లేదు. వేరేది ఎంచుకోండి. |  | यह फ़सल उपलब्ध नहीं है। दूसरी चुनें। |  |
+| farmer:sell.errors.UNIT_NOT_ALLOWED | Choose a unit from the list. | జాబితా నుండి కొలత ఎంచుకోండి. |  | सूची से इकाई चुनें। |  |
+| farmer:sell.errors.HARVEST_IN_FUTURE | The harvest date cannot be in the future. | కోత తేదీ భవిష్యత్తులో ఉండకూడదు. |  | तुड़ाई की तारीख भविष्य में नहीं हो सकती। |  |
+| farmer:sell.errors.HARVEST_TOO_OLD | This harvest is too old to sell. Pick a newer date. | ఈ కోత అమ్మడానికి చాలా పాతది. కొత్త తేదీ ఎంచుకోండి. |  | यह तुड़ाई बेचने के लिए बहुत पुरानी है। नई तारीख चुनें। |  |
+| farmer:sell.errors.PHOTOS_UNAVAILABLE | A photo could not be used. Remove it and take it again. | ఒక ఫోటోను ఉపయోగించలేకపోయాము. దాన్ని తీసివేసి మళ్ళీ తీయండి. |  | एक फ़ोटो इस्तेमाल नहीं हो सकी। उसे हटाकर फिर से लें। |  |
+| farmer:sell.waitingNote | You are offline. Photos are saved on this phone and will upload by themselves when the internet is back. | మీరు ఆఫ్‌లైన్‌లో ఉన్నారు. ఫోటోలు ఈ ఫోన్‌లో సేవ్ అయ్యాయి, ఇంటర్నెట్ వచ్చినప్పుడు వాటంతట అవే అప్‌లోడ్ అవుతాయి. |  | आप ऑफ़लाइन हैं। फ़ोटो इस फ़ोन पर सेव हैं और इंटरनेट आने पर अपने आप अपलोड हो जाएँगी। |  |
+| farmer:sell.stepPhotosCrop | Photos and crop | ఫోటోలు, పంట |  | फ़ोटो और फ़सल |  |
+| farmer:sell.stepAmount | Quantity, price and harvest | పరిమాణం, ధర, కోత |  | मात्रा, भाव और तुड़ाई |  |
+| farmer:sell.stepReview | Check and publish | చూసి ప్రచురించండి |  | जाँचें और प्रकाशित करें |  |
+| farmer:sell.cropHeading | Which crop? | ఏ పంట? |  | कौन सी फ़सल? |  |
+| farmer:sell.cropSearch | Search crop | పంటను వెతకండి |  | फ़सल खोजें |  |
+| farmer:sell.cropNone | No crop matches. Try another spelling. | ఏ పంట సరిపోలలేదు. వేరే స్పెల్లింగ్ ప్రయత్నించండి. |  | कोई फ़सल नहीं मिली। दूसरी स्पेलिंग आज़माएँ। |  |
+| farmer:sell.soldBefore | You sold before | మీరు ఇంతకు ముందు అమ్మినవి |  | आपने पहले बेची |  |
+| farmer:sell.categories.all | All | అన్నీ |  | सभी |  |
+| farmer:sell.categories.vegetable | Vegetables | కూరగాయలు |  | सब्ज़ियाँ |  |
+| farmer:sell.categories.leafy | Leafy greens | ఆకుకూరలు |  | पत्तेदार साग |  |
+| farmer:sell.categories.fruit | Fruits | పండ్లు |  | फल |  |
+| farmer:sell.unit | Sold by | అమ్మే కొలత |  | किस में बेचें |  |
+| farmer:sell.quantity | How much do you have? | మీ దగ్గర ఎంత ఉంది? |  | आपके पास कितना है? |  |
+| farmer:sell.price | Price per {{unit}} | ఒక్కో {{unit}} ధర |  | प्रति {{unit}} भाव |  |
+| farmer:sell.priceWarning | This is very different from your last price ({{price}} per {{unit}}). Please check. | ఇది మీ చివరి ధర ({{unit}}కు {{price}}) కంటే చాలా భిన్నంగా ఉంది. దయచేసి చూడండి. |  | यह आपके पिछले भाव ({{price}} प्रति {{unit}}) से बहुत अलग है। कृपया जाँच लें। |  |
+| farmer:sell.harvest | When was it harvested? | ఎప్పుడు కోశారు? |  | कब तोड़ा गया? |  |
+| farmer:sell.today | Today | ఈరోజు |  | आज |  |
+| farmer:sell.yesterday | Yesterday | నిన్న |  | कल |  |
+| farmer:sell.pickDate | Pick a date | తేదీ ఎంచుకోండి |  | तारीख चुनें |  |
+| farmer:sell.harvestDateLabel | Harvest date | కోత తేదీ |  | तुड़ाई की तारीख |  |
+| farmer:sell.needPhoto | Add at least one photo. | కనీసం ఒక ఫోటో జోడించండి. |  | कम से कम एक फ़ोटो जोड़ें। |  |
+| farmer:sell.needCrop | Choose a crop. | పంటను ఎంచుకోండి. |  | फ़सल चुनें। |  |
+| farmer:sell.reviewHeading | Check your listing | మీ లిస్టింగ్ చూడండి |  | अपनी लिस्टिंग जाँचें |  |
+| farmer:sell.total | Total value | మొత్తం విలువ |  | कुल कीमत |  |
+| farmer:sell.readAloud | Read aloud | చదివి వినిపించండి |  | पढ़कर सुनाएँ |  |
+| farmer:sell.readAloudText | {{crop}}. {{quantity}} {{unit}}. {{price}} per {{unit}}. Harvested {{date}}. | {{crop}}. {{quantity}} {{unit}}. {{unit}}కు {{price}}. {{date}}న కోశారు. |  | {{crop}}। {{quantity}} {{unit}}। {{price}} प्रति {{unit}}। {{date}} को तोड़ा। |  |
+| farmer:sell.publish | Publish listing | లిస్టింగ్ ప్రచురించండి |  | लिस्टिंग प्रकाशित करें |  |
+| farmer:sell.published | Your listing is live. Nearby buyers can see it. | మీ లిస్టింగ్ ప్రచురించబడింది. దగ్గరలోని కొనుగోలుదారులు చూడగలరు. |  | आपकी लिस्टिंग प्रकाशित हो गई। पास के खरीदार इसे देख सकते हैं। |  |
+| farmer:sell.photosPending | Waiting for photos to finish uploading. | ఫోటోలు అప్‌లోడ్ అయ్యే వరకు వేచి ఉంది. |  | फ़ोटो अपलोड होने का इंतज़ार है। |  |
+| farmer:sell.offlineQueued | You are offline. Your listing is saved and will be published automatically when the internet is back. | మీరు ఆఫ్‌లైన్‌లో ఉన్నారు. మీ లిస్టింగ్ సేవ్ అయింది, ఇంటర్నెట్ రాగానే దానంతట అదే ప్రచురించబడుతుంది. |  | आप ऑफ़लाइन हैं। आपकी लिस्टिंग सेव है और इंटरनेट आते ही अपने आप प्रकाशित हो जाएगी। |  |
+| farmer:sell.typePrice | Or type the price (₹) | లేదా ధర టైప్ చేయండి (₹) |  | या भाव टाइप करें (₹) |  |
+| farmer:sell.quickPick | Quick pick | త్వరగా ఎంచుకోండి |  | झटपट चुनें |  |
+| farmer:sell.priceRange | Enter a price from ₹1 to {{max}}. | ₹1 నుండి {{max}} వరకు ధర ఇవ్వండి. |  | ₹1 से {{max}} तक का भाव डालें। |  |
+| onboarding:role.title | How will you use AgriConnect? | AgriConnectను మీరు ఎలా ఉపయోగిస్తారు? |  | आप AgriConnect का उपयोग कैसे करेंगे? |  |
+| onboarding:role.farmer | I am a farmer | నేను రైతును |  | मैं किसान हूँ |  |
+| onboarding:role.farmerHint | Sell my vegetables and fruits | నా కూరగాయలు, పండ్లు అమ్ముతాను |  | अपनी सब्ज़ियाँ और फल बेचें |  |
+| onboarding:role.buyer | I want to buy | నేను కొనాలి |  | मुझे खरीदना है |  |
+| onboarding:role.buyerHint | Fresh produce for my home | ఇంటికి తాజా కూరగాయలు, పండ్లు |  | घर के लिए ताज़ी सब्ज़ियाँ और फल |  |
+| onboarding:role.notYou | Not you? Log out | మీరు కాదా? లాగ్ అవుట్ అవ్వండి |  | आप नहीं हैं? लॉग आउट करें |  |
+| onboarding:farmer.title | Your farm details | మీ పొలం వివరాలు |  | आपके खेत की जानकारी |  |
+| onboarding:farmer.detailsHeading | About you | మీ గురించి |  | आपके बारे में |  |
+| onboarding:farmer.locationHeading | Your farm location | మీ పొలం స్థానం |  | आपके खेत की जगह |  |
+| onboarding:farmer.deliveryHeading | How you deliver | మీరు ఎలా డెలివరీ చేస్తారు |  | आप डिलीवरी कैसे करेंगे |  |
+| onboarding:farmer.name | Your name | మీ పేరు |  | आपका नाम |  |
+| onboarding:farmer.state | State | రాష్ట్రం |  | राज्य |  |
+| onboarding:farmer.district | District | జిల్లా |  | ज़िला |  |
+| onboarding:farmer.districtSearch | Search district | జిల్లాను వెతకండి |  | ज़िला खोजें |  |
+| onboarding:farmer.districtNone | No district matches. Check the spelling. | ఏ జిల్లా సరిపోలలేదు. స్పెల్లింగ్ చూడండి. |  | कोई ज़िला नहीं मिला। स्पेलिंग जाँचें। |  |
+| onboarding:farmer.mandal | Mandal | మండలం |  | मंडल |  |
+| onboarding:farmer.village | Village | గ్రామం |  | गाँव |  |
+| onboarding:farmer.pincode | Pincode | పిన్‌కోడ్ |  | पिनकोड |  |
+| onboarding:farmer.radius | How far will you deliver? | ఎంత దూరం వరకు డెలివరీ చేస్తారు? |  | आप कितनी दूर तक डिलीवरी करेंगे? |  |
+| onboarding:farmer.deliveryDays | Which days do you deliver? | ఏ రోజుల్లో డెలివరీ చేస్తారు? |  | आप किन दिनों डिलीवरी करते हैं? |  |
+| onboarding:farmer.cutoff | Latest time to order for next delivery | తదుపరి డెలివరీకి ఆర్డర్ చేయడానికి చివరి సమయం |  | अगली डिलीवरी के लिए ऑर्डर का आखिरी समय |  |
+| onboarding:farmer.minOrder | Smallest order you accept | మీరు తీసుకునే కనీస ఆర్డర్ |  | आप सबसे छोटा कितना ऑर्डर लेंगे |  |
+| onboarding:farmer.fee | Delivery charge per order | ఒక్కో ఆర్డర్‌కు డెలివరీ ఛార్జీ |  | हर ऑर्डर पर डिलीवरी शुल्क |  |
+| onboarding:farmer.servicePincodes | Pincodes you deliver to | మీరు డెలివరీ చేసే పిన్‌కోడ్‌లు |  | जिन पिनकोड में आप डिलीवरी करते हैं |  |
+| onboarding:farmer.servicePincodesHint | Buyers in these pincodes can order from you. | ఈ పిన్‌కోడ్‌లలోని కొనుగోలుదారులు మీ దగ్గర ఆర్డర్ చేయవచ్చు. |  | इन पिनकोड के खरीदार आपसे ऑर्डर कर सकते हैं। |  |
+| onboarding:farmer.servicePincodesRequired | Without your location, add at least one pincode you deliver to. | మీ స్థానం లేకుండా, మీరు డెలివరీ చేసే కనీసం ఒక పిన్‌కోడ్ జోడించండి. |  | जगह के बिना, कम से कम एक पिनकोड जोड़ें जहाँ आप डिलीवरी करते हैं। |  |
+| onboarding:farmer.addPincode | Add pincode | పిన్‌కోడ్ జోడించండి |  | पिनकोड जोड़ें |  |
+| onboarding:farmer.removePincode | Remove {{pincode}} | {{pincode}} తీసివేయండి |  | {{pincode}} हटाएँ |  |
+| onboarding:farmer.submit | Save and start selling | సేవ్ చేసి అమ్మడం మొదలుపెట్టండి |  | सेव करें और बेचना शुरू करें |  |
+| onboarding:buyer.title | Your delivery address | మీ డెలివరీ చిరునామా |  | आपका डिलीवरी पता |  |
+| onboarding:buyer.name | Your name | మీ పేరు |  | आपका नाम |  |
+| onboarding:buyer.pincode | Pincode | పిన్‌కోడ్ |  | पिनकोड |  |
+| onboarding:buyer.landmark | Landmark | గుర్తు (ల్యాండ్‌మార్క్) |  | पहचान की जगह (लैंडमार्क) |  |
+| onboarding:buyer.landmarkHint | Something the farmer can find, for example "Near Hanuman temple". | రైతు సులభంగా కనుగొనగలిగేది, ఉదాహరణకు "హనుమాన్ గుడి దగ్గర". |  | ऐसी जगह जो किसान आसानी से ढूँढ सके, जैसे "हनुमान मंदिर के पास"। |  |
+| onboarding:buyer.houseAndStreet | House number and street (optional) | ఇంటి నంబర్, వీధి (ఐచ్ఛికం) |  | मकान नंबर और गली (वैकल्पिक) |  |
+| onboarding:buyer.area | Area or colony (optional) | ప్రాంతం లేదా కాలనీ (ఐచ్ఛికం) |  | इलाका या कॉलोनी (वैकल्पिक) |  |
+| onboarding:buyer.submit | Save and start shopping | సేవ్ చేసి కొనడం మొదలుపెట్టండి |  | सेव करें और खरीदारी शुरू करें |  |
+| onboarding:location.farmerWhy | Sharing your farm location lets nearby buyers find you. Buyers only see the approximate distance, never your exact location. | మీ పొలం స్థానం పంచుకుంటే దగ్గరలోని కొనుగోలుదారులు మిమ్మల్ని కనుగొంటారు. కొనుగోలుదారులకు సుమారు దూరం మాత్రమే కనిపిస్తుంది, మీ ఖచ్చితమైన స్థానం ఎప్పుడూ కనిపించదు. |  | खेत की जगह साझा करने से पास के खरीदार आपको ढूँढ पाते हैं। खरीदारों को सिर्फ़ अनुमानित दूरी दिखती है, आपकी सटीक जगह कभी नहीं। |  |
+| onboarding:location.buyerWhy | Sharing your location shows you farmers who deliver to you. Farmers see your address only after you order. | మీ స్థానం పంచుకుంటే మీకు డెలివరీ చేసే రైతులు కనిపిస్తారు. మీరు ఆర్డర్ చేసిన తర్వాతే రైతులకు మీ చిరునామా కనిపిస్తుంది. |  | अपनी जगह साझा करने से आपको वे किसान दिखते हैं जो आप तक डिलीवरी करते हैं। ऑर्डर करने के बाद ही किसान को आपका पता दिखता है। |  |
+| onboarding:location.use | Use my location | నా స్థానం ఉపయోగించండి |  | मेरी जगह का उपयोग करें |  |
+| onboarding:location.finding | Finding your location… | మీ స్థానం కనుగొంటున్నాము… |  | आपकी जगह ढूँढ रहे हैं… |  |
+| onboarding:location.saved | Location saved (accurate to about {{meters}} metres). | స్థానం సేవ్ అయింది (సుమారు {{meters}} మీటర్ల ఖచ్చితత్వం). |  | जगह सेव हो गई (लगभग {{meters}} मीटर तक सटीक)। |  |
+| onboarding:location.remove | Remove location | స్థానం తీసివేయండి |  | जगह हटाएँ |  |
+| onboarding:location.denied | Location permission is turned off. That is fine, we will use your pincode instead. | స్థానం అనుమతి ఆపివేయబడింది. పరవాలేదు, మీ పిన్‌కోడ్ ఉపయోగిస్తాము. |  | जगह की अनुमति बंद है। कोई बात नहीं, हम आपका पिनकोड इस्तेमाल करेंगे। |  |
+| onboarding:location.unavailable | We could not find your location. That is fine, we will use your pincode instead. | మీ స్థానం కనుగొనలేకపోయాము. పరవాలేదు, మీ పిన్‌కోడ్ ఉపయోగిస్తాము. |  | आपकी जगह नहीं मिल सकी। कोई बात नहीं, हम आपका पिनकोड इस्तेमाल करेंगे। |  |
+| onboarding:location.unsupported | This phone cannot share its location. We will use your pincode instead. | ఈ ఫోన్ స్థానాన్ని పంచుకోలేదు. మీ పిన్‌కోడ్ ఉపయోగిస్తాము. |  | यह फ़ोन जगह साझा नहीं कर सकता। हम आपका पिनकोड इस्तेमाल करेंगे। |  |
+| onboarding:location.skip | Continue without location | స్థానం లేకుండా కొనసాగించండి |  | जगह के बिना आगे बढ़ें |  |
+| onboarding:location.savedNoAccuracy | Location saved. | స్థానం సేవ్ అయింది. |  | जगह सेव हो गई। |  |
+| onboarding:km | {{count}} km | {{count}} కి.మీ |  | {{count}} किमी |  |
+| onboarding:errors.required | Please fill this in. | దయచేసి దీన్ని నింపండి. |  | कृपया इसे भरें। |  |
+| onboarding:errors.pincode | Enter a 6-digit pincode. | 6 అంకెల పిన్‌కోడ్ ఇవ్వండి. |  | 6 अंकों का पिनकोड डालें। |  |
+| onboarding:errors.pincodeState | This pincode is not in {{state}}. | ఈ పిన్‌కోడ్ {{state}}లో లేదు. |  | यह पिनकोड {{state}} में नहीं है। |  |
+| onboarding:errors.pickDistrict | Please choose your district. | దయచేసి మీ జిల్లాను ఎంచుకోండి. |  | कृपया अपना ज़िला चुनें। |  |
+| onboarding:errors.pickDay | Pick at least one delivery day. | కనీసం ఒక డెలివరీ రోజు ఎంచుకోండి. |  | कम से कम एक डिलीवरी दिन चुनें। |  |
+| onboarding:errors.saveFailed | We could not save. Your answers are kept, please try again. | సేవ్ చేయలేకపోయాము. మీ సమాధానాలు అలాగే ఉన్నాయి, దయచేసి మళ్ళీ ప్రయత్నించండి. |  | सेव नहीं हो सका। आपके जवाब सुरक्षित हैं, कृपया फिर से कोशिश करें। |  |
 
 ## District names (backend/src/data/districts.js)
 

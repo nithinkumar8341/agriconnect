@@ -194,13 +194,27 @@
       - No overflow in en/te/hi.
   - **Test stability:** frontend `testTimeout` raised to 20 s. A few multi-screen flow tests went past 5 s under machine load (the same cause as the backend hooks in Prompt 6). A race in an old AuthProvider test assertion was also fixed.
 
+- **Prompt 8: Farmer product listing flow** (4 commits, 2026-10-25):
+  - **Products API** (farmer-only, own listings only; others' ids answer 404): publish, get, edit (price, quantity, harvest date), status (`pause`, `resume`, `mark_out_of_stock`), sell again (duplicate), soft delete, and the farmer's last price for a crop.
+    - Publishing checks the crop is active, the unit is allowed and the harvest date is sane, then claims the photos in a transaction (one photo can never end up on two listings).
+    - Quantity edits are one conditional pipeline update, so stock can't drop below what buyers already ordered (`QUANTITY_BELOW_SOLD`), even with a concurrent order.
+    - New field `pausedReason` (`farmer` | `expired`). An hourly job pauses listings past the crop's shelf life; resume is refused for those and a fresh harvest date reopens them.
+  - **Sell in three screens** ([ADR 0009](decisions/0009-listing-flow.md)): photos + crop picker (sold-before first, search in te/en/hi), quantity chips + price (pre-filled with the last price, yellow warning at > 50 % difference) + harvest chips, then review with Read aloud and Publish.
+    - The half-made listing is kept on the phone; publishing offline (or while photos upload) waits and publishes by itself.
+  - **My Products:** a Manage sheet per card with edit, pause, start selling again, mark out of stock, sell again and delete (with confirmation); expired listings explain how to relist.
+  - **Fixed along the way:** photos taken before saved drafts finished loading could vanish (restore now merges); "mark out of stock" then restock computed the wrong amount (now withdraws unsold stock).
+  - **Verified:**
+    - 281 backend tests (+21) and 133 frontend tests (+10) pass; lint is clean; the build works.
+    - **Real browser, real stack, 360px (Edge):** publish (8 taps, one price typed), then pause, resume, edit, out of stock, sell again and delete on that listing, each checked against the API; offline publish queued, saved, and published by itself on reconnect; every step plus Manage in te and hi; no sideways overflow.
+    - Found and fixed in that run: a too-high price said "Please fill this in" (now states the range), and the Telugu status badge squeezed crop names to one letter per line.
+
 ## In progress
 
 - Nothing.
 
 ## Next
 
-- Prompt 8: Farmer product listing flow (photo → crop → quantity → price → harvest date → review and publish; My Products actions: edit, pause, out of stock, delete, duplicate; attach uploaded photos; shelf-life expiry).
+- Prompt 9: Buyer discovery with location (nearby farmers and produce, distance, filters).
 
 ## Known issues
 
@@ -212,8 +226,8 @@
 - The frontend bundle is 128 KB gzipped in a single chunk. Route-level code splitting is planned for Prompt 23.
 
 - ai-service tests print a `StarletteDeprecationWarning` saying the httpx-backed `TestClient` is deprecated in Starlette 1.x. Tests pass. The suggested replacement package was not installed because it could not be verified during setup; review it before switching.
-- CI has not run on Prompts 1–7: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
-- 271 frontend UI strings in te/hi are machine-written and await native-speaker review.
+- CI has not run on Prompts 1–8: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
+- 335 frontend UI strings in te/hi are machine-written and await native-speaker review.
 - The 59 crop names in te/hi are machine-written and await native-speaker review.
 - Demo phone numbers (`+9199999000xx`) are invented but could belong to real people: never seed demo data where a real SMS gateway is active.
 - AuditLog and LedgerEntry immutability is enforced in Mongoose only; direct database access could still change rows.
@@ -221,3 +235,5 @@
 - `TRUST_PROXY` for production (Vercel rewrite + Render) is expected to be 2 but is unverified until deploy.
 - The te/hi OTP SMS texts are machine-written and await native-speaker review ([translation-review.md](translation-review.md)).
 - Graceful shutdown can't be checked by hand on Windows (no SIGTERM). Press Ctrl+C in a terminal running `npm run dev`; that sends SIGINT, which takes the same shutdown path.
+- Success toasts sit above the bottom navigation for 5 seconds and can cover the lowest card's button. They can be dismissed; revisit in the UI polish pass.
+- The listing-expiry and photo-cleanup jobs run with `setInterval` inside the web process. With more than one backend instance they would run on each (harmless, as both are idempotent updates), but a proper scheduler is better at scale.

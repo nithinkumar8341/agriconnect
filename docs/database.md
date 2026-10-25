@@ -167,13 +167,14 @@ One listing by one farmer.
 | --- | --- | --- |
 | `farmerId` | ObjectId → users | Owner (checked by `requireOwnership`). |
 | `cropId` | ObjectId → crops | |
-| `photos[]` | ≤5 of `{ url, thumbnailUrl, capturedAt, perceptualHash }` | Upload pipeline in Prompt 7. |
+| `photos[]` | ≤5 of `{ url, thumbnailUrl, capturedAt, perceptualHash }` | Copied from `mediaassets` at publish, in the same transaction that marks those assets `attached`. "Sell again" reuses the same photos. |
 | `quantity` | number ≥ 0 | What was listed. |
 | `availableQuantity` | number, 0 ≤ x ≤ quantity | **Decremented only by a conditional atomic update at checkout** (Prompt 10). Restored on cancel, reject or failure. |
 | `unit` | unit enum | |
 | `pricePerUnit` | paise | |
 | `harvestDate` | date | |
 | `status` | `available` \| `out_of_stock` \| `paused` \| `removed` | `removed` is a soft delete. |
+| `pausedReason` | `farmer` \| `expired` \| null | Why a listing is paused. `expired` is set by the hourly shelf-life job; the farmer relists by editing the harvest date. |
 | `aiResultId` | ObjectId → AIResult \| null | Prompt 19. |
 | `createdByAgentId` | ObjectId → users \| null | Prompt 15. |
 

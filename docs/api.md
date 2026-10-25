@@ -235,6 +235,53 @@ Every route works on the **caller's own** records. The user id always comes from
 | --- | --- | --- | --- |
 | GET | `/farmer/dashboard` | none | `200` dashboard (below) |
 | GET | `/products/mine` | `status` (`available`\|`out_of_stock`\|`paused`\|`low`), `page`, `limit` (1–50, default 20) | `200 { items, page, limit, total }` |
+| GET | `/products/last-price` | `crop` (slug) | `200 { lastPrice: { pricePerUnit, unit, listedAt } \| null }`: the farmer's own most recent listing of that crop |
+
+### Listing your produce
+
+All of these are farmer-only and act **only on the caller's own listings**: another farmer's listing id answers `404 NOT_FOUND`, the same as an id that doesn't exist. Every success returns `{ product }` in the [My products item](#my-products-item) shape, except `DELETE`.
+
+| Method | Path | Body | Success |
+| --- | --- | --- | --- |
+| POST | `/products` | `cropSlug`, `photoAssetIds` (1–5 distinct ids from `POST /uploads/photos`), `quantity` (> 0, ≤ 100,000), `unit`, `pricePerUnit` (paise, whole, ₹1–₹10,000), `harvestDate` (ISO) | `201` |
+| GET | `/products/:id` | none | `200` |
+| PATCH | `/products/:id` | any of `pricePerUnit`, `quantity`, `harvestDate` (at least one) | `200` |
+| POST | `/products/:id/status` | `action`: `pause` \| `resume` \| `mark_out_of_stock` | `200` |
+| POST | `/products/:id/duplicate` | `quantity` | `201`: a new listing, same crop, unit, price and photos, harvested now ("Sell again") |
+| DELETE | `/products/:id` | none | `204`: soft delete (`status: removed`); past orders keep pointing at it |
+
+**Publishing (`POST /products`):**
+- The crop must be active and the unit one of the crop's `allowedUnits`.
+- The harvest date may be at most 12 hours in the future (clock and time-zone slack) and no older than the crop's `shelfLifeDays`.
+- In one transaction, the photos must be the caller's own `pending` uploads; they are copied onto the listing and marked `attached`. If any photo is missing, someone else's or already used, nothing is created (`PHOTOS_UNAVAILABLE`). Two simultaneous publishes with the same photo produce exactly one listing.
+
+**Editing quantity:** the new `quantity` is the total listed. What buyers already ordered (`quantity − availableQuantity`) is kept, so `availableQuantity` becomes `new quantity − sold`. This is one atomic update; if it would go below what was sold the answer is `409 QUANTITY_BELOW_SOLD`, even when an order lands at the same moment.
+
+**Status after an edit:** a listing paused for being too old (`pausedReason: expired`) sells again when given a fresh harvest date; no stock left → `out_of_stock`; stock added to an out-of-stock listing → `available`.
+
+**Status changes:**
+
+| `action` | From | To |
+| --- | --- | --- |
+| `pause` | `available`, `out_of_stock` | `paused` (`pausedReason: farmer`) |
+| `resume` | `paused` | `available` (or `out_of_stock` if nothing is left). Refused with `409 LISTING_EXPIRED` past the crop's shelf life: edit the harvest date instead. |
+| `mark_out_of_stock` | `available` | `out_of_stock`; unsold stock is withdrawn (`quantity` becomes what was sold, `availableQuantity` 0), so a later edit restocks from a clean number |
+
+A change from any other status, or a listing that changed in between (an order arrived), answers `409 INVALID_STATUS_CHANGE`.
+
+**Automatic expiry:** an hourly job pauses `available` and `out_of_stock` listings harvested longer ago than their crop's shelf life, with `pausedReason: expired`, so buyers never order produce that has likely spoiled.
+
+**Errors:**
+
+| Error | When |
+| --- | --- |
+| `400 UNKNOWN_CROP` | Unknown or inactive crop |
+| `400 UNIT_NOT_ALLOWED` | Unit not used for this crop |
+| `400 HARVEST_IN_FUTURE` / `400 HARVEST_TOO_OLD` | Harvest date outside the rules above |
+| `400`/`409 PHOTOS_UNAVAILABLE` | A photo is missing, not yours, or already on a listing |
+| `409 QUANTITY_BELOW_SOLD` | New quantity is less than what buyers already ordered |
+| `409 INVALID_STATUS_CHANGE` | Action not allowed from the current status, or the listing just changed |
+| `409 LISTING_EXPIRED` | Resume past shelf life |
 
 ### Dashboard
 
@@ -264,11 +311,11 @@ Every route works on the **caller's own** records. The user id always comes from
 
 **Fields:**
 - `id`
-- `crop` (`slug`, `names`, `icon`, `category`)
+- `crop` (`slug`, `names`, `icon`, `category`, `shelfLifeDays`, `quantityStep`, `allowedUnits`)
 - `quantity`, `availableQuantity`, `unit`
 - `pricePerUnit` (paise)
-- `status`, `harvestDate`, `updatedAt`
-- `photoUrl` (null until Prompt 7)
+- `status`, `pausedReason` (`farmer` \| `expired` \| null), `harvestDate`, `updatedAt`
+- `photos[]` (`url`, `thumbnailUrl`) and `photoUrl` (the first thumbnail, or null)
 - `isLowStock`
 - `isPastShelfLife` (harvested longer ago than the crop's `shelfLifeDays`)
 
@@ -299,7 +346,7 @@ Every route works on the **caller's own** records. The user id always comes from
 | `429 RATE_LIMITED` | More than 60 uploads per user per hour |
 
 **Lifecycle:**
-- Uploaded photos stay `pending` until a listing uses them (Prompt 8). Pending photos are deleted after 24 hours.
+- Uploaded photos stay `pending` until `POST /products` attaches them. Pending photos are deleted after 24 hours.
 - Near-identical photos from another farmer are recorded server-side for fraud review. The uploader never sees that.
 
 **URLs:** in development they're served from `/uploads/...` (proxied by Vite); in production they're Cloudinary URLs.
