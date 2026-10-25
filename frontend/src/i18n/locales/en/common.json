@@ -29,7 +29,8 @@
     "profile": "Profile",
     "farmers": "Farmers",
     "users": "Users",
-    "settings": "Settings"
+    "settings": "Settings",
+    "cart": "Cart"
   },
   "roles": {
     "farmer": "Farmer",

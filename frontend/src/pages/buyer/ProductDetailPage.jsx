@@ -1,10 +1,18 @@
-import { CircleAlert, Clock, MapPin, UserRound } from 'lucide-react';
+import { ArrowRight, CircleAlert, MapPin, ShoppingCart, UserRound } from 'lucide-react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router';
 import { useAuth } from '../../auth/authContext.js';
+import { toCartItem, useCart } from '../../cart/cartContext.js';
 import { DistanceText } from '../../components/buyer/MarketProductCard.jsx';
 import { Screen } from '../../components/Screen.jsx';
-import { ErrorState, SkeletonList } from '../../components/ui/index.js';
+import {
+  BigButton,
+  ErrorState,
+  QuantityStepper,
+  SkeletonList,
+  useToast,
+} from '../../components/ui/index.js';
 import { useApiRequest } from '../../hooks/useApiRequest.js';
 import { useBuyerLocationParams } from '../../hooks/useBuyerLocationParams.js';
 import { formatDate, formatQuantity, formatRupees, localName } from '../../lib/format.js';
@@ -131,10 +139,55 @@ export function ProductDetailPage() {
         </Link>
       </section>
 
-      <p className="flex items-center gap-2 text-lg text-ink-muted">
-        <Clock aria-hidden="true" className="size-5 shrink-0" />
-        {t('product.orderSoon')}
-      </p>
+      {product.canDeliver && product.status === 'available' && (
+        <AddToCart product={product} unit={unit} />
+      )}
     </Screen>
+  );
+}
+
+// Quantity in the crop's own steps (never more than is left), then one big Add button.
+function AddToCart({ product, unit }) {
+  const { t, i18n } = useTranslation('buyer');
+  const cart = useCart();
+  const toast = useToast();
+  const step = product.crop?.quantityStep ?? 1;
+  const [quantity, setQuantity] = useState(Math.min(step, product.availableQuantity));
+  const inCart = cart.items.find((item) => item.productId === product.id);
+
+  return (
+    <section className="flex flex-col gap-4 rounded-2xl bg-white p-4">
+      <QuantityStepper
+        label={t('product.quantity')}
+        value={quantity}
+        onChange={setQuantity}
+        step={step}
+        min={step}
+        max={product.availableQuantity}
+        unitLabel={unit}
+      />
+      <BigButton
+        icon={ShoppingCart}
+        onClick={() => {
+          cart.add(toCartItem(product, quantity));
+          toast.show(t('product.added'));
+        }}
+      >
+        {t('product.addToCart')}
+      </BigButton>
+      {inCart && (
+        <>
+          <p className="text-center text-lg text-ink-muted">
+            {t('product.inCart', {
+              quantity: formatQuantity(inCart.quantity, i18n.language),
+              unit,
+            })}
+          </p>
+          <BigButton icon={ArrowRight} variant="secondary" to="/buyer/cart">
+            {t('product.goToCart')}
+          </BigButton>
+        </>
+      )}
+    </section>
   );
 }

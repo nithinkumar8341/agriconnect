@@ -4,6 +4,7 @@ import {
   Package,
   Settings,
   ShoppingBasket,
+  ShoppingCart,
   UserRound,
   Users,
   Wheat,
@@ -25,6 +26,7 @@ export const ROLE_SECTIONS = [
     role: 'buyer',
     nav: [
       { to: '/buyer', icon: ShoppingBasket, labelKey: 'nav.home', end: true },
+      { to: '/buyer/cart', icon: ShoppingCart, labelKey: 'nav.cart' },
       { to: '/buyer/orders', icon: ClipboardList, labelKey: 'nav.orders' },
       { to: '/buyer/profile', icon: UserRound, labelKey: 'nav.profile' },
     ],

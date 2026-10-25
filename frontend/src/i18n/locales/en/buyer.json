@@ -68,7 +68,11 @@
     "minOrder": "Minimum order",
     "nextDelivery": "Next delivery",
     "cannotDeliver": "This farmer does not deliver to your location.",
-    "orderSoon": "Ordering opens in the next update."
+    "quantity": "How much?",
+    "addToCart": "Add to cart",
+    "added": "Added to cart.",
+    "goToCart": "Go to cart",
+    "inCart": "{{quantity}} {{unit}} in your cart"
   },
   "farmer": {
     "title": "Farmer",
@@ -84,5 +88,69 @@
     "nothing": "Nothing on sale right now.",
     "reviews": "Reviews",
     "reviewsSoon": "Reviews from buyers will appear here after delivered orders."
+  },
+  "cart": {
+    "title": "My cart",
+    "emptyTitle": "Your cart is empty",
+    "emptyMessage": "Add vegetables and fruits from farmers near you.",
+    "browse": "See produce",
+    "from": "From {{name}}, {{village}}",
+    "remove": "Remove {{crop}}",
+    "itemTotal": "Item total",
+    "deliveryFee": "Delivery fee",
+    "farmerTotal": "Total for this farmer",
+    "belowMinimum": "Add {{amount}} more: this farmer’s minimum order is {{minimum}}.",
+    "deliveryDay": "Delivery day",
+    "deliverTo": "Deliver to",
+    "payment": "Payment",
+    "cod": "Cash on delivery",
+    "upiSoon": "UPI payment comes in the next update.",
+    "summary": "Price summary",
+    "itemsTotal": "Vegetables and fruits",
+    "deliveryTotal": "Delivery",
+    "platformFee": "Platform fee (from the farmer’s share)",
+    "grandTotal": "You pay",
+    "placeOrder": "Place order",
+    "placed": "Order placed. The farmer will confirm it soon.",
+    "changedTitle": "Some things changed",
+    "changes": {
+      "price": "{{crop}}: price is now {{new}} (was {{old}}).",
+      "stock": "{{crop}}: only {{available}} {{unit}} left.",
+      "unavailable": "{{crop}} is no longer available.",
+      "not_delivered": "{{crop}}: this farmer does not deliver to your address."
+    },
+    "acceptChanges": "OK, update my cart",
+    "errors": {
+      "BELOW_MINIMUM": "Some farmers need a bigger order. Add more items or remove theirs.",
+      "INVALID_DELIVERY_DATE": "Choose a delivery day for each farmer.",
+      "COD_LIMIT": "New buyers can pay cash for orders up to {{limit}}. Make the order smaller.",
+      "TOO_MANY_OPEN_ORDERS": "You already have open orders. Please wait until they are delivered.",
+      "COD_BLOCKED": "Cash on delivery is not available on this account.",
+      "ADDRESS_REQUIRED": "Add a delivery address in your profile first."
+    }
+  },
+  "orders": {
+    "title": "My orders",
+    "emptyTitle": "No orders yet",
+    "emptyMessage": "Your orders will appear here.",
+    "status": {
+      "placed": "Waiting for farmer",
+      "accepted": "Accepted",
+      "out_for_delivery": "On the way",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled",
+      "rejected": "Declined by farmer",
+      "failed": "Not delivered"
+    },
+    "delivery": "Delivery {{date}}",
+    "total": "Total {{amount}} · {{method}}",
+    "cancel": "Cancel order",
+    "cancelTitle": "Cancel this order?",
+    "cancelMessage": "The farmer will be told. You can order again any time.",
+    "cancelConfirm": "Yes, cancel",
+    "cancelled": "Order cancelled.",
+    "errors": {
+      "INVALID_STATUS_CHANGE": "The farmer already accepted this order, so it cannot be cancelled here."
+    }
   }
 }

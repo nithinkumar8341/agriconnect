@@ -5,6 +5,8 @@ import { PublicLayout } from '../layouts/PublicLayout.jsx';
 import { RoleLayout } from '../layouts/RoleLayout.jsx';
 import { RootLayout } from '../layouts/RootLayout.jsx';
 import { BuyerHomePage } from '../pages/buyer/BuyerHomePage.jsx';
+import { BuyerOrdersPage } from '../pages/buyer/BuyerOrdersPage.jsx';
+import { CartPage } from '../pages/buyer/CartPage.jsx';
 import { FarmerPublicPage } from '../pages/buyer/FarmerPublicPage.jsx';
 import { ProductDetailPage } from '../pages/buyer/ProductDetailPage.jsx';
 import { ComingSoonPage } from '../pages/ComingSoonPage.jsx';
@@ -32,6 +34,8 @@ const devUiRoute = {
 const BUILT_SCREENS = {
   buyer: {
     '': <BuyerHomePage />,
+    cart: <CartPage />,
+    orders: <BuyerOrdersPage />,
     'products/:id': <ProductDetailPage />,
     'farmers/:id': <FarmerPublicPage />,
   },
