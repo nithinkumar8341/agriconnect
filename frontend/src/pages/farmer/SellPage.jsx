@@ -129,8 +129,12 @@ export function SellPage() {
   function nextFromAmount() {
     const found = {};
     if (!(draft.quantity > 0)) found.quantity = t('onboarding:errors.required');
-    if (!(draft.priceRupees >= 1 && draft.priceRupees <= MAX_PRICE_RUPEES)) {
+    if (!draft.priceRupees) {
       found.price = t('onboarding:errors.required');
+    } else if (!(draft.priceRupees >= 1 && draft.priceRupees <= MAX_PRICE_RUPEES)) {
+      found.price = t('sell.priceRange', {
+        max: formatRupees(MAX_PRICE_RUPEES * 100, language),
+      });
     }
     if (draft.harvestChoice === 'pick' && !draft.harvestDate) {
       found.harvest = t('onboarding:errors.required');

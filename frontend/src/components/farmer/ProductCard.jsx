@@ -45,12 +45,14 @@ export function ProductCard({ product, onManage }) {
               unit,
             })}
           </p>
+          {/* Under the price, not beside the name: Telugu status words are long and would squeeze
+              the crop name to one letter per line on a 360px phone. */}
+          <span
+            className={`self-start rounded-full px-3 py-1 text-base font-semibold ${STATUS_STYLES[product.status]}`}
+          >
+            {t(`products.status.${product.status}`)}
+          </span>
         </div>
-        <span
-          className={`shrink-0 rounded-full px-3 py-1 text-base font-semibold ${STATUS_STYLES[product.status]}`}
-        >
-          {t(`products.status.${product.status}`)}
-        </span>
       </div>
 
       <div className="flex flex-col gap-1">
