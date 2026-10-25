@@ -20,6 +20,8 @@ const productSchema = new mongoose.Schema(
     pricePerUnit: paise({ required: true }),
     harvestDate: { type: Date, required: true },
     status: { type: String, enum: PRODUCT_STATUSES, default: 'available' },
+    // Why a listing is paused: by the farmer, or automatically after the crop's shelf life.
+    pausedReason: { type: String, enum: ['farmer', 'expired', null], default: null },
     aiResultId: { type: mongoose.Schema.Types.ObjectId, ref: 'AIResult', default: null },
     createdByAgentId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', default: null },
     isDemo: { type: Boolean, default: false },

@@ -2,6 +2,7 @@ import { createApp } from './app.js';
 import { connectDb, disconnectDb } from './config/db.js';
 import { loadConfig } from './config/env.js';
 import { createLogger } from './config/logger.js';
+import { startListingExpiryJob } from './jobs/listingExpiry.js';
 import { startMediaCleanupJob } from './jobs/mediaCleanup.js';
 import { createMediaService } from './services/media.service.js';
 import { createStorage } from './services/storage/index.js';
@@ -30,6 +31,7 @@ const server = createApp(config, { logger, storage }).listen(config.port, () => 
   logger.info(`AgriConnect backend listening on http://localhost:${config.port}`);
 });
 startMediaCleanupJob({ mediaService: createMediaService({ storage, logger }), logger });
+startListingExpiryJob({ logger });
 
 let shuttingDown = false;
 

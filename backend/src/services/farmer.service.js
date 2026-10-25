@@ -23,11 +23,20 @@ const lowStockExpr = (percent) => ({
 
 function toCropSummary(crop) {
   return crop
-    ? { slug: crop.slug, names: crop.names, icon: crop.icon, category: crop.category }
+    ? {
+        slug: crop.slug,
+        names: crop.names,
+        icon: crop.icon,
+        category: crop.category,
+        shelfLifeDays: crop.shelfLifeDays,
+        quantityStep: crop.quantityStep,
+        allowedUnits: crop.allowedUnits,
+      }
     : null;
 }
 
-function toOwnProduct(product, { lowStockPercent, now }) {
+// The owner's view of a listing (product.cropId must be populated).
+export function toOwnProduct(product, { lowStockPercent, now = new Date() }) {
   const crop = product.cropId;
   const ageMs = now.getTime() - new Date(product.harvestDate).getTime();
   return {
@@ -38,7 +47,12 @@ function toOwnProduct(product, { lowStockPercent, now }) {
     unit: product.unit,
     pricePerUnit: product.pricePerUnit,
     status: product.status,
+    pausedReason: product.pausedReason ?? null,
     harvestDate: product.harvestDate,
+    photos: (product.photos ?? []).map((photo) => ({
+      url: photo.url,
+      thumbnailUrl: photo.thumbnailUrl ?? photo.url,
+    })),
     updatedAt: product.updatedAt,
     photoUrl: product.photos?.[0]?.thumbnailUrl ?? product.photos?.[0]?.url ?? null,
     isLowStock:
