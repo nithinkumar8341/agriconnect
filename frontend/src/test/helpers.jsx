@@ -41,18 +41,63 @@ export const anonymousHandlers = {
 };
 
 export const sampleProfiles = {
-  farmer: { name: 'Ramu', state: 'Andhra Pradesh', district: 'Krishna', location: null },
+  farmer: {
+    name: 'Ramu',
+    state: 'Andhra Pradesh',
+    district: 'Krishna',
+    mandal: 'Kankipadu',
+    village: 'Kankipadu',
+    pincode: '521151',
+    location: null,
+    deliveryRadiusKm: 10,
+    servicePincodes: ['521151'],
+    deliveryDays: ['mon', 'wed', 'fri'],
+    cutoffTime: '18:00',
+    minOrderValue: 10000,
+    deliveryFee: 2000,
+    verificationLevel: 'phone_verified',
+  },
   buyer: { name: 'Padma', addresses: [] },
 };
 
+export function sampleDashboard(overrides = {}) {
+  return {
+    farmerName: 'Ramu',
+    orders: { today: 0, new: 0, pendingDelivery: 0 },
+    listings: { available: 0, outOfStock: 0, paused: 0 },
+    lowStockPercent: 20,
+    lowStock: [],
+    agent: null,
+    ...overrides,
+  };
+}
+
+const emptyPage = { items: [], page: 1, limit: 20, total: 0 };
+
 // profile: an object (onboarded), null (still needs onboarding); agents/admins never ask for one.
-export function signedInHandlers(user, { profile = sampleProfiles[user.role] ?? null } = {}) {
+export function signedInHandlers(
+  user,
+  { profile = sampleProfiles[user.role] ?? null, dashboard = sampleDashboard() } = {},
+) {
   return {
     'POST /auth/token/refresh': () => [200, { accessToken: 'access-1', user }],
     'POST /auth/logout': () => [204, null],
+    'POST /auth/logout-all': () => [204, null],
     'GET /profile': () => [200, { role: user.role, profile }],
     'PATCH /users/me': (request) => [200, { user: { ...user, language: request.body.language } }],
+    'GET /farmer/dashboard': () => [200, dashboard],
+    'GET /locations/districts': () => [200, testDistricts],
   };
+}
+
+// Answers GET /products/mine?... for any query; tests override it to return listings.
+export function withProducts(handlers, respond = () => [200, emptyPage]) {
+  return new Proxy(handlers, {
+    get(target, key) {
+      if (typeof key === 'string' && key.startsWith('GET /products/mine')) return respond;
+      return target[key];
+    },
+  });
 }
 
 export const testDistricts = {
@@ -122,6 +167,7 @@ export function createFakeBackend({ existingUser = null, existingProfile = null 
       return [200, { profile: db.profile }];
     },
     'GET /locations/districts': () => [200, testDistricts],
+    'GET /farmer/dashboard': () => [200, sampleDashboard({ farmerName: db.profile?.name ?? null })],
     'PATCH /users/me': (request) => {
       db.user = { ...db.user, language: request.body.language };
       return [200, { user: db.user }];

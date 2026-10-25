@@ -52,7 +52,8 @@
     "denied": "Location permission is turned off. That is fine, we will use your pincode instead.",
     "unavailable": "We could not find your location. That is fine, we will use your pincode instead.",
     "unsupported": "This phone cannot share its location. We will use your pincode instead.",
-    "skip": "Continue without location"
+    "skip": "Continue without location",
+    "savedNoAccuracy": "Location saved."
   },
   "km": "{{count}} km",
   "errors": {

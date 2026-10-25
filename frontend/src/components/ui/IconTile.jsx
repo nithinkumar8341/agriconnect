@@ -5,7 +5,17 @@ const TILE =
 
 // A large square shortcut for home screens. `hint` explains a disabled tile (for example "Coming soon")
 // so it never looks broken; `badge` shows a count such as new orders.
-export function IconTile({ icon: Icon, label, to, onClick, badge, badgeLabel, disabled, hint }) {
+export function IconTile({
+  icon: Icon,
+  label,
+  to,
+  href,
+  onClick,
+  badge,
+  badgeLabel,
+  disabled,
+  hint,
+}) {
   const hasBadge = badge > 0;
   // Stacked spans would be read as one run-on word ("Orders3new"), so the spoken name is built
   // explicitly. It starts with the visible label, which voice-control users say to activate it.
@@ -50,6 +60,14 @@ export function IconTile({ icon: Icon, label, to, onClick, badge, badgeLabel, di
       <Link to={to} aria-label={accessibleName} className={interactive}>
         {body}
       </Link>
+    );
+  }
+  // Non-app links such as tel: (one tap opens the phone dialler).
+  if (href) {
+    return (
+      <a href={href} aria-label={accessibleName} className={interactive}>
+        {body}
+      </a>
     );
   }
   return (

@@ -70,7 +70,7 @@ describe('complete sign-up flows', () => {
       minOrderValue: 10000,
       deliveryFee: 2500,
     });
-    expect(await screen.findByText('Signed in as Farmer')).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Namaste, Ramu' })).toBeInTheDocument();
   });
 
   it('new buyer: role, one address screen, then the buyer home', async () => {

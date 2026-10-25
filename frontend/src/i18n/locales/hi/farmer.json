@@ -1,0 +1,75 @@
+{
+  "home": {
+    "greeting": "नमस्ते, {{name}}",
+    "greetingNoName": "नमस्ते",
+    "glance": "आज एक नज़र में",
+    "todayOrders": "आज के ऑर्डर",
+    "pendingDeliveries": "डिलीवरी बाकी",
+    "lowStock": "कम बचा है",
+    "lowItem": "{{crop}}: {{left}} {{unit}} बचा है",
+    "tasks": "आप क्या करना चाहते हैं?"
+  },
+  "tiles": {
+    "sell": "फ़सल बेचें",
+    "products": "मेरे उत्पाद",
+    "orders": "मेरे ऑर्डर",
+    "prices": "मंडी भाव",
+    "assistant": "सहायक से पूछें",
+    "callAgent": "मेरे एजेंट को कॉल",
+    "callSupport": "सहायता को कॉल",
+    "noAgent": "अभी कोई एजेंट नहीं",
+    "newOrders": "नए"
+  },
+  "products": {
+    "title": "मेरे उत्पाद",
+    "filterLabel": "दिखाएँ",
+    "filters": {
+      "all": "सभी",
+      "available": "बिक रहे",
+      "low": "कम बचे",
+      "out_of_stock": "खत्म",
+      "paused": "रोके गए"
+    },
+    "status": {
+      "available": "बिक रहा है",
+      "out_of_stock": "खत्म",
+      "paused": "रोका गया"
+    },
+    "left": "{{total}} {{unit}} में से {{left}} बचा है",
+    "price": "{{price}} प्रति {{unit}}",
+    "harvested": "{{date}} को तोड़ा",
+    "lowBadge": "कम बचा है",
+    "oldWarning": "काफ़ी पहले तोड़ा गया। देख लें कि अभी भी ताज़ा है।",
+    "emptyTitle": "अभी कोई उत्पाद नहीं",
+    "emptyMessage": "अपनी पहली फ़सल जोड़ें, पास के खरीदारों को दिखेगी।",
+    "emptyFilteredTitle": "यहाँ कुछ नहीं",
+    "emptyFilteredMessage": "इस विकल्प से कोई उत्पाद मेल नहीं खाता।",
+    "showing": "{{total}} में से {{shown}} दिखा रहे हैं",
+    "loadMore": "और दिखाएँ"
+  },
+  "profile": {
+    "title": "मेरी प्रोफ़ाइल",
+    "farm": "खेत की जानकारी",
+    "location": "खेत की जगह",
+    "delivery": "डिलीवरी",
+    "language": "भाषा",
+    "account": "खाता",
+    "edit": "बदलें",
+    "editTitle": "खेत की जानकारी बदलें",
+    "save": "बदलाव सेव करें",
+    "saved": "आपकी जानकारी सेव हो गई।",
+    "noLocation": "साझा नहीं की। खरीदार पिनकोड से आपको ढूँढेंगे।",
+    "locationShared": "साझा की। खरीदारों को सिर्फ़ अनुमानित दूरी दिखती है।",
+    "days": "डिलीवरी के दिन",
+    "cutoff": "अगली डिलीवरी के लिए {{time}} तक ऑर्डर",
+    "radius": "{{km}} किमी तक",
+    "minOrder": "सबसे छोटा ऑर्डर: {{amount}}",
+    "fee": "डिलीवरी शुल्क: {{amount}}",
+    "pincodes": "यहाँ डिलीवरी: {{list}}",
+    "phone": "फ़ोन",
+    "logoutAll": "सभी फ़ोन पर लॉग आउट",
+    "logoutAllTitle": "सभी फ़ोन पर लॉग आउट करें?",
+    "logoutAllMessage": "इस फ़ोन समेत हर फ़ोन पर फिर से लॉगिन करने के लिए SMS कोड चाहिए होगा।",
+    "logoutAllConfirm": "हाँ, हर जगह लॉग आउट करें"
+  }
+}

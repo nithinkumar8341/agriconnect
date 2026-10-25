@@ -24,7 +24,7 @@ describe('routing and role guards', () => {
   it('lets a farmer into the farmer area with its bottom menu', async () => {
     renderApp('/farmer', signedInHandlers(testUsers.farmer));
 
-    expect(await screen.findByText('Signed in as Farmer')).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Namaste, Ramu' })).toBeInTheDocument();
     const menu = screen.getByRole('navigation', { name: 'Main menu' });
     expect(menu).toHaveTextContent('My products');
     expect(screen.getByRole('link', { name: 'Home' })).toHaveAttribute('aria-current', 'page');
@@ -61,7 +61,7 @@ describe('routing and role guards', () => {
 
   it('logs out and returns to the login screen', async () => {
     const user = userEvent.setup();
-    const { router } = renderApp('/farmer', signedInHandlers(testUsers.farmer));
+    const { router } = renderApp('/farmer/profile', signedInHandlers(testUsers.farmer));
 
     await user.click(await screen.findByRole('button', { name: 'Log out' }));
 

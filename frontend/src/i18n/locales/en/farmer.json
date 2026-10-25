@@ -1,0 +1,75 @@
+{
+  "home": {
+    "greeting": "Namaste, {{name}}",
+    "greetingNoName": "Namaste",
+    "glance": "Today at a glance",
+    "todayOrders": "Orders today",
+    "pendingDeliveries": "Waiting to deliver",
+    "lowStock": "Running low",
+    "lowItem": "{{crop}}: {{left}} {{unit}} left",
+    "tasks": "What do you want to do?"
+  },
+  "tiles": {
+    "sell": "Sell produce",
+    "products": "My products",
+    "orders": "My orders",
+    "prices": "Market prices",
+    "assistant": "Ask assistant",
+    "callAgent": "Call my agent",
+    "callSupport": "Call support",
+    "noAgent": "No agent yet",
+    "newOrders": "new"
+  },
+  "products": {
+    "title": "My products",
+    "filterLabel": "Show",
+    "filters": {
+      "all": "All",
+      "available": "Selling",
+      "low": "Running low",
+      "out_of_stock": "Out of stock",
+      "paused": "Paused"
+    },
+    "status": {
+      "available": "Selling",
+      "out_of_stock": "Out of stock",
+      "paused": "Paused"
+    },
+    "left": "{{left}} of {{total}} {{unit}} left",
+    "price": "{{price}} per {{unit}}",
+    "harvested": "Harvested {{date}}",
+    "lowBadge": "Running low",
+    "oldWarning": "Harvested long ago. Check it is still fresh.",
+    "emptyTitle": "No products yet",
+    "emptyMessage": "Add your first crop and nearby buyers will see it.",
+    "emptyFilteredTitle": "Nothing here",
+    "emptyFilteredMessage": "None of your products match this filter.",
+    "showing": "Showing {{shown}} of {{total}}",
+    "loadMore": "Show more"
+  },
+  "profile": {
+    "title": "My profile",
+    "farm": "Farm details",
+    "location": "Farm location",
+    "delivery": "Delivery",
+    "language": "Language",
+    "account": "Account",
+    "edit": "Edit",
+    "editTitle": "Edit farm details",
+    "save": "Save changes",
+    "saved": "Your details are saved.",
+    "noLocation": "Not shared. Buyers find you by pincode.",
+    "locationShared": "Shared. Buyers only see the approximate distance.",
+    "days": "Delivery days",
+    "cutoff": "Order until {{time}} for the next delivery",
+    "radius": "Up to {{km}} km",
+    "minOrder": "Smallest order: {{amount}}",
+    "fee": "Delivery charge: {{amount}}",
+    "pincodes": "Delivers to: {{list}}",
+    "phone": "Phone",
+    "logoutAll": "Log out on all phones",
+    "logoutAllTitle": "Log out on all phones?",
+    "logoutAllMessage": "You will need an SMS code to log in again on every phone, including this one.",
+    "logoutAllConfirm": "Yes, log out everywhere"
+  }
+}

@@ -28,7 +28,9 @@ export function LocationCapture({ why, value, onChange }) {
         <>
           <p className="flex items-start gap-2 text-lg font-semibold text-leaf-800">
             <MapPinCheck aria-hidden="true" className="mt-1 size-6 shrink-0" />
-            {t('location.saved', { meters: value.accuracyMeters ?? '?' })}
+            {value.accuracyMeters
+              ? t('location.saved', { meters: value.accuracyMeters })
+              : t('location.savedNoAccuracy')}
           </p>
           <BigButton
             icon={Trash2}

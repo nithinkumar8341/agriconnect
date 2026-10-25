@@ -5,6 +5,9 @@ import { PublicLayout } from '../layouts/PublicLayout.jsx';
 import { RoleLayout } from '../layouts/RoleLayout.jsx';
 import { RootLayout } from '../layouts/RootLayout.jsx';
 import { ComingSoonPage } from '../pages/ComingSoonPage.jsx';
+import { FarmerHomePage } from '../pages/farmer/FarmerHomePage.jsx';
+import { FarmerProfilePage } from '../pages/farmer/FarmerProfilePage.jsx';
+import { MyProductsPage } from '../pages/farmer/MyProductsPage.jsx';
 import { LoginPage } from '../pages/login/LoginPage.jsx';
 import { NotFoundPage } from '../pages/NotFoundPage.jsx';
 import { BuyerOnboardingPage } from '../pages/onboarding/BuyerOnboardingPage.jsx';
@@ -21,27 +24,53 @@ const devUiRoute = {
   lazy: async () => ({ Component: (await import('../pages/DevUiPage.jsx')).DevUiPage }),
 };
 
-// One protected area per role: /farmer, /buyer, /agent, /admin. Each nav entry other than home
-// is a placeholder screen until its prompt builds it.
-const roleRoutes = ROLE_SECTIONS.map(({ role, nav }) => ({
-  path: role,
-  element: <RequireRole roles={[role]} />,
-  children: [
-    {
-      element: <RoleLayout navItems={nav} />,
-      children: [
-        { index: true, element: <RoleHomePage /> },
-        ...nav
-          .filter((item) => !item.end)
-          .map((item) => ({
-            path: item.to.slice(role.length + 2),
-            element: <ComingSoonPage titleKey={item.labelKey} />,
-          })),
-        { path: '*', element: <NotFoundPage /> },
-      ],
-    },
+// Screens built so far, by role and path ('' = home). Any other menu entry shows a placeholder.
+const BUILT_SCREENS = {
+  farmer: {
+    '': <FarmerHomePage />,
+    products: <MyProductsPage />,
+    profile: <FarmerProfilePage />,
+  },
+};
+
+// Destinations reached from home tiles (not the bottom menu) whose screens come in later prompts.
+const TILE_PLACEHOLDERS = {
+  farmer: [
+    { path: 'sell', titleKey: 'farmer:tiles.sell' }, // Prompt 8
+    { path: 'prices', titleKey: 'farmer:tiles.prices' }, // Prompt 18
   ],
-}));
+};
+
+// One protected area per role: /farmer, /buyer, /agent, /admin.
+const roleRoutes = ROLE_SECTIONS.map(({ role, nav }) => {
+  const built = BUILT_SCREENS[role] ?? {};
+  return {
+    path: role,
+    element: <RequireRole roles={[role]} />,
+    children: [
+      {
+        element: <RoleLayout navItems={nav} />,
+        children: [
+          { index: true, element: built[''] ?? <RoleHomePage /> },
+          ...nav
+            .filter((item) => !item.end)
+            .map((item) => {
+              const path = item.to.slice(role.length + 2);
+              return {
+                path,
+                element: built[path] ?? <ComingSoonPage titleKey={item.labelKey} />,
+              };
+            }),
+          ...(TILE_PLACEHOLDERS[role] ?? []).map(({ path, titleKey }) => ({
+            path,
+            element: <ComingSoonPage titleKey={titleKey} />,
+          })),
+          { path: '*', element: <NotFoundPage /> },
+        ],
+      },
+    ],
+  };
+});
 
 export const routes = [
   {
