@@ -49,6 +49,40 @@
       - Planting an OTP debug log makes the log-safety test fail.
     - Manual curl walkthrough against the Docker MongoDB: OTP request, cooldown, wrong code, login with cookie attributes, `/me`, role choice (admin refused), refresh rotation, reuse detection killing the new token too, and admin PIN setup followed by logout-all (old token gives `TOKEN_REVOKED`). The server log had no full phone numbers outside the dev SMS line, and no JWTs.
   - **Not done in this prompt (by plan):** no frontend login screens (Prompt 5) and no AuditLog (Prompt 3; login events only go to logs).
+- **Prompt 3: Core data models and seed data** (3 commits, 2026-10-25), backend only:
+  - **New models** with validation and indexes:
+    - FarmerProfile (2dsphere location), BuyerProfile, Crop, Product
+    - Order (snapshots, price breakdown, status history, hidden delivery OTP), Payment
+    - LedgerEntry (append-only, unique idempotency key), Review (one per order), ReturnRequest, Complaint
+    - Notification (90-day TTL), AuditLog (append-only), FraudFlag, PriceReference (unique per source/commodity/market/date), AppConfig
+    - `User.isDemo` was added.
+  - **Conventions:**
+    - Money is integer paise.
+    - GeoJSON `[lng, lat]` must fall inside India's bounding box (this catches swapped coordinates).
+    - The platform fee is deducted from farmer earnings (ADR 0004).
+  - **Services:**
+    - `computeOrderPricing`.
+    - `recordAudit` / `SYSTEM_ACTOR`.
+    - AppConfig `get`/`getAll`/`set` with code defaults, zod validation per key, and an audited change.
+  - **Seeds:**
+    - `seed:crops`: 59 crops (32 vegetables, 10 leafy, 17 fruits) with en/te/hi names, units, presets, step, shelf life and icon. Writes only new or changed rows.
+    - `seed:admin`: from `SEED_ADMIN_PHONE`; refuses to promote without `--force`; audited.
+    - `seed:demo`: 4 farmers (one agent-assisted, one pincode-only), 3 buyers (one pincode-only), 1 agent, 13 products and 4 orders across `placed`, `accepted`, `delivered` and `cancelled`, all `isDemo`. Stock is consistent with active orders. Production is refused.
+    - `db:indexes`.
+  - **Docs:**
+    - `database.md` rewritten: ER diagram, every collection, indexes, AppConfig defaults, and a who-may-read-and-write matrix.
+    - ADR 0004 and the phase 03 learn note.
+    - 59 crop names added to `translation-review.md`.
+  - **Verified:**
+    - 193 backend tests pass on Windows (1 SIGTERM test skipped), run twice. The 145 auth/foundation tests are unchanged and passing.
+    - Against the Docker MongoDB:
+      - `db:indexes` succeeds.
+      - `seed:crops` run twice: 59 inserted, then 0/0.
+      - `seed:demo` run twice: same counts.
+      - `seed:admin` with no phone exits 1 with a clear message.
+      - The 2dsphere index is present on `farmerprofiles`.
+    - A demo farmer logs in with OTP `123456` (role farmer), and the demo agent is sent to `pin_setup`.
+  - **Not done in this prompt (by plan):** no API routes for the new collections. Those come in Prompts 6–16, which implement the permission matrix in `database.md`.
 
 ## In progress
 
@@ -56,12 +90,15 @@
 
 ## Next
 
-- Prompt 3: Core data models and seed data (seed:crops, seed:admin, seed:demo; AuditLog).
+- Prompt 4: Frontend foundation and design system (Tailwind theme, components, router with role guards, i18n te/en/hi, API client with single-flight refresh, PWA).
 
 ## Known issues
 
 - ai-service tests print a `StarletteDeprecationWarning` saying the httpx-backed `TestClient` is deprecated in Starlette 1.x. Tests pass. The suggested replacement package was not installed because it could not be verified during setup; review it before switching.
-- CI has not run on Prompt 1 or Prompt 2: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
+- CI has not run on Prompts 1–3: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
+- The 59 crop names in te/hi are machine-written and await native-speaker review.
+- Demo phone numbers (`+9199999000xx`) are invented but could belong to real people: never seed demo data where a real SMS gateway is active.
+- AuditLog and LedgerEntry immutability is enforced in Mongoose only; direct database access could still change rows.
 - **Real SMS is not implemented.** India requires DLT registration (sender ID and approved templates) first, so start that early if the pilot needs real SMS. Until then production cannot send OTPs.
 - **Two parallel refreshes from one browser end the session** (they look like token reuse). Prompt 4's API client must run one refresh at a time.
 - `TRUST_PROXY` for production (Vercel rewrite + Render) is expected to be 2 but is unverified until deploy.

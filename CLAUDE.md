@@ -100,6 +100,10 @@ Works end to end in the browser; tests pass; lint passes; i18n keys added (te + 
   - backend: `npm test` (Jest + supertest, native ESM; starts an in-memory MongoDB 7.0.14 replica set, so the first run downloads ~100 MB)
   - frontend: `npm test` (Vitest + Testing Library); `npm run build` for a production build
   - ai-service: `pytest`
-- Seed: (none yet; added in Prompt 3)
+- Seed (in `backend/`, needs MongoDB running; every task syncs indexes first):
+  - `npm run db:indexes`: sync all model indexes
+  - `npm run seed:crops`: upsert the 59-crop catalog (idempotent)
+  - `npm run seed:admin`: create the first admin from `SEED_ADMIN_PHONE` (add `-- --force` to promote an existing user); the admin sets a PIN on first login
+  - `npm run seed:demo`: replace all `isDemo` data with the demo marketplace (refused in production unless `ALLOW_DEMO_SEED=true`). Demo logins: farmers `9999900011`–`14`, buyers `9999900021`–`23`, agent `9999900001`; OTP `123456` in dev
 
 The full prompt sequence lives in `docs/prompt-pack.md`.
