@@ -72,6 +72,12 @@ export const APP_CONFIG_DEFINITIONS = Object.freeze({
     schema: positiveInt,
     description: 'Mandi prices older than this show a "may be outdated" warning.',
   },
+  lowStockPercent: {
+    default: 20,
+    schema: percent,
+    description:
+      'A listing counts as low on stock when what is left is at or below this % of what was listed.',
+  },
   agentListingsNeedFarmerApproval: {
     default: true,
     schema: z.boolean(),
