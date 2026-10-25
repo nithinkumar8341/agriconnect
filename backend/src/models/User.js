@@ -19,6 +19,8 @@ const userSchema = new mongoose.Schema(
     // Access tokens issued before this instant are rejected (set by logout-all).
     tokensValidAfter: { type: Date, default: null },
     lastLoginAt: { type: Date, default: null },
+    // Set only by the demo seed so demo accounts can be found and removed safely.
+    isDemo: { type: Boolean, default: false },
   },
   { timestamps: true },
 );
