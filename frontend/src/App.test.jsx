@@ -5,9 +5,7 @@ describe('App', () => {
   beforeEach(() => {
     vi.stubGlobal(
       'fetch',
-      vi.fn(() =>
-        Promise.resolve({ json: () => Promise.resolve({ message: 'Hello from AgriConnect' }) }),
-      ),
+      vi.fn(() => Promise.resolve({ json: () => Promise.resolve({ status: 'ok', db: 'up' }) })),
     );
   });
 
@@ -15,10 +13,11 @@ describe('App', () => {
     vi.unstubAllGlobals();
   });
 
-  it('renders the heading and the backend greeting', async () => {
+  it('renders the heading and the backend health status', async () => {
     render(<App />);
 
     expect(screen.getByRole('heading', { name: 'AgriConnect' })).toBeInTheDocument();
-    expect(await screen.findByText('Backend says: Hello from AgriConnect')).toBeInTheDocument();
+    expect(await screen.findByText('Backend: ok, database: up')).toBeInTheDocument();
+    expect(fetch).toHaveBeenCalledWith('/api/v1/health', expect.anything());
   });
 });

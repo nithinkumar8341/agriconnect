@@ -87,15 +87,16 @@ Works end to end in the browser; tests pass; lint passes; i18n keys added (te + 
 
 - Install: `npm install` in `frontend/` and `backend/`; in `ai-service/`: `python -m venv .venv`, activate it, then `pip install -r requirements-dev.txt`
 - Database: `docker compose up -d` (MongoDB 7, single-node replica set `rs0` on :27017)
+- Env: backend reads `.env` (copy `backend/.env.example`); variables are validated by `backend/src/config/env.js` and the server refuses to start if any are invalid. Set `TRUST_PROXY=1` and `CORS_ORIGINS` on Render.
 - Dev:
-  - backend: `npm run dev` (port 4000, reloads on change, loads `.env` if present)
+  - backend: `npm run dev` (port 4000, reloads on change, loads `.env` if present; needs MongoDB running). Health: `GET /api/v1/health`
   - frontend: `npm run dev` (port 5173, proxies `/api` to :4000)
   - ai-service: `uvicorn app.main:app --reload --port 8000`
 - Lint:
   - backend / frontend: `npm run lint` (ESLint + Prettier check); `npm run format` to fix formatting
   - ai-service: `ruff check .` and `ruff format --check .`
 - Test:
-  - backend: `npm test` (Jest + supertest, native ESM)
+  - backend: `npm test` (Jest + supertest, native ESM; starts an in-memory MongoDB 7.0.14 replica set, so the first run downloads ~100 MB)
   - frontend: `npm test` (Vitest + Testing Library); `npm run build` for a production build
   - ai-service: `pytest`
 - Seed: (none yet; added in Prompt 3)

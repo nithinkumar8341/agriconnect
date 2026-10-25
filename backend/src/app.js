@@ -8,6 +8,7 @@ import { notFound } from './middleware/notFound.js';
 import { createRateLimiter } from './middleware/rateLimiter.js';
 import { requestId } from './middleware/requestId.js';
 import { sanitizeRequest } from './middleware/sanitize.js';
+import { createApiRouter } from './routes/index.js';
 
 function httpLogLevel(req, res, err) {
   if (err || res.statusCode >= 500) return 'error';
@@ -53,9 +54,7 @@ export function createApp(config, logger = createLogger(config)) {
   app.use(express.json({ limit: config.jsonBodyLimit }));
   app.use(sanitizeRequest);
 
-  app.get('/api/v1/hello', (req, res) => {
-    res.json({ service: 'backend', message: 'Hello from AgriConnect' });
-  });
+  app.use('/api/v1', createApiRouter());
 
   app.use(notFound);
   app.use(createErrorHandler(config));

@@ -21,7 +21,7 @@ Prerequisites: Node.js 22.9+, Python 3.11+, Docker.
 # 1. Database (MongoDB single-node replica set)
 docker compose up -d
 
-# 2. Backend -> http://localhost:4000/api/v1/hello
+# 2. Backend -> http://localhost:4000/api/v1/health
 cd backend && cp .env.example .env && npm install && npm run dev
 
 # 3. Frontend -> http://localhost:5173
