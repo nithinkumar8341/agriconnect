@@ -1,3 +1,4 @@
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
@@ -8,6 +9,7 @@ import { notFound } from './middleware/notFound.js';
 import { createRateLimiter } from './middleware/rateLimiter.js';
 import { requestId } from './middleware/requestId.js';
 import { sanitizeRequest } from './middleware/sanitize.js';
+import { createSmsProvider } from './services/sms/index.js';
 import { createApiRouter } from './routes/index.js';
 
 function httpLogLevel(req, res, err) {
@@ -17,7 +19,10 @@ function httpLogLevel(req, res, err) {
 }
 
 // Building the app separately from server.js lets tests import it without opening a port.
-export function createApp(config, logger = createLogger(config)) {
+export function createApp(
+  config,
+  { logger = createLogger(config), smsProvider = createSmsProvider(config.sms) } = {},
+) {
   const app = express();
   app.set('trust proxy', config.trustProxy);
   app.disable('x-powered-by');
@@ -52,9 +57,10 @@ export function createApp(config, logger = createLogger(config)) {
     }),
   );
   app.use(express.json({ limit: config.jsonBodyLimit }));
+  app.use(cookieParser());
   app.use(sanitizeRequest);
 
-  app.use('/api/v1', createApiRouter());
+  app.use('/api/v1', createApiRouter({ config, logger, smsProvider }));
 
   app.use(notFound);
   app.use(createErrorHandler(config));

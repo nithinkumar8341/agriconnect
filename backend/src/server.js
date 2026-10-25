@@ -22,7 +22,7 @@ try {
   process.exit(1);
 }
 
-const server = createApp(config, logger).listen(config.port, () => {
+const server = createApp(config, { logger }).listen(config.port, () => {
   logger.info(`AgriConnect backend listening on http://localhost:${config.port}`);
 });
 
