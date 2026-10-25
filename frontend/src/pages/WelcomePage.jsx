@@ -10,10 +10,10 @@ import { BigButton } from '../components/ui/BigButton.jsx';
 // First screen: language first (before anything has to be read), then one primary action.
 export function WelcomePage() {
   const { t } = useTranslation();
-  const { status, user } = useAuth();
+  const { status, user, profile } = useAuth();
 
   if (status === 'loading') return <FullPageLoading />;
-  if (status === 'authenticated') return <Navigate to={homePathFor(user)} replace />;
+  if (status === 'authenticated') return <Navigate to={homePathFor(user, profile)} replace />;
 
   return (
     <div className="mx-auto flex min-h-dvh max-w-screen-sm flex-col gap-8 px-4 py-8">

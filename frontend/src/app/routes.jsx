@@ -1,11 +1,15 @@
-import { RequireRole } from '../auth/RequireRole.jsx';
-import { CHOOSE_ROLE_PATH, LOGIN_PATH } from '../auth/roles.js';
+import { RequireOnboardingStep, RequireRole } from '../auth/RequireRole.jsx';
+import { CHOOSE_ROLE_PATH, LOGIN_PATH, onboardingPathFor } from '../auth/roles.js';
 import { ROLE_SECTIONS } from '../layouts/navigation.js';
 import { PublicLayout } from '../layouts/PublicLayout.jsx';
 import { RoleLayout } from '../layouts/RoleLayout.jsx';
 import { RootLayout } from '../layouts/RootLayout.jsx';
 import { ComingSoonPage } from '../pages/ComingSoonPage.jsx';
+import { LoginPage } from '../pages/login/LoginPage.jsx';
 import { NotFoundPage } from '../pages/NotFoundPage.jsx';
+import { BuyerOnboardingPage } from '../pages/onboarding/BuyerOnboardingPage.jsx';
+import { ChooseRolePage } from '../pages/onboarding/ChooseRolePage.jsx';
+import { FarmerOnboardingPage } from '../pages/onboarding/FarmerOnboardingPage.jsx';
 import { RoleHomePage } from '../pages/RoleHomePage.jsx';
 import { WelcomePage } from '../pages/WelcomePage.jsx';
 
@@ -47,11 +51,22 @@ export const routes = [
         element: <PublicLayout />,
         children: [
           { index: true, element: <WelcomePage /> },
-          // Login and role choice screens arrive in Prompt 5.
-          { path: LOGIN_PATH.slice(1), element: <ComingSoonPage titleKey="actions.login" /> },
+          { path: LOGIN_PATH.slice(1), element: <LoginPage /> },
           {
-            path: CHOOSE_ROLE_PATH.slice(1),
-            element: <ComingSoonPage titleKey="comingSoon.title" />,
+            element: <RequireOnboardingStep step="role" />,
+            children: [{ path: CHOOSE_ROLE_PATH.slice(1), element: <ChooseRolePage /> }],
+          },
+          {
+            element: <RequireOnboardingStep step="farmer" />,
+            children: [
+              { path: onboardingPathFor('farmer').slice(1), element: <FarmerOnboardingPage /> },
+            ],
+          },
+          {
+            element: <RequireOnboardingStep step="buyer" />,
+            children: [
+              { path: onboardingPathFor('buyer').slice(1), element: <BuyerOnboardingPage /> },
+            ],
           },
           ...(devUiEnabled ? [devUiRoute] : []),
           { path: '*', element: <NotFoundPage /> },

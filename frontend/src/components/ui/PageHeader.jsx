@@ -22,7 +22,9 @@ export function PageHeader({ title, showBack = true, onBack, actions }) {
             <span>{t('actions.back')}</span>
           </button>
         )}
-        <h1 className="min-w-0 flex-1 truncate text-xl font-bold">{title}</h1>
+        <h1 className="line-clamp-2 min-w-0 flex-1 text-xl leading-tight font-bold break-words">
+          {title}
+        </h1>
         {actions}
         <LanguageSwitcher />
       </div>

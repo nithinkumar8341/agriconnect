@@ -1,0 +1,66 @@
+{
+  "role": {
+    "title": "How will you use AgriConnect?",
+    "farmer": "I am a farmer",
+    "farmerHint": "Sell my vegetables and fruits",
+    "buyer": "I want to buy",
+    "buyerHint": "Fresh produce for my home",
+    "notYou": "Not you? Log out"
+  },
+  "farmer": {
+    "title": "Your farm details",
+    "detailsHeading": "About you",
+    "locationHeading": "Your farm location",
+    "deliveryHeading": "How you deliver",
+    "name": "Your name",
+    "state": "State",
+    "district": "District",
+    "districtSearch": "Search district",
+    "districtNone": "No district matches. Check the spelling.",
+    "mandal": "Mandal",
+    "village": "Village",
+    "pincode": "Pincode",
+    "radius": "How far will you deliver?",
+    "deliveryDays": "Which days do you deliver?",
+    "cutoff": "Latest time to order for next delivery",
+    "minOrder": "Smallest order you accept",
+    "fee": "Delivery charge per order",
+    "servicePincodes": "Pincodes you deliver to",
+    "servicePincodesHint": "Buyers in these pincodes can order from you.",
+    "servicePincodesRequired": "Without your location, add at least one pincode you deliver to.",
+    "addPincode": "Add pincode",
+    "removePincode": "Remove {{pincode}}",
+    "submit": "Save and start selling"
+  },
+  "buyer": {
+    "title": "Your delivery address",
+    "name": "Your name",
+    "pincode": "Pincode",
+    "landmark": "Landmark",
+    "landmarkHint": "Something the farmer can find, for example \"Near Hanuman temple\".",
+    "houseAndStreet": "House number and street (optional)",
+    "area": "Area or colony (optional)",
+    "submit": "Save and start shopping"
+  },
+  "location": {
+    "farmerWhy": "Sharing your farm location lets nearby buyers find you. Buyers only see the approximate distance, never your exact location.",
+    "buyerWhy": "Sharing your location shows you farmers who deliver to you. Farmers see your address only after you order.",
+    "use": "Use my location",
+    "finding": "Finding your location…",
+    "saved": "Location saved (accurate to about {{meters}} metres).",
+    "remove": "Remove location",
+    "denied": "Location permission is turned off. That is fine, we will use your pincode instead.",
+    "unavailable": "We could not find your location. That is fine, we will use your pincode instead.",
+    "unsupported": "This phone cannot share its location. We will use your pincode instead.",
+    "skip": "Continue without location"
+  },
+  "km": "{{count}} km",
+  "errors": {
+    "required": "Please fill this in.",
+    "pincode": "Enter a 6-digit pincode.",
+    "pincodeState": "This pincode is not in {{state}}.",
+    "pickDistrict": "Please choose your district.",
+    "pickDay": "Pick at least one delivery day.",
+    "saveFailed": "We could not save. Your answers are kept, please try again."
+  }
+}

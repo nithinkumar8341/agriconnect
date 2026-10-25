@@ -8,7 +8,7 @@ import { EmptyState } from '../components/ui/EmptyState.jsx';
 
 export function NotFoundPage() {
   const { t } = useTranslation();
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   return (
     <Screen title={t('notFound.title')}>
       <EmptyState
@@ -16,7 +16,7 @@ export function NotFoundPage() {
         title={t('notFound.title')}
         message={t('notFound.message')}
         action={
-          <BigButton icon={House} to={user ? homePathFor(user) : '/'}>
+          <BigButton icon={House} to={user ? homePathFor(user, profile) : '/'}>
             {t('actions.goHome')}
           </BigButton>
         }

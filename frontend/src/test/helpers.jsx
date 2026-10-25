@@ -40,11 +40,111 @@ export const anonymousHandlers = {
   ],
 };
 
-export function signedInHandlers(user) {
+export const sampleProfiles = {
+  farmer: { name: 'Ramu', state: 'Andhra Pradesh', district: 'Krishna', location: null },
+  buyer: { name: 'Padma', addresses: [] },
+};
+
+// profile: an object (onboarded), null (still needs onboarding); agents/admins never ask for one.
+export function signedInHandlers(user, { profile = sampleProfiles[user.role] ?? null } = {}) {
   return {
     'POST /auth/token/refresh': () => [200, { accessToken: 'access-1', user }],
     'POST /auth/logout': () => [204, null],
+    'GET /profile': () => [200, { role: user.role, profile }],
+    'PATCH /users/me': (request) => [200, { user: { ...user, language: request.body.language } }],
   };
+}
+
+export const testDistricts = {
+  states: [
+    {
+      state: 'Andhra Pradesh',
+      districts: [
+        { en: 'Krishna', te: 'కృష్ణా', hi: 'कृष्णा' },
+        { en: 'Guntur', te: 'గుంటూరు', hi: 'गुंटूर' },
+      ],
+    },
+    {
+      state: 'Telangana',
+      districts: [
+        { en: 'Rangareddy', te: 'రంగారెడ్డి', hi: 'रंगारेड्डी' },
+        { en: 'Hyderabad', te: 'హైదరాబాద్', hi: 'हैदराबाद' },
+      ],
+    },
+  ],
+};
+
+// A small stateful stand-in for the backend auth and profile API, so whole flows can be driven
+// screen by screen. The correct OTP is 123456; `existingUser` simulates a returning account.
+export function createFakeBackend({ existingUser = null, existingProfile = null } = {}) {
+  const db = { user: existingUser, profile: existingProfile, savedProfiles: [] };
+  const handlers = {
+    ...anonymousHandlers,
+    'POST /auth/otp/request': () => [202, { expiresInSeconds: 300, resendAfterSeconds: 30 }],
+    'POST /auth/otp/verify': (request) => {
+      if (request.body.otp !== '123456') {
+        return [400, { error: { code: 'OTP_INVALID', details: { attemptsLeft: 4 } } }];
+      }
+      const isNewUser = !db.user;
+      db.user ??= {
+        id: 'new-user',
+        phone: `+91${request.body.phone}`,
+        role: null,
+        language: request.body.language ?? 'te',
+        status: 'active',
+      };
+      if (['agent', 'admin'].includes(db.user.role)) {
+        return [200, { next: db.user.hasPin ? 'pin' : 'pin_setup', pinToken: 'pin-token' }];
+      }
+      return [200, { accessToken: 'access-1', user: db.user, isNewUser }];
+    },
+    'POST /auth/pin/verify': (request) =>
+      request.body.pin === '2468'
+        ? [200, { accessToken: 'access-1', user: db.user }]
+        : [400, { error: { code: 'PIN_INVALID', details: { attemptsLeft: 4 } } }],
+    'POST /auth/pin/setup': () => [200, { accessToken: 'access-1', user: db.user }],
+    'POST /auth/role': (request) => {
+      db.user = { ...db.user, role: request.body.role };
+      return [200, { accessToken: 'access-2', user: db.user }];
+    },
+    'GET /profile': () => [200, { role: db.user.role, profile: db.profile }],
+    'PUT /profile/farmer': (request) => {
+      db.savedProfiles.push(request.body);
+      db.profile = { ...request.body, verificationLevel: 'phone_verified' };
+      return [200, { profile: db.profile }];
+    },
+    'PUT /profile/buyer': (request) => {
+      db.savedProfiles.push(request.body);
+      db.profile = {
+        name: request.body.name,
+        addresses: [{ ...request.body.address, isDefault: true }],
+      };
+      return [200, { profile: db.profile }];
+    },
+    'GET /locations/districts': () => [200, testDistricts],
+    'PATCH /users/me': (request) => {
+      db.user = { ...db.user, language: request.body.language };
+      return [200, { user: db.user }];
+    },
+    'POST /auth/logout': () => [204, null],
+  };
+  return { db, handlers };
+}
+
+// jsdom has no geolocation; tests choose whether the person allows or refuses it.
+export function mockGeolocation(outcome) {
+  const getCurrentPosition = vi.fn((success, failure) => {
+    if (outcome === 'allow') {
+      success({ coords: { latitude: 16.438412, longitude: 80.782634, accuracy: 18 } });
+    } else {
+      failure({ code: 1, PERMISSION_DENIED: 1 });
+    }
+  });
+  Object.defineProperty(navigator, 'geolocation', {
+    configurable: true,
+    value: { getCurrentPosition },
+  });
+  return getCurrentPosition;
 }
 
 export function renderApp(path, handlers = anonymousHandlers) {

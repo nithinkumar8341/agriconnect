@@ -13,7 +13,8 @@
     "login": "Log in with phone number",
     "logout": "Log out",
     "goHome": "Go to home",
-    "skipToContent": "Skip to main content"
+    "skipToContent": "Skip to main content",
+    "next": "Next"
   },
   "language": {
     "label": "Language",
@@ -50,7 +51,8 @@
     "kg": "kg",
     "dozen": "dozen",
     "bunch": "bunch",
-    "piece": "piece"
+    "piece": "piece",
+    "km": "km"
   },
   "stepper": {
     "decrease": "Decrease {{label}}",
@@ -75,5 +77,18 @@
     "FORBIDDEN": "You do not have access to this.",
     "NOT_FOUND": "We could not find what you were looking for.",
     "VALIDATION_ERROR": "Some details are not correct. Please check and try again."
+  },
+  "weekdays": {
+    "mon": "Monday",
+    "tue": "Tuesday",
+    "wed": "Wednesday",
+    "thu": "Thursday",
+    "fri": "Friday",
+    "sat": "Saturday",
+    "sun": "Sunday"
+  },
+  "states": {
+    "andhraPradesh": "Andhra Pradesh",
+    "telangana": "Telangana"
   }
 }

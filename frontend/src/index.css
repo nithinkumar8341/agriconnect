@@ -46,6 +46,9 @@
     @apply bg-soil-50 font-sans text-ink antialiased;
     /* Telugu and Devanagari have tall vowel signs that clip at tighter line heights. */
     line-height: 1.6;
+    /* Telugu forms long single words (for example కొనాలనుకుంటున్నాను) that would otherwise push
+       a card wider than a 360px phone; let any word break rather than overflow sideways. */
+    overflow-wrap: anywhere;
   }
 
   /* A dark ring plus a yellow halo stays visible on cream, white and green backgrounds alike. */

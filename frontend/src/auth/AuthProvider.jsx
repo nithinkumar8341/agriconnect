@@ -1,23 +1,44 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import i18n from '../i18n/index.js';
 import { api } from '../lib/api.js';
 import { AuthContext } from './authContext.js';
+import { PROFILE_ROLES } from './roles.js';
+
+const ANONYMOUS = { status: 'anonymous', user: null, profile: undefined };
 
 // status: 'loading' while we ask the server whether the refresh cookie still holds a session,
 // then 'authenticated' or 'anonymous'. The user object comes from the server, never from storage.
+// profile: undefined = not needed (agent/admin) or could not be loaded; null = farmer/buyer who
+// has not finished onboarding; object = their profile.
 export function AuthProvider({ children, client = api }) {
-  const [state, setState] = useState({ status: 'loading', user: null });
+  const [state, setState] = useState({ status: 'loading', user: null, profile: undefined });
 
-  const startSession = useCallback(
-    ({ accessToken, user }) => {
-      client.setAccessToken(accessToken);
-      setState({ status: 'authenticated', user });
+  // The profile is loaded before the session is announced, so guards never flash the wrong screen.
+  const loadProfile = useCallback(
+    async (user) => {
+      if (!PROFILE_ROLES.includes(user.role)) return undefined;
+      try {
+        return (await client.get('/profile')).profile;
+      } catch {
+        // Unknown rather than missing: never push someone into onboarding because of a network blip.
+        return undefined;
+      }
     },
     [client],
   );
 
+  const startSession = useCallback(
+    async ({ accessToken, user }) => {
+      client.setAccessToken(accessToken);
+      const profile = await loadProfile(user);
+      setState({ status: 'authenticated', user, profile });
+    },
+    [client, loadProfile],
+  );
+
   const endSession = useCallback(() => {
     client.setAccessToken(null);
-    setState({ status: 'anonymous', user: null });
+    setState(ANONYMOUS);
   }, [client]);
 
   useEffect(() => {
@@ -26,16 +47,33 @@ export function AuthProvider({ children, client = api }) {
     // makes both runs share one request, so the cookie is never presented twice.
     client
       .refreshAccessToken()
-      .then((data) => active && setState({ status: 'authenticated', user: data.user }))
-      .catch(() => active && setState({ status: 'anonymous', user: null }));
-    const unsubscribe = client.onSessionExpired(() =>
-      setState({ status: 'anonymous', user: null }),
-    );
+      .then(async (data) => {
+        const profile = await loadProfile(data.user);
+        if (active) setState({ status: 'authenticated', user: data.user, profile });
+      })
+      .catch(() => active && setState(ANONYMOUS));
+    const unsubscribe = client.onSessionExpired(() => setState(ANONYMOUS));
     return () => {
       active = false;
       unsubscribe();
     };
-  }, [client]);
+  }, [client, loadProfile]);
+
+  // Keep the account's language in step with the app, so SMS arrive in the language on screen.
+  const { status, user } = state;
+  useEffect(() => {
+    if (status !== 'authenticated') return undefined;
+    function syncLanguage(language) {
+      if (language === user.language) return;
+      client
+        .patch('/users/me', { language })
+        .then((data) => setState((current) => ({ ...current, user: data.user })))
+        .catch(() => {});
+    }
+    syncLanguage(i18n.language);
+    i18n.on('languageChanged', syncLanguage);
+    return () => i18n.off('languageChanged', syncLanguage);
+  }, [client, status, user]);
 
   const actions = useMemo(
     () => ({
@@ -49,26 +87,31 @@ export function AuthProvider({ children, client = api }) {
           { phone, otp, language, rememberDevice },
           { auth: false },
         );
-        if (data.accessToken) startSession(data);
+        if (data.accessToken) await startSession(data);
         return data;
       },
 
       async verifyPin({ pinToken, pin }) {
         const data = await client.post('/auth/pin/verify', { pinToken, pin }, { auth: false });
-        startSession(data);
+        await startSession(data);
         return data;
       },
 
       async setupPin({ pinToken, pin }) {
         const data = await client.post('/auth/pin/setup', { pinToken, pin }, { auth: false });
-        startSession(data);
+        await startSession(data);
         return data;
       },
 
       async chooseRole(role) {
         const data = await client.post('/auth/role', { role });
-        startSession(data);
+        await startSession(data);
         return data.user;
+      },
+
+      // Called by onboarding once the profile is saved.
+      setProfile(profile) {
+        setState((current) => ({ ...current, profile }));
       },
 
       async logout() {
@@ -90,6 +133,6 @@ export function AuthProvider({ children, client = api }) {
     [client, startSession, endSession],
   );
 
-  const value = useMemo(() => ({ ...state, ...actions }), [state, actions]);
+  const value = useMemo(() => ({ ...state, ...actions, client }), [state, actions, client]);
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
