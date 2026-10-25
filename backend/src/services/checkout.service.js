@@ -9,7 +9,8 @@ import { AppError } from '../utils/AppError.js';
 import { getAppConfig } from './appConfig.service.js';
 import { actorFromUser, recordAudit } from './audit.service.js';
 import { deliveryDateOptions, servesBuyer, toFarmerSummary } from './market.service.js';
-import { toBuyerOrder } from './orders.service.js';
+import { notify } from './notification.service.js';
+import { buyerContext, toBuyerOrder } from './orders.service.js';
 import { computeOrderPricing } from './pricing.service.js';
 
 const ACTIVE_STATUSES = ['placed', 'accepted', 'out_for_delivery'];
@@ -183,10 +184,12 @@ async function checkCodLimits(user, groups) {
 const cartChanged = (quote) =>
   new AppError(409, 'CART_CHANGED', 'Some items changed. Please check your cart.', { quote });
 
+const buyerView = async (order) => toBuyerOrder(order, await buyerContext(order));
+
 async function existingCheckout(user, checkoutGroupId) {
   const orders = await Order.find({ buyerId: user._id, checkoutGroupId }).sort({ _id: 1 }).lean();
   return orders.length
-    ? { checkoutGroupId, orders: await Promise.all(orders.map(toBuyerOrder)) }
+    ? { checkoutGroupId, orders: await Promise.all(orders.map(buyerView)) }
     : null;
 }
 
@@ -289,6 +292,16 @@ export async function checkout(user, body, { now = new Date(), requestId } = {})
           },
           { session },
         );
+        // The farmer hears about the new order straight away (in-app; Prompt 11).
+        await notify(
+          {
+            userId: order.farmerId,
+            templateKey: 'order.placed',
+            params: { orderId: order._id.toString(), name: profile.name.trim().split(/\s+/)[0] },
+            link: `/farmer/orders/${order._id}`,
+          },
+          { session },
+        );
       }
       return orders;
     });
@@ -304,7 +317,7 @@ export async function checkout(user, body, { now = new Date(), requestId } = {})
 
   return {
     checkoutGroupId,
-    orders: await Promise.all(created.map((order) => toBuyerOrder(order.toObject()))),
+    orders: await Promise.all(created.map((order) => buyerView(order.toObject()))),
     replayed: false,
   };
 }

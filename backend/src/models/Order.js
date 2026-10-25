@@ -92,6 +92,8 @@ const orderSchema = new mongoose.Schema(
     // 4-digit code shown to the buyer; the farmer enters it at handover (Prompt 11).
     deliveryOtpHash: { type: String, select: false },
     deliveryOtpAttempts: { type: Number, default: 0, select: false },
+    // Per-order salt the code is derived from (see services/deliveryOtp.js); never sent to clients.
+    deliveryOtpSalt: { type: String, select: false },
     deliveredAt: { type: Date, default: null },
     isDemo: { type: Boolean, default: false },
   },

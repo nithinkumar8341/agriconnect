@@ -25,9 +25,23 @@ export const checkoutSchema = z.object({
 });
 
 export const orderIdParams = z.object({ id: objectId });
-export const closeOrderSchema = z
-  .object({ reason: z.string().trim().max(300).optional() })
+// Body for any order action: a reason (reject, cancel, failed delivery) or the delivery code.
+export const orderActionSchema = z
+  .object({
+    reason: z.string().trim().min(1).max(300).optional(),
+    code: z
+      .string()
+      .regex(/^\d{4}$/, 'must be 4 digits')
+      .optional(),
+  })
   .default({});
+
+export const farmerOrdersQuerySchema = z.object({
+  status: z.enum(['new', 'active', 'done']).optional(),
+  page: z.coerce.number().int().min(1).max(1000).default(1),
+  limit: z.coerce.number().int().min(1).max(50).default(20),
+});
+
 export const ordersQuerySchema = z.object({
   page: z.coerce.number().int().min(1).max(1000).default(1),
   limit: z.coerce.number().int().min(1).max(50).default(20),
