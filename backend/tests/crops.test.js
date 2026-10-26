@@ -35,7 +35,7 @@ describe('crop catalog API', () => {
       quantityPresets: [10, 25, 50, 100],
       quantityStep: 0.5,
       shelfLifeDays: 5,
-      icon: '🍅',
+      image: '/crops/tomato.jpg',
     });
   });
 

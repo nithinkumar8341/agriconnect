@@ -11,7 +11,11 @@ import {
   withProducts,
 } from '../../test/helpers.jsx';
 
-const tomato = { slug: 'tomato', names: { en: 'Tomato', te: 'టమాటా', hi: 'टमाटर' }, icon: '🍅' };
+const tomato = {
+  slug: 'tomato',
+  names: { en: 'Tomato', te: 'టమాటా', hi: 'टमाटर' },
+  image: '/crops/tomato.jpg',
+};
 
 function listing(overrides = {}) {
   return {

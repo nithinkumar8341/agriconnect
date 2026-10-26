@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { useAuth } from '../../auth/authContext.js';
 import { useCart } from '../../cart/cartContext.js';
+import { CropPhoto } from '../../components/CropPhoto.jsx';
 import { FormAlert } from '../../components/form/FormAlert.jsx';
 import { Screen } from '../../components/Screen.jsx';
 import {
@@ -86,9 +87,11 @@ function FarmerGroup({ group, chosenDate, onChooseDate }) {
           return (
             <li key={line.productId} className="flex flex-col gap-2 border-b border-soil-100 pb-4">
               <div className="flex items-center gap-2">
-                <span aria-hidden="true" className="text-3xl">
-                  {line.crop?.icon}
-                </span>
+                <CropPhoto
+                  crop={line.crop}
+                  photoUrl={item?.photoUrl}
+                  className="size-12 shrink-0 rounded-xl"
+                />
                 <span className="flex-1 text-lg font-bold">{crop}</span>
                 <button
                   type="button"

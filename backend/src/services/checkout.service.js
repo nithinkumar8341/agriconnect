@@ -119,7 +119,7 @@ export async function buildQuote(user, { items, addressId }, { now = new Date() 
       items: lines.map(({ product, crop, quantity }, index) => ({
         productId: product._id.toString(),
         cropId: product.cropId,
-        crop: crop && { slug: crop.slug, names: crop.names, icon: crop.icon },
+        crop: crop && { slug: crop.slug, names: crop.names, image: crop.image },
         unit: product.unit,
         quantity,
         pricePerUnit: product.pricePerUnit,

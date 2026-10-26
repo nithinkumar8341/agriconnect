@@ -3,7 +3,11 @@ import userEvent from '@testing-library/user-event';
 import { changeLanguage } from '../../i18n/index.js';
 import { renderApp, sampleProfiles, signedInHandlers, testUsers } from '../../test/helpers.jsx';
 
-const tomato = { slug: 'tomato', names: { en: 'Tomato', te: 'టమాటా', hi: 'टमाटर' }, icon: '🍅' };
+const tomato = {
+  slug: 'tomato',
+  names: { en: 'Tomato', te: 'టమాటా', hi: 'टमाटर' },
+  image: '/crops/tomato.jpg',
+};
 const farmer = { id: 'f1', firstName: 'Ramu', village: 'Kankipadu' };
 const CART_KEY = `agc.cart.${testUsers.buyer.id}`;
 
@@ -108,7 +112,7 @@ const cartLine = (overrides = {}) => ({
   pricePerUnit: 3000,
   unit: 'kg',
   cropNames: tomato.names,
-  icon: '🍅',
+  image: '/crops/tomato.jpg',
   quantityStep: 1,
   farmer,
   ...overrides,

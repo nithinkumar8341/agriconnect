@@ -104,7 +104,7 @@ export const testCrops = [
   {
     slug: 'tomato',
     names: { en: 'Tomato', te: 'టమాటా', hi: 'टमाटर' },
-    icon: '🍅',
+    image: '/crops/tomato.jpg',
     category: 'vegetable',
     defaultUnit: 'kg',
     allowedUnits: ['kg'],
@@ -115,7 +115,7 @@ export const testCrops = [
   {
     slug: 'spinach',
     names: { en: 'Spinach', te: 'పాలకూర', hi: 'पालक' },
-    icon: '🥬',
+    image: '/crops/spinach.jpg',
     category: 'leafy',
     defaultUnit: 'bunch',
     allowedUnits: ['bunch', 'kg'],

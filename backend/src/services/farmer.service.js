@@ -26,7 +26,7 @@ function toCropSummary(crop) {
     ? {
         slug: crop.slug,
         names: crop.names,
-        icon: crop.icon,
+        image: crop.image,
         category: crop.category,
         shelfLifeDays: crop.shelfLifeDays,
         quantityStep: crop.quantityStep,

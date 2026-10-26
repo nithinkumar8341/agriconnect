@@ -115,7 +115,6 @@ export function FarmerHomePage() {
               <ul className="flex flex-col gap-1 rounded-2xl bg-sun-100 px-4 py-3 text-lg">
                 {data.lowStock.map((item) => (
                   <li key={item.id}>
-                    <span aria-hidden="true">{item.crop?.icon} </span>
                     {t('home.lowItem', {
                       crop: localName(item.crop?.names, i18n.language),
                       left: formatQuantity(item.availableQuantity, i18n.language),

@@ -16,7 +16,7 @@ export function toCartItem(product, quantity) {
     pricePerUnit: product.pricePerUnit,
     unit: product.unit,
     cropNames: product.crop?.names,
-    icon: product.crop?.icon,
+    cropSlug: product.crop?.slug,
     quantityStep: product.crop?.quantityStep ?? 1,
     photoUrl: product.photoUrl ?? null,
     farmer: product.farmer,

@@ -18,7 +18,8 @@ const cropSchema = new mongoose.Schema(
     // Smallest amount a buyer can add or remove at a time (0.5 kg, 1 bunch, ...).
     quantityStep: { type: Number, min: 0.25, default: 1 },
     shelfLifeDays: { type: Number, min: 1, required: true },
-    icon: { type: String, required: true },
+    // Stock photo path served by the frontend (public/crops/<slug>.jpg).
+    image: { type: String, required: true },
     isActive: { type: Boolean, default: true },
   },
   { timestamps: true },

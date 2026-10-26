@@ -72,7 +72,7 @@ describe('AI features (backend side)', () => {
       quantityPresets: [10],
       quantityStep: 0.5,
       shelfLifeDays: 5,
-      icon: '🍅',
+      image: '/crops/tomato.jpg',
     });
     await PriceReference.create({
       cropId,

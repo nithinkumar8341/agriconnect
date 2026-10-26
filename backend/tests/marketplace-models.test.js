@@ -206,7 +206,7 @@ describe('marketplace models', () => {
         defaultUnit: 'dozen',
         allowedUnits: ['kg'],
         shelfLifeDays: 5,
-        icon: '🍅',
+        image: '/crops/tomato.jpg',
       });
 
       expect(await validationErrorPaths(crop)).toEqual(

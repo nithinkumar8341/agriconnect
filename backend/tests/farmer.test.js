@@ -145,7 +145,7 @@ describe('farmer dashboard and my products', () => {
         quantity: 100,
         unit: 'kg',
         isLowStock: true,
-        crop: { slug: 'tomato', names: { te: 'టమాటా' }, icon: '🍅' },
+        crop: { slug: 'tomato', names: { te: 'టమాటా' }, image: '/crops/tomato.jpg' },
       });
     });
 

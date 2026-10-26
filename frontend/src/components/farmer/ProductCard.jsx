@@ -1,6 +1,7 @@
 import { CircleAlert, PackageMinus, Settings2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { formatDate, formatQuantity, formatRupees, localName } from '../../lib/format.js';
+import { CropPhoto } from '../CropPhoto.jsx';
 
 // Status is always shown as text as well as colour, so it reads correctly for colour-blind
 // people and in bright sunlight.
@@ -22,21 +23,11 @@ export function ProductCard({ product, onManage }) {
   return (
     <article className="flex flex-col gap-3 rounded-2xl border-2 border-soil-200 bg-white p-4">
       <div className="flex items-start gap-3">
-        {product.photoUrl ? (
-          <img
-            src={product.photoUrl}
-            alt=""
-            loading="lazy"
-            className="size-16 shrink-0 rounded-xl object-cover"
-          />
-        ) : (
-          <span
-            aria-hidden="true"
-            className="grid size-16 shrink-0 place-items-center rounded-xl bg-leaf-50 text-4xl"
-          >
-            {product.crop?.icon}
-          </span>
-        )}
+        <CropPhoto
+          crop={product.crop}
+          photoUrl={product.photoUrl}
+          className="size-16 shrink-0 rounded-xl"
+        />
         <div className="flex min-w-0 flex-1 flex-col gap-1">
           <h3 className="text-xl font-bold">{cropName}</h3>
           <p className="text-lg">

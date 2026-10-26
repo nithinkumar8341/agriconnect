@@ -16,7 +16,7 @@ export function toPublicCrop(crop) {
     quantityPresets: [...crop.quantityPresets],
     quantityStep: crop.quantityStep,
     shelfLifeDays: crop.shelfLifeDays,
-    icon: crop.icon,
+    image: crop.image,
   };
 }
 
