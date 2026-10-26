@@ -54,7 +54,7 @@ export function createUploadsRouter({ requireAuth, mediaService }) {
   router.post(
     '/photos',
     requireAuth,
-    requireRole('farmer', 'agent'),
+    requireRole('farmer', 'agent', 'buyer'),
     perUserLimit,
     receivePhoto,
     validate({ body: uploadBodySchema }),
@@ -64,7 +64,7 @@ export function createUploadsRouter({ requireAuth, mediaService }) {
   router.delete(
     '/photos/:id',
     requireAuth,
-    requireRole('farmer', 'agent'),
+    requireRole('farmer', 'agent', 'buyer'),
     validate({ params: assetParamsSchema }),
     controller.deletePhoto,
   );

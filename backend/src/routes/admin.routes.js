@@ -9,6 +9,7 @@ import {
   resolveFraudFlag,
   setUserStatus,
 } from '../services/admin.service.js';
+import { listReturns, resolveReturn } from '../services/return.service.js';
 
 const objectId = z.string().regex(/^[0-9a-f]{24}$/, 'is not a valid id');
 const idParams = z.object({ id: objectId });
@@ -68,6 +69,23 @@ export function createAdminRouter({ requireAuth }) {
     }),
     async (req, res) =>
       res.json(await resolveFraudFlag(req.user, req.params.id, req.body, { requestId: req.id })),
+  );
+  router.get(
+    '/returns',
+    validate({ query: z.object({ status: z.enum(['open', 'resolved']).optional(), ...paging }) }),
+    async (req, res) => res.json(await listReturns(req.query)),
+  );
+  router.post(
+    '/returns/:id/resolve',
+    validate({
+      params: idParams,
+      body: z.object({
+        decision: z.enum(['approve', 'reject']),
+        note: z.string().trim().max(500).optional(),
+      }),
+    }),
+    async (req, res) =>
+      res.json(await resolveReturn(req.user, req.params.id, req.body, { requestId: req.id })),
   );
   return router;
 }

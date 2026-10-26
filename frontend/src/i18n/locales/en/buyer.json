@@ -185,5 +185,26 @@
     "rating": "★ {{rating}} ({{count}} reviews)",
     "orders": "{{count}} orders delivered",
     "noReviews": "No reviews yet."
+  },
+  "returns": {
+    "report": "Report a problem",
+    "title": "What was wrong?",
+    "reason": "Problem",
+    "reasons": {
+      "damaged": "Damaged",
+      "rotten": "Rotten",
+      "wrong_item": "Wrong item",
+      "underweight": "Less than ordered"
+    },
+    "note": "Tell us more (optional)",
+    "photo": "Take a photo of the problem",
+    "photoAdded": "Photo added",
+    "send": "Send report",
+    "sent": "Reported. We will check and reply soon.",
+    "status": {
+      "open": "Problem reported, being checked",
+      "approved": "Refund of {{amount}} approved",
+      "rejected": "Report not approved"
+    }
   }
 }

@@ -2,6 +2,7 @@ import { Router } from 'express';
 import * as orders from '../controllers/orders.controller.js';
 import { requireRole } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
+import { requestReturn } from '../services/return.service.js';
 import { createReview } from '../services/review.service.js';
 import {
   checkoutSchema,
@@ -11,6 +12,7 @@ import {
   ordersQuerySchema,
   checkoutGroupParams,
   quoteSchema,
+  returnSchema,
   reviewSchema,
 } from '../validators/checkout.validators.js';
 
@@ -46,6 +48,13 @@ export function createOrdersRouter({ requireAuth, lifecycle }) {
   );
   router.get('/:id', ...either, params, getOne);
   router.post('/:id/cancel', ...buyer, action, act('cancel'));
+  router.post(
+    '/:id/return',
+    ...buyer,
+    validate({ params: orderIdParams, body: returnSchema }),
+    async (req, res) =>
+      res.status(201).json({ return: await requestReturn(req.user, req.params.id, req.body) }),
+  );
   router.post(
     '/:id/review',
     ...buyer,

@@ -106,6 +106,11 @@
       "cancelled": "{{name}} cancelled the order.",
       "rejected": "{{name}} could not take your order: {{reason}}",
       "failed": "Delivery from {{name}} did not happen: {{reason}}"
+    },
+    "return": {
+      "requested": "A buyer reported a problem with an order.",
+      "approved": "Your problem report was approved. A refund is on the way.",
+      "rejected": "Your problem report was not approved."
     }
   },
   "timeline": "What happened"

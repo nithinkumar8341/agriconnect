@@ -1,9 +1,10 @@
-import { KeyRound, Phone, Wallet, XCircle } from 'lucide-react';
+import { KeyRound, Phone, TriangleAlert, Wallet, XCircle } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { useAuth } from '../../auth/authContext.js';
 import { FormAlert } from '../../components/form/FormAlert.jsx';
+import { ReturnSheet } from '../../components/buyer/ReturnSheet.jsx';
 import { ReviewForm } from '../../components/buyer/Trust.jsx';
 import { OrderTimeline } from '../../components/orders/OrderTimeline.jsx';
 import { Screen } from '../../components/Screen.jsx';
@@ -30,6 +31,7 @@ export function BuyerOrderDetailPage() {
   const toast = useToast();
   const live = useLiveOrder(id);
   const [confirming, setConfirming] = useState(false);
+  const [reporting, setReporting] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const money = (paise) => formatRupees(paise, language);
@@ -149,6 +151,32 @@ export function BuyerOrderDetailPage() {
         </BigButton>
       )}
 
+      {order.returnRequest && (
+        <p role="status" className="rounded-2xl bg-sun-100 px-4 py-3 text-lg font-semibold">
+          {order.returnRequest.status === 'open'
+            ? t('returns.status.open')
+            : order.returnRequest.outcome === 'rejected'
+              ? t('returns.status.rejected')
+              : t('returns.status.approved', {
+                  amount: money(order.returnRequest.refundAmount ?? 0),
+                })}
+        </p>
+      )}
+      {order.canReturn && (
+        <BigButton icon={TriangleAlert} variant="secondary" onClick={() => setReporting(true)}>
+          {t('returns.report')}
+        </BigButton>
+      )}
+      {reporting && (
+        <ReturnSheet
+          orderId={order.id}
+          onClose={() => setReporting(false)}
+          onDone={() => {
+            setReporting(false);
+            live.reload();
+          }}
+        />
+      )}
       {order.canReview && <ReviewForm orderId={order.id} onDone={live.reload} />}
 
       <OrderTimeline

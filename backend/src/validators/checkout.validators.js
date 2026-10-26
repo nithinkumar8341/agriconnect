@@ -53,3 +53,9 @@ export const reviewSchema = z.object({
   stars: z.number().int().min(1).max(5),
   comment: z.string().trim().max(500).optional(),
 });
+
+export const returnSchema = z.object({
+  reason: z.enum(['damaged', 'rotten', 'wrong_item', 'underweight']),
+  note: z.string().trim().max(500).optional(),
+  photoAssetId: objectId,
+});

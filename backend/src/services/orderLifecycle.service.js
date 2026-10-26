@@ -14,6 +14,7 @@ import {
   toFarmerOrder,
 } from './orders.service.js';
 import { refundOrder, settleDeliveredOrder } from './payment.service.js';
+import { findReturnForOrder, returnWindowOpen, toReturnView } from './return.service.js';
 import { hasReview } from './review.service.js';
 import { orderSmsMessage } from './sms/templates.js';
 
@@ -53,6 +54,9 @@ export function createOrderLifecycle({ config, smsProvider, logger }) {
       : null;
     const view = toBuyerOrder(order, { ...context, deliveryCode });
     view.canReview = order.status === 'delivered' && !(await hasReview(order._id));
+    const existingReturn = await findReturnForOrder(order._id);
+    view.returnRequest = toReturnView(existingReturn) ?? null;
+    view.canReturn = !existingReturn && (await returnWindowOpen(order));
     return view;
   }
 

@@ -3,6 +3,7 @@ import request from 'supertest';
 import { createLogger } from '../src/config/logger.js';
 import { AuditLog } from '../src/models/AuditLog.js';
 import { LedgerEntry } from '../src/models/LedgerEntry.js';
+import { MediaAsset } from '../src/models/MediaAsset.js';
 import { BuyerProfile } from '../src/models/BuyerProfile.js';
 import { Crop } from '../src/models/Crop.js';
 import { FarmerProfile } from '../src/models/FarmerProfile.js';
@@ -10,6 +11,7 @@ import { syncAllIndexes } from '../src/models/index.js';
 import { Notification } from '../src/models/Notification.js';
 import { Order } from '../src/models/Order.js';
 import { Product } from '../src/models/Product.js';
+import { ReturnRequest } from '../src/models/ReturnRequest.js';
 import { User } from '../src/models/User.js';
 import { seedCrops } from '../src/seeds/seedCrops.js';
 import { createDeliveryOtp } from '../src/services/deliveryOtp.js';
@@ -113,9 +115,16 @@ describe('order lifecycle API', () => {
   afterAll(() => dropTestDbAndDisconnect());
   beforeEach(async () => {
     await Promise.all(
-      [User, BuyerProfile, FarmerProfile, Product, Order, Notification].map((m) =>
-        m.deleteMany({}),
-      ),
+      [
+        User,
+        BuyerProfile,
+        FarmerProfile,
+        Product,
+        Order,
+        Notification,
+        MediaAsset,
+        ReturnRequest,
+      ].map((m) => m.deleteMany({})),
     );
     sms.messages.length = 0;
     [buyer, farmer] = await User.create([
@@ -401,5 +410,93 @@ describe('order lifecycle API', () => {
       comment: 'Fresh tomatoes',
       buyerFirstName: 'Padma',
     });
+  });
+  async function deliveredOrder(quantity = 5) {
+    const id = await placeOrder(quantity);
+    await act(farmer, id, 'accept');
+    await act(farmer, id, 'dispatch');
+    const code = (await view(buyer, id)).body.order.deliveryCode;
+    await act(farmer, id, 'deliver', { code });
+    return id;
+  }
+
+  const buyerPhoto = () =>
+    MediaAsset.create({
+      ownerId: buyer._id,
+      provider: 'local',
+      storageKey: 'photos/r.jpg',
+      thumbnailKey: 'photos/r-thumb.webp',
+      url: '/uploads/photos/r.jpg',
+      thumbnailUrl: '/uploads/photos/r-thumb.webp',
+      width: 1280,
+      height: 960,
+      bytes: 100000,
+      perceptualHash: 'abcdef0123456789',
+      perceptualHashBands: ['0:a', '1:b', '2:c', '3:d'],
+    });
+
+  it('return: buyer reports with a photo, admin approves; refund, farmer debit and restock', async () => {
+    const admin = await User.create({ phone: '+919000000190', role: 'admin' });
+    const id = await deliveredOrder(5);
+    expect((await view(buyer, id)).body.order.canReturn).toBe(true);
+    const photo = await buyerPhoto();
+
+    const reported = await request(app)
+      .post(`/api/v1/orders/${id}/return`)
+      .set(as(buyer))
+      .send({ reason: 'wrong_item', note: 'Got onions', photoAssetId: photo.id });
+    expect(reported.status).toBe(201);
+    expect(reported.body.return).toMatchObject({ status: 'open', reason: 'wrong_item' });
+
+    const list = await request(app).get('/api/v1/admin/returns').set(as(admin));
+    expect(list.body.items[0]).toMatchObject({
+      id: reported.body.return.id,
+      order: { itemsTotal: 15000 },
+    });
+
+    const resolved = await request(app)
+      .post(`/api/v1/admin/returns/${reported.body.return.id}/resolve`)
+      .set(as(admin))
+      .send({ decision: 'approve' });
+    expect(resolved.body).toMatchObject({
+      status: 'resolved',
+      outcome: 'partial_refund',
+      refundAmount: 15000,
+    });
+
+    const ledger = await LedgerEntry.find({
+      orderId: id,
+      type: { $in: ['refund', 'farmer_payout'] },
+    }).lean();
+    expect(ledger.map((e) => [e.type, e.direction, e.amount]).sort()).toEqual([
+      ['farmer_payout', 'credit', 17000],
+      ['farmer_payout', 'debit', 15000],
+      ['refund', 'credit', 15000],
+    ]);
+    expect((await Order.findById(id)).paymentStatus).toBe('partially_refunded');
+    expect((await Product.findById(product.id)).availableQuantity).toBe(20);
+    expect(
+      (
+        await request(app)
+          .post(`/api/v1/admin/returns/${reported.body.return.id}/resolve`)
+          .set(as(admin))
+          .send({ decision: 'reject' })
+      ).body.error.code,
+    ).toBe('ALREADY_RESOLVED');
+  });
+
+  it('return: not before delivery, and only once per order', async () => {
+    const early = await placeOrder();
+    const photo = await buyerPhoto();
+    const report = (id) =>
+      request(app)
+        .post(`/api/v1/orders/${id}/return`)
+        .set(as(buyer))
+        .send({ reason: 'rotten', photoAssetId: photo.id });
+    expect((await report(early)).body.error.code).toBe('RETURN_WINDOW_CLOSED');
+
+    const id = await deliveredOrder();
+    expect((await report(id)).status).toBe(201);
+    expect((await report(id)).body.error.code).toBe('ALREADY_REPORTED');
   });
 });
