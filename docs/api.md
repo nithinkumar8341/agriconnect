@@ -366,6 +366,21 @@ The cart lives on the buyer's phone. The server trusts none of it: every quote a
 4. COD limits from AppConfig: `403 COD_BLOCKED` (too many failed COD deliveries), `409 TOO_MANY_OPEN_ORDERS` (`details.max`, `details.open`), `409 COD_LIMIT` for buyers with fewer than `newBuyerDeliveredOrders` deliveries (`details.limit`, default ₹500 per order).
 5. In one transaction: for each item, `updateOne({ _id, status: 'available', pricePerUnit, availableQuantity: { $gte: qty } }, { $inc: { availableQuantity: -qty } })`. Any miss aborts everything and answers `409 CART_CHANGED`. Listings at 0 become `out_of_stock`. One order per farmer is created with item snapshots, the delivery address and day, the breakdown, and an `order.placed` audit entry.
 
+**Order lifecycle (Prompt 11):**
+
+| Method | Path | Who | Body | Notes |
+| --- | --- | --- | --- | --- |
+| GET | `/orders/farmer` | farmer | `status` (`new`\|`active`\|`done`), `page`, `limit` | Open tabs sorted by delivery day |
+| GET | `/orders/:id` | buyer or farmer (own) | none | Buyer view adds `deliveryCode` (once accepted) and the farmer's phone; farmer view adds the buyer's name, phone, full address and map location once accepted. Both have `actions` and `isOpen`. |
+| POST | `/orders/:id/accept` \| `dispatch` | farmer | none | |
+| POST | `/orders/:id/reject` \| `fail` | farmer | `reason` (required for `fail`) | Restores stock |
+| POST | `/orders/:id/deliver` | farmer | `code` (4 digits) | `400 DELIVERY_OTP_WRONG` (`details.attemptsLeft`), `429 DELIVERY_OTP_LOCKED` after 5; COD becomes `paid` |
+| POST | `/orders/:id/cancel` | buyer | optional `reason` | Restores stock |
+| GET | `/notifications` | any user | `page`, `limit` | `{ items[{ id, templateKey, params, link, read, createdAt }], total, unread }` |
+| POST | `/notifications/:id/read`, `/notifications/read-all` | any user | none | `204` |
+
+Invalid moves answer `409 INVALID_STATUS_CHANGE` (`details.status`); the wrong role `403`; someone else's order `404`. The buyer gets SMS for accepted, out for delivery and delivered, in their language.
+
 **Cancel / reject:** one transaction: a conditional `placed → cancelled/rejected` update (`409 INVALID_STATUS_CHANGE` otherwise), quantities added back (never above the listing's `quantity`), sold-out listings back to `available` (paused or removed ones stay as they are), and an audit entry.
 
 ## Photo uploads (farmer or agent)

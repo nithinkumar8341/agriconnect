@@ -232,13 +232,15 @@
     - Concurrency: 50 buyers racing for 30 units sell exactly 30 (20 clean refusals, stock 0, out of stock); passed 4 runs in a row.
     - **Real browser, real stack, 360px:** buyer `…0022` added 5 dozen bananas, chose the second delivery day, placed a COD order (₹300 + ₹20 delivery = ₹320); stock 58 → 53, then back to 58 after cancelling; cart emptied; no overflow.
 
+- **Prompt 11: Order lifecycle and delivery code** (3 commits, 2026-10-26): state machine as data ([ADR 0012](decisions/0012-order-lifecycle.md)); farmer accept / reject (reason) / out for delivery / deliver with the buyer's 4-digit code / could not deliver (reason); buyer tracking with the delivery code, call farmer, timeline and cancel; stock restored on rejected, cancelled and failed; status history, audit and in-app notification on every change; buyer SMS in their language for accepted, out for delivery and delivered; updates inbox with a bell; pages refresh by polling. Delivery code derived from a server secret and per-order salt (only salt and hash stored), locked after 5 wrong tries; COD paid on delivery. **Verified:** 314 backend tests (+8, including a racing cancel against an accept) and 146 frontend tests (+2) pass; lint is clean.
+
 ## In progress
 
 - Nothing.
 
 ## Next
 
-- Prompt 11: Order lifecycle and delivery OTP (state machine; farmer accept/reject, out for delivery, delivery OTP, failed delivery; buyer tracking; notifications; order screens for both roles).
+- Prompt 12: Payments, COD and ledger (Razorpay test-mode UPI, webhooks, ledger entries, refunds).
 
 ## Known issues
 
@@ -250,8 +252,8 @@
 - The frontend bundle is 128 KB gzipped in a single chunk. Route-level code splitting is planned for Prompt 23.
 
 - ai-service tests print a `StarletteDeprecationWarning` saying the httpx-backed `TestClient` is deprecated in Starlette 1.x. Tests pass. The suggested replacement package was not installed because it could not be verified during setup; review it before switching.
-- CI has not run on Prompts 1–10: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
-- 460 frontend UI strings in te/hi are machine-written and await native-speaker review.
+- CI has not run on Prompts 1–11: the commits are local and not pushed. Confirm on the GitHub Actions tab after pushing.
+- 528 frontend UI strings in te/hi are machine-written and await native-speaker review.
 - The 59 crop names in te/hi are machine-written and await native-speaker review.
 - Demo phone numbers (`+9199999000xx`) are invented but could belong to real people: never seed demo data where a real SMS gateway is active.
 - AuditLog and LedgerEntry immutability is enforced in Mongoose only; direct database access could still change rows.
@@ -262,4 +264,5 @@
 - Success toasts sit above the bottom navigation for 5 seconds and can cover the lowest card's button. They can be dismissed; revisit in the UI polish pass.
 - The listing-expiry and photo-cleanup jobs run with `setInterval` inside the web process. With more than one backend instance they would run on each (harmless, as both are idempotent updates), but a proper scheduler is better at scale.
 - Buyer search loads the farmer list into memory per request (fine for the pilot). Revisit with many farmers within 50 km.
-- Farmers cannot see or act on orders in the app yet (reject exists in the API only); Prompt 11 adds their order screens. UPI payment comes in Prompt 12.
+- UPI payment is not built yet (Prompt 12); only cash on delivery works.
+- The order SMS texts (te/hi) in backend/src/services/sms/templates.js are machine-written; add them to translation review with the OTP texts.
