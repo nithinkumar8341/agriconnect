@@ -14,6 +14,7 @@ import { createMarketRouter } from './market.routes.js';
 import {
   createCheckoutRouter,
   createNotificationsRouter,
+  createPaymentsRouter,
   createOrdersRouter,
 } from './orders.routes.js';
 import { createLocationsRouter, createProfileRouter, createUsersRouter } from './profile.routes.js';
@@ -42,6 +43,7 @@ export function createApiRouter({ config, logger, smsProvider, storage }) {
   router.use('/products', createProductsRouter({ requireAuth }));
   router.use('/market', createMarketRouter({ requireAuth }));
   router.use('/checkout', createCheckoutRouter({ requireAuth }));
+  router.use('/payments', createPaymentsRouter({ requireAuth }));
   router.use('/orders', createOrdersRouter({ requireAuth, lifecycle }));
   router.use('/notifications', createNotificationsRouter({ requireAuth }));
   router.use('/uploads', createUploadsRouter({ requireAuth, mediaService }));

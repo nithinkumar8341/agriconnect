@@ -8,6 +8,7 @@ import {
   orderActionSchema,
   orderIdParams,
   ordersQuerySchema,
+  checkoutGroupParams,
   quoteSchema,
 } from '../validators/checkout.validators.js';
 
@@ -58,6 +59,19 @@ export function createNotificationsRouter({ requireAuth }) {
     requireAuth,
     validate({ params: objectIdParams }),
     orders.readNotification,
+  );
+  return router;
+}
+
+// Mock UPI (test mode): the buyer pays for a whole checkout in one tap.
+export function createPaymentsRouter({ requireAuth }) {
+  const router = Router();
+  router.post(
+    '/:checkoutGroupId/pay',
+    requireAuth,
+    requireRole('buyer'),
+    validate({ params: checkoutGroupParams }),
+    orders.payUpiOrder,
   );
   return router;
 }

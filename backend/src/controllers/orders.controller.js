@@ -1,4 +1,5 @@
 import { buildQuote, checkout } from '../services/checkout.service.js';
+import { payUpi } from '../services/payment.service.js';
 import { listNotifications, markAllRead, markRead } from '../services/notification.service.js';
 import { listBuyerOrders, listFarmerOrders } from '../services/orders.service.js';
 
@@ -10,6 +11,10 @@ export async function placeOrder(req, res) {
   const result = await checkout(req.user, req.body, { requestId: req.id });
   // A replayed submission answers 200 with the orders the first one created.
   res.status(result.replayed ? 200 : 201).json(result);
+}
+
+export async function payUpiOrder(req, res) {
+  res.json(await payUpi(req.user, req.params.checkoutGroupId, { requestId: req.id }));
 }
 
 export async function mine(req, res) {

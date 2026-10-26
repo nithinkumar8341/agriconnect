@@ -48,7 +48,7 @@ function OrderCard({ order, onCancel }) {
       <p className="text-lg font-semibold">
         {t('orders.total', {
           amount: formatRupees(order.priceBreakdown.buyerTotal, language),
-          method: t('cart.cod'),
+          method: t(order.paymentMethod === 'upi' ? 'orders.upi' : 'cart.cod'),
         })}
       </p>
       <BigButton icon={Eye} to={`/buyer/orders/${order.id}`}>

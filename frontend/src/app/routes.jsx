@@ -11,6 +11,7 @@ import { CartPage } from '../pages/buyer/CartPage.jsx';
 import { FarmerPublicPage } from '../pages/buyer/FarmerPublicPage.jsx';
 import { ProductDetailPage } from '../pages/buyer/ProductDetailPage.jsx';
 import { ComingSoonPage } from '../pages/ComingSoonPage.jsx';
+import { EarningsPage } from '../pages/farmer/EarningsPage.jsx';
 import { FarmerHomePage } from '../pages/farmer/FarmerHomePage.jsx';
 import { FarmerOrderDetailPage } from '../pages/farmer/FarmerOrderDetailPage.jsx';
 import { FarmerOrdersPage } from '../pages/farmer/FarmerOrdersPage.jsx';
@@ -49,6 +50,7 @@ const BUILT_SCREENS = {
     '': <FarmerHomePage />,
     products: <MyProductsPage />,
     orders: <FarmerOrdersPage />,
+    earnings: <EarningsPage />,
     'orders/:id': <FarmerOrderDetailPage />,
     notifications: <NotificationsPage />,
     profile: <FarmerProfilePage />,

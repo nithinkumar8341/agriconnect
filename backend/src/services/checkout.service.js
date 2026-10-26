@@ -10,6 +10,7 @@ import { getAppConfig } from './appConfig.service.js';
 import { actorFromUser, recordAudit } from './audit.service.js';
 import { deliveryDateOptions, servesBuyer, toFarmerSummary } from './market.service.js';
 import { notify } from './notification.service.js';
+import { createUpiPayment } from './payment.service.js';
 import { buyerContext, toBuyerOrder } from './orders.service.js';
 import { computeOrderPricing } from './pricing.service.js';
 
@@ -198,8 +199,12 @@ const istDay = (date) => new Date(`${date}T00:00:00+05:30`);
 
 export async function checkout(user, body, { now = new Date(), requestId } = {}) {
   const checkoutGroupId = body.idempotencyKey;
+  const withPayment = async (result) =>
+    body.paymentMethod === 'upi'
+      ? { ...result, payment: await createUpiPayment(user, checkoutGroupId, result.orders) }
+      : result;
   const replay = await existingCheckout(user, checkoutGroupId);
-  if (replay) return { ...replay, replayed: true };
+  if (replay) return withPayment({ ...replay, replayed: true });
 
   const quote = await buildQuote(user, body, { now });
   if (quote.changes.length || quote.groups.length === 0) throw cartChanged(quote);
@@ -216,7 +221,7 @@ export async function checkout(user, body, { now = new Date(), requestId } = {})
       });
     }
   }
-  await checkCodLimits(user, quote.groups);
+  if (body.paymentMethod === 'cod') await checkCodLimits(user, quote.groups);
 
   const { profile, address } = await buyerAddress(user, body.addressId);
   const deliveryAddress = {
@@ -310,14 +315,14 @@ export async function checkout(user, body, { now = new Date(), requestId } = {})
     // The same idempotency key submitted twice at once: the other request created the orders.
     if (err.code === 11000) {
       const winner = await existingCheckout(user, checkoutGroupId);
-      if (winner) return { ...winner, replayed: true };
+      if (winner) return withPayment({ ...winner, replayed: true });
     }
     throw err;
   }
 
-  return {
+  return withPayment({
     checkoutGroupId,
     orders: await Promise.all(created.map((order) => buyerView(order.toObject()))),
     replayed: false,
-  };
+  });
 }

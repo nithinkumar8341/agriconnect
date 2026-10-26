@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import request from 'supertest';
 import { createLogger } from '../src/config/logger.js';
 import { AuditLog } from '../src/models/AuditLog.js';
+import { LedgerEntry } from '../src/models/LedgerEntry.js';
 import { BuyerProfile } from '../src/models/BuyerProfile.js';
 import { Crop } from '../src/models/Crop.js';
 import { FarmerProfile } from '../src/models/FarmerProfile.js';
@@ -75,6 +76,7 @@ describe('order lifecycle API', () => {
   let buyer;
   let farmer;
   let product;
+  let lastCheckout;
   const as = (user) => ({
     Authorization: `Bearer ${sessionService.issueAccessToken(user, 'family')}`,
   });
@@ -82,7 +84,7 @@ describe('order lifecycle API', () => {
     request(app).post(`/api/v1/orders/${id}/${action}`).set(as(user)).send(body);
   const view = (user, id) => request(app).get(`/api/v1/orders/${id}`).set(as(user));
 
-  async function placeOrder(quantity = 5) {
+  async function placeOrder(quantity = 5, paymentMethod = 'cod') {
     const quote = await request(app)
       .post('/api/v1/checkout/quote')
       .set(as(buyer))
@@ -92,11 +94,12 @@ describe('order lifecycle API', () => {
       .set(as(buyer))
       .send({
         idempotencyKey: randomUUID(),
-        paymentMethod: 'cod',
+        paymentMethod,
         items: [{ productId: product.id, quantity, pricePerUnit: 3000 }],
         deliveryDates: { [farmer.id]: quote.body.groups[0].deliveryDates[0] },
       });
     expect(res.status).toBe(201);
+    lastCheckout = res.body;
     return res.body.orders[0].id;
   }
 
@@ -326,5 +329,44 @@ describe('order lifecycle API', () => {
     expect((await request(app).get('/api/v1/notifications').set(as(buyer))).body.unread).toBe(0);
     await request(app).post('/api/v1/notifications/read-all').set(as(farmer));
     expect((await request(app).get('/api/v1/notifications').set(as(farmer))).body.unread).toBe(0);
+  });
+  it('mock UPI: pay, deliver, ledger and earnings; paying twice changes nothing', async () => {
+    const id = await placeOrder(5, 'upi');
+    const groupId = lastCheckout.checkoutGroupId;
+    expect(lastCheckout.payment).toMatchObject({
+      amount: 17000,
+      status: 'created',
+      testMode: true,
+    });
+    // Not paid yet: the farmer cannot accept.
+    expect((await act(farmer, id, 'accept')).body.error.code).toBe('PAYMENT_PENDING');
+
+    const pay = () => request(app).post(`/api/v1/payments/${groupId}/pay`).set(as(buyer));
+    expect((await pay()).body).toEqual({ status: 'captured', alreadyPaid: false });
+    expect((await pay()).body.alreadyPaid).toBe(true);
+    expect((await view(buyer, id)).body.order.paymentStatus).toBe('held');
+
+    await act(farmer, id, 'accept');
+    await act(farmer, id, 'dispatch');
+    const code = (await view(buyer, id)).body.order.deliveryCode;
+    expect((await act(farmer, id, 'deliver', { code })).body.order.paymentStatus).toBe('paid');
+
+    const ledger = await LedgerEntry.find({ orderId: id }).lean();
+    expect(ledger.map((e) => [e.type, e.amount]).sort()).toEqual([
+      ['buyer_payment', 17000],
+      ['farmer_payout', 17000],
+    ]);
+    const earnings = await request(app).get('/api/v1/farmer/earnings').set(as(farmer));
+    expect(earnings.body.totals).toMatchObject({ orders: 1, itemsTotal: 15000, earnings: 17000 });
+    expect(earnings.body.items[0].payoutSimulated).toBe(true);
+  });
+
+  it("cannot pay for someone else's checkout", async () => {
+    await placeOrder(5, 'upi');
+    const other = await User.create({ phone: '+919000000150', role: 'buyer' });
+    const res = await request(app)
+      .post(`/api/v1/payments/${lastCheckout.checkoutGroupId}/pay`)
+      .set(as(other));
+    expect(res.status).toBe(404);
   });
 });

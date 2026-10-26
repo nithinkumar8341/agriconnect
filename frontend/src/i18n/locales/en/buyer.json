@@ -104,7 +104,6 @@
     "deliverTo": "Deliver to",
     "payment": "Payment",
     "cod": "Cash on delivery",
-    "upiSoon": "UPI payment comes in the next update.",
     "summary": "Price summary",
     "itemsTotal": "Vegetables and fruits",
     "deliveryTotal": "Delivery",
@@ -127,7 +126,9 @@
       "TOO_MANY_OPEN_ORDERS": "You already have open orders. Please wait until they are delivered.",
       "COD_BLOCKED": "Cash on delivery is not available on this account.",
       "ADDRESS_REQUIRED": "Add a delivery address in your profile first."
-    }
+    },
+    "upi": "UPI (test mode)",
+    "upiNote": "Test mode: you tap Pay and no real money moves."
   },
   "orders": {
     "title": "My orders",
@@ -157,6 +158,19 @@
     "codeHint": "Tell this code to the farmer only when you have your vegetables in hand.",
     "callFarmer": "Call {{name}}",
     "open": "See order",
-    "autoRefresh": "This page updates by itself."
+    "autoRefresh": "This page updates by itself.",
+    "payNow": "Pay {{amount}} by UPI (test mode)",
+    "paid": "Payment received.",
+    "farmerReceives": "Farmer receives",
+    "paymentLabel": "Payment",
+    "payment": {
+      "pending": "Not paid yet",
+      "held": "Paid, held until delivery",
+      "paid": "Paid",
+      "refunded": "Refunded",
+      "partially_refunded": "Partly refunded",
+      "failed": "Payment failed"
+    },
+    "upi": "UPI (test mode)"
   }
 }

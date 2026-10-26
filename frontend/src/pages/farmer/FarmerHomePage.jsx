@@ -1,5 +1,6 @@
 import {
   ClipboardList,
+  IndianRupee,
   MessageCircleQuestion,
   PackageMinus,
   Phone,
@@ -142,6 +143,7 @@ export function FarmerHomePage() {
             badge={data?.orders.new ?? 0}
             badgeLabel={t('tiles.newOrders')}
           />
+          <IconTile icon={IndianRupee} label={t('tiles.earnings')} to="/farmer/earnings" />
           <IconTile icon={TrendingUp} label={t('tiles.prices')} to="/farmer/prices" />
           <IconTile
             icon={MessageCircleQuestion}

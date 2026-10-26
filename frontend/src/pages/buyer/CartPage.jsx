@@ -1,4 +1,4 @@
-import { Banknote, CircleAlert, MapPin, Send, ShoppingCart, Trash2 } from 'lucide-react';
+import { CircleAlert, MapPin, Send, ShoppingCart, Trash2 } from 'lucide-react';
 import { useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
@@ -155,6 +155,7 @@ export function CartPage() {
   // retries after a network error, so the same checkout can never create orders twice.
   const [attempt, setAttempt] = useState({ cartKey: null, id: null });
   const [placing, setPlacing] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('cod');
   const [error, setError] = useState('');
 
   const items = cart.items.map(({ productId, quantity, pricePerUnit }) => ({
@@ -218,15 +219,16 @@ export function CartPage() {
     setPlacing(true);
     setError('');
     try {
-      await client.post('/checkout', {
+      const placed = await client.post('/checkout', {
         idempotencyKey,
-        paymentMethod: 'cod',
+        paymentMethod,
         items,
         deliveryDates: Object.fromEntries(groups.map((g) => [g.farmer.id, dateFor(g)])),
       });
       cart.clear();
       toast.show(t('cart.placed'));
-      navigate('/buyer/orders');
+      // UPI (test mode): go straight to the order, where the buyer taps Pay.
+      navigate(placed.payment ? `/buyer/orders/${placed.orders[0].id}` : '/buyer/orders');
     } catch (err) {
       setPlacing(false);
       if (err.code === 'CART_CHANGED') {
@@ -270,12 +272,14 @@ export function CartPage() {
         <p className="text-lg font-semibold">
           {[address.landmark, address.area, address.pincode].filter(Boolean).join(', ')}
         </p>
-        <h2 className="mt-2 flex items-center gap-2 text-lg text-ink-muted">
-          <Banknote aria-hidden="true" className="size-5" />
-          {t('cart.payment')}
-        </h2>
-        <p className="text-lg font-semibold">{t('cart.cod')}</p>
-        <p className="text-base text-ink-muted">{t('cart.upiSoon')}</p>
+        <PresetChips
+          label={t('cart.payment')}
+          options={['cod', 'upi']}
+          value={paymentMethod}
+          onChange={setPaymentMethod}
+          formatOption={(method) => t(method === 'cod' ? 'cart.cod' : 'cart.upi')}
+        />
+        {paymentMethod === 'upi' && <p className="text-base text-ink-muted">{t('cart.upiNote')}</p>}
       </section>
 
       <section className="rounded-2xl bg-white p-4">

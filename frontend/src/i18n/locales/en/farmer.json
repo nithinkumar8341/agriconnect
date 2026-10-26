@@ -18,7 +18,8 @@
     "callAgent": "Call my agent",
     "callSupport": "Call support",
     "noAgent": "No agent yet",
-    "newOrders": "new"
+    "newOrders": "new",
+    "earnings": "My earnings"
   },
   "products": {
     "title": "My products",
@@ -229,5 +230,17 @@
       "INVALID_STATUS_CHANGE": "This order just changed. The page has been refreshed.",
       "REASON_REQUIRED": "Please choose or write a reason."
     }
+  },
+  "earnings": {
+    "title": "My earnings",
+    "delivered": "Delivered orders",
+    "earned": "You earned",
+    "produce": "Produce sold",
+    "delivery": "Delivery fees",
+    "platformFee": "Platform fee",
+    "mandi": "Estimate: a mandi commission of about {{percent}}% would have taken {{amount}} from this produce.",
+    "simulated": "UPI payouts are simulated in test mode.",
+    "empty": "Your earnings appear here after your first delivery.",
+    "order": "Delivered {{date}}"
   }
 }

@@ -13,7 +13,8 @@ const paymentSchema = new mongoose.Schema(
     method: { type: String, enum: PAYMENT_METHODS, required: true },
     amount: paise({ required: true }),
     status: { type: String, enum: PAYMENT_RECORD_STATUSES, default: 'created' },
-    provider: { type: String, enum: ['razorpay', 'cod'], required: true },
+    // 'mock' is the MVP UPI test mode; 'razorpay' is future scope.
+    provider: { type: String, enum: ['mock', 'razorpay', 'cod'], required: true },
     providerOrderId: { type: String },
     providerPaymentId: { type: String },
     // Webhook event ids already applied; a replayed webhook is recognised and ignored (Prompt 12).

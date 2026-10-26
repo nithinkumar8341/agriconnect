@@ -66,7 +66,13 @@ describe('farmer home', () => {
     const hrefs = within(tasks)
       .getAllByRole('link')
       .map((link) => link.getAttribute('href'));
-    expect(hrefs).toEqual(['/farmer/sell', '/farmer/products', '/farmer/orders', '/farmer/prices']);
+    expect(hrefs).toEqual([
+      '/farmer/sell',
+      '/farmer/products',
+      '/farmer/orders',
+      '/farmer/earnings',
+      '/farmer/prices',
+    ]);
     // The assistant is a placeholder until Prompt 20, and says so rather than looking broken.
     expect(
       within(tasks).getByRole('group', { name: 'Ask assistant, Coming soon' }),

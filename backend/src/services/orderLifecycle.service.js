@@ -13,6 +13,7 @@ import {
   toBuyerOrder,
   toFarmerOrder,
 } from './orders.service.js';
+import { refundOrder, settleDeliveredOrder } from './payment.service.js';
 import { orderSmsMessage } from './sms/templates.js';
 
 const notFound = () => new AppError(404, 'NOT_FOUND', 'Not found');
@@ -103,6 +104,14 @@ export function createOrderLifecycle({ config, smsProvider, logger }) {
         status: current.status,
       });
     }
+    // A UPI order is only real once paid; the farmer should not pack produce before that.
+    if (
+      action === 'accept' &&
+      current.paymentMethod === 'upi' &&
+      current.paymentStatus !== 'held'
+    ) {
+      throw new AppError(409, 'PAYMENT_PENDING', 'The buyer has not paid yet');
+    }
     if (action === 'deliver') await checkDeliveryCode(current, code);
 
     const now = new Date();
@@ -117,8 +126,10 @@ export function createOrderLifecycle({ config, smsProvider, logger }) {
     }
     if (action === 'deliver') {
       set.deliveredAt = now;
-      // Cash on delivery is collected at handover (CLAUDE.md).
-      if (current.paymentMethod === 'cod') set.paymentStatus = 'paid';
+      // Cash on delivery is collected at handover (CLAUDE.md); held UPI money is released.
+      if (current.paymentMethod === 'cod' || current.paymentStatus === 'held') {
+        set.paymentStatus = 'paid';
+      }
     }
 
     const order = await mongoose.connection.transaction(async (session) => {
@@ -141,6 +152,11 @@ export function createOrderLifecycle({ config, smsProvider, logger }) {
         );
       }
       if (rule.restock) await restoreStock(updated, session);
+      if (rule.restock && updated.paymentStatus === 'held') {
+        await refundOrder(updated, { reason: reason ?? rule.to, session });
+        updated.paymentStatus = 'refunded';
+      }
+      if (rule.to === 'delivered') await settleDeliveredOrder(updated, session);
       await recordAudit(
         {
           actor: actorFromUser(user),

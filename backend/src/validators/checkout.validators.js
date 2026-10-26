@@ -19,7 +19,7 @@ export const checkoutSchema = z.object({
     .min(1)
     .max(30),
   addressId: objectId.optional(),
-  paymentMethod: z.enum(['cod']),
+  paymentMethod: z.enum(['cod', 'upi']),
   // farmerId -> chosen delivery day (YYYY-MM-DD).
   deliveryDates: z.record(objectId, z.string().regex(/^\d{4}-\d{2}-\d{2}$/)),
 });
@@ -46,3 +46,5 @@ export const ordersQuerySchema = z.object({
   page: z.coerce.number().int().min(1).max(1000).default(1),
   limit: z.coerce.number().int().min(1).max(50).default(20),
 });
+
+export const checkoutGroupParams = z.object({ checkoutGroupId: z.uuid() });

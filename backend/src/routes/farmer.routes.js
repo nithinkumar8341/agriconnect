@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { getDashboard, getMyProducts } from '../controllers/farmer.controller.js';
+import { getDashboard, getEarnings, getMyProducts } from '../controllers/farmer.controller.js';
+import { ordersQuerySchema } from '../validators/checkout.validators.js';
 import * as products from '../controllers/products.controller.js';
 import { requireRole } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
@@ -18,6 +19,13 @@ import {
 export function createFarmerRouter({ requireAuth }) {
   const router = Router();
   router.get('/dashboard', requireAuth, requireRole('farmer'), getDashboard);
+  router.get(
+    '/earnings',
+    requireAuth,
+    requireRole('farmer'),
+    validate({ query: ordersQuerySchema }),
+    getEarnings,
+  );
   return router;
 }
 

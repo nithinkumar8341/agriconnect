@@ -1,4 +1,4 @@
-import { KeyRound, Phone, XCircle } from 'lucide-react';
+import { KeyRound, Phone, Wallet, XCircle } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
@@ -45,6 +45,20 @@ export function BuyerOrderDetailPage() {
     );
   }
   const { order } = live;
+
+  async function pay() {
+    setBusy(true);
+    setError('');
+    try {
+      await client.post(`/payments/${order.checkoutGroupId}/pay`, {});
+      toast.show(t('orders.paid'));
+      live.reload();
+    } catch (err) {
+      setError(t(`common:${errorMessageKey(err)}`));
+    } finally {
+      setBusy(false);
+    }
+  }
 
   async function cancel() {
     setBusy(true);
@@ -118,9 +132,21 @@ export function BuyerOrderDetailPage() {
           <DetailRow label={t('cart.grandTotal')}>
             <span className="text-2xl">{money(order.priceBreakdown.buyerTotal)}</span>
           </DetailRow>
-          <DetailRow label={t('cart.payment')}>{t('cart.cod')}</DetailRow>
+          <DetailRow label={t('orders.farmerReceives')}>
+            {money(order.priceBreakdown.farmerEarnings)}
+          </DetailRow>
+          <DetailRow label={t('orders.paymentLabel')}>
+            {t(order.paymentMethod === 'upi' ? 'orders.upi' : 'cart.cod')} ·{' '}
+            {t(`orders.payment.${order.paymentStatus}`)}
+          </DetailRow>
         </dl>
       </section>
+
+      {order.paymentMethod === 'upi' && order.paymentStatus === 'pending' && order.isOpen && (
+        <BigButton icon={Wallet} loading={busy} onClick={pay}>
+          {t('orders.payNow', { amount: money(order.priceBreakdown.buyerTotal) })}
+        </BigButton>
+      )}
 
       <OrderTimeline
         history={order.statusHistory}
