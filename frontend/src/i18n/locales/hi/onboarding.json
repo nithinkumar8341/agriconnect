@@ -30,7 +30,8 @@
     "servicePincodesRequired": "जगह के बिना, कम से कम एक पिनकोड जोड़ें जहाँ आप डिलीवरी करते हैं।",
     "addPincode": "पिनकोड जोड़ें",
     "removePincode": "{{pincode}} हटाएँ",
-    "submit": "सेव करें और बेचना शुरू करें"
+    "submit": "सेव करें और बेचना शुरू करें",
+    "districtClear": "ज़िला हटाएँ"
   },
   "buyer": {
     "title": "आपका डिलीवरी पता",

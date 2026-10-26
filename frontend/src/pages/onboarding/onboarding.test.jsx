@@ -20,8 +20,8 @@ async function loginNewUser(user, handlers) {
 
 async function fillFarmerDetails(user, { pincode = '521151' } = {}) {
   await user.type(await screen.findByLabelText('Your name'), 'Ramu');
-  await user.type(screen.getByLabelText('Search district'), 'kris');
-  await user.click(screen.getByRole('radio', { name: 'Krishna' }));
+  await user.type(screen.getByRole('combobox', { name: 'District' }), 'kris');
+  await user.click(screen.getByRole('option', { name: 'Krishna' }));
   await user.type(screen.getByLabelText('Mandal'), 'Kankipadu');
   await user.type(screen.getByLabelText('Village'), 'Kankipadu');
   await user.type(screen.getByLabelText('Pincode'), pincode);
@@ -137,15 +137,41 @@ describe('farmer onboarding details', () => {
     renderFarmerOnboarding();
 
     await user.click(await screen.findByRole('radio', { name: 'Telangana' }));
-    const districts = screen.getByRole('group', { name: 'District' });
-    expect(within(districts).queryByRole('radio', { name: 'Krishna' })).not.toBeInTheDocument();
+    const field = screen.getByRole('combobox', { name: 'District' });
+    await user.click(field);
+    const list = screen.getByRole('listbox', { name: 'District' });
+    expect(within(list).queryByRole('option', { name: 'Krishna' })).not.toBeInTheDocument();
 
-    await user.type(screen.getByLabelText('Search district'), 'హైద');
+    await user.type(field, 'హైద');
     expect(
-      within(districts)
-        .getAllByRole('radio')
-        .map((r) => r.value),
+      within(list)
+        .getAllByRole('option')
+        .map((o) => o.textContent),
     ).toEqual(['Hyderabad']);
+  });
+
+  it('picks with the keyboard, clears on state change, and can be changed with X', async () => {
+    const user = userEvent.setup();
+    renderFarmerOnboarding();
+    const field = await screen.findByRole('combobox', { name: 'District' });
+
+    await user.type(field, 'KRISH');
+    await user.keyboard('{Enter}');
+    expect(field).toHaveValue('Krishna');
+    expect(field).toHaveAttribute('aria-expanded', 'false');
+
+    await user.click(screen.getByRole('radio', { name: 'Telangana' }));
+    expect(field).toHaveValue('');
+
+    await user.click(field);
+    await user.keyboard('{ArrowDown}{Enter}');
+    expect(field).toHaveValue('Hyderabad');
+
+    await user.click(screen.getByRole('button', { name: 'Clear district' }));
+    expect(field).toHaveValue('');
+    expect(field).toHaveAttribute('aria-expanded', 'true');
+    await user.keyboard('{Escape}');
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
   });
 
   it('treats refusing location as normal: explains, then delivers by the farm pincode', async () => {
@@ -239,7 +265,8 @@ describe('farmer onboarding details', () => {
 
     await user.click(await screen.findByRole('button', { name: 'Try again' }));
 
-    expect(await screen.findByRole('radio', { name: 'Krishna' })).toBeInTheDocument();
+    await user.click(await screen.findByRole('combobox', { name: 'District' }));
+    expect(screen.getByRole('option', { name: 'Krishna' })).toBeInTheDocument();
   });
 });
 

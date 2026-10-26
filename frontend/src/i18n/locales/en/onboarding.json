@@ -30,7 +30,8 @@
     "servicePincodesRequired": "Without your location, add at least one pincode you deliver to.",
     "addPincode": "Add pincode",
     "removePincode": "Remove {{pincode}}",
-    "submit": "Save and start selling"
+    "submit": "Save and start selling",
+    "districtClear": "Clear district"
   },
   "buyer": {
     "title": "Your delivery address",
