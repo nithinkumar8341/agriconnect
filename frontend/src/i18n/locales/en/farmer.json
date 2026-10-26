@@ -164,5 +164,70 @@
     "typePrice": "Or type the price (₹)",
     "quickPick": "Quick pick",
     "priceRange": "Enter a price from ₹1 to {{max}}."
+  },
+  "orders": {
+    "title": "My orders",
+    "tabs": {
+      "new": "New",
+      "active": "To deliver",
+      "done": "Finished"
+    },
+    "status": {
+      "placed": "New order",
+      "accepted": "Accepted",
+      "out_for_delivery": "On the way",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled by buyer",
+      "rejected": "Rejected",
+      "failed": "Not delivered"
+    },
+    "emptyTitle": "No orders here",
+    "emptyMessage": "New orders from buyers appear here.",
+    "detailTitle": "Order",
+    "deliverOn": "Deliver on {{date}}",
+    "youGet": "You get {{amount}}",
+    "buyer": "Buyer",
+    "callBuyer": "Call {{name}}",
+    "openMap": "Open in maps",
+    "addressAfterAccept": "Full address and phone number appear after you accept.",
+    "actions": {
+      "accept": "Accept order",
+      "reject": "Reject",
+      "dispatch": "Out for delivery",
+      "deliver": "Delivered",
+      "fail": "Could not deliver"
+    },
+    "done": {
+      "accept": "Order accepted. The buyer has been told.",
+      "reject": "Order rejected.",
+      "dispatch": "Marked out for delivery.",
+      "deliver": "Delivered. Well done!",
+      "fail": "Marked as not delivered. The stock is back on sale."
+    },
+    "rejectTitle": "Why are you rejecting?",
+    "failTitle": "Why could you not deliver?",
+    "reasonLabel": "Reason",
+    "otherReason": "Or write the reason",
+    "rejectReasons": {
+      "stock": "Not enough stock",
+      "quality": "Quality is not good today",
+      "distance": "Cannot reach this place",
+      "day": "Cannot deliver that day"
+    },
+    "failReasons": {
+      "not_home": "Buyer was not at home",
+      "refused": "Buyer refused the order",
+      "no_code": "Buyer did not give the code",
+      "vehicle": "Vehicle problem"
+    },
+    "confirm": "Confirm",
+    "codeLabel": "Code from the buyer (4 digits)",
+    "codeHint": "Ask the buyer for their delivery code after handing over the vegetables.",
+    "errors": {
+      "DELIVERY_OTP_WRONG": "That code is not right. {{attemptsLeft}} tries left.",
+      "DELIVERY_OTP_LOCKED": "Too many wrong codes. Mark the delivery as failed, or call support.",
+      "INVALID_STATUS_CHANGE": "This order just changed. The page has been refreshed.",
+      "REASON_REQUIRED": "Please choose or write a reason."
+    }
   }
 }

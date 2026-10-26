@@ -91,5 +91,22 @@
   "states": {
     "andhraPradesh": "Andhra Pradesh",
     "telangana": "Telangana"
-  }
+  },
+  "notifications": {
+    "title": "Updates",
+    "open": "Updates ({{count}} new)",
+    "openNone": "Updates",
+    "empty": "No updates yet.",
+    "markAll": "Mark all as read",
+    "order": {
+      "placed": "New order from {{name}}.",
+      "accepted": "{{name}} accepted your order.",
+      "out_for_delivery": "{{name}} is on the way with your order.",
+      "delivered": "Your order from {{name}} was delivered.",
+      "cancelled": "{{name}} cancelled the order.",
+      "rejected": "{{name}} could not take your order: {{reason}}",
+      "failed": "Delivery from {{name}} did not happen: {{reason}}"
+    }
+  },
+  "timeline": "What happened"
 }

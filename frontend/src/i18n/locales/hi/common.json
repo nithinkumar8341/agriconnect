@@ -91,5 +91,22 @@
   "states": {
     "andhraPradesh": "आंध्र प्रदेश",
     "telangana": "तेलंगाना"
-  }
+  },
+  "notifications": {
+    "title": "अपडेट",
+    "open": "अपडेट ({{count}} नए)",
+    "openNone": "अपडेट",
+    "empty": "अभी कोई अपडेट नहीं।",
+    "markAll": "सब पढ़ा हुआ करें",
+    "order": {
+      "placed": "{{name}} से नया ऑर्डर।",
+      "accepted": "{{name}} ने आपका ऑर्डर स्वीकार किया।",
+      "out_for_delivery": "{{name}} आपका ऑर्डर लेकर रास्ते में हैं।",
+      "delivered": "{{name}} से आपका ऑर्डर डिलीवर हुआ।",
+      "cancelled": "{{name}} ने ऑर्डर रद्द किया।",
+      "rejected": "{{name}} आपका ऑर्डर नहीं ले सके: {{reason}}",
+      "failed": "{{name}} से डिलीवरी नहीं हुई: {{reason}}"
+    }
+  },
+  "timeline": "क्या हुआ"
 }

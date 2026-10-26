@@ -5,17 +5,21 @@ import { PublicLayout } from '../layouts/PublicLayout.jsx';
 import { RoleLayout } from '../layouts/RoleLayout.jsx';
 import { RootLayout } from '../layouts/RootLayout.jsx';
 import { BuyerHomePage } from '../pages/buyer/BuyerHomePage.jsx';
+import { BuyerOrderDetailPage } from '../pages/buyer/BuyerOrderDetailPage.jsx';
 import { BuyerOrdersPage } from '../pages/buyer/BuyerOrdersPage.jsx';
 import { CartPage } from '../pages/buyer/CartPage.jsx';
 import { FarmerPublicPage } from '../pages/buyer/FarmerPublicPage.jsx';
 import { ProductDetailPage } from '../pages/buyer/ProductDetailPage.jsx';
 import { ComingSoonPage } from '../pages/ComingSoonPage.jsx';
 import { FarmerHomePage } from '../pages/farmer/FarmerHomePage.jsx';
+import { FarmerOrderDetailPage } from '../pages/farmer/FarmerOrderDetailPage.jsx';
+import { FarmerOrdersPage } from '../pages/farmer/FarmerOrdersPage.jsx';
 import { FarmerProfilePage } from '../pages/farmer/FarmerProfilePage.jsx';
 import { MyProductsPage } from '../pages/farmer/MyProductsPage.jsx';
 import { SellPage } from '../pages/farmer/SellPage.jsx';
 import { LoginPage } from '../pages/login/LoginPage.jsx';
 import { NotFoundPage } from '../pages/NotFoundPage.jsx';
+import { NotificationsPage } from '../pages/NotificationsPage.jsx';
 import { BuyerOnboardingPage } from '../pages/onboarding/BuyerOnboardingPage.jsx';
 import { ChooseRolePage } from '../pages/onboarding/ChooseRolePage.jsx';
 import { FarmerOnboardingPage } from '../pages/onboarding/FarmerOnboardingPage.jsx';
@@ -36,12 +40,17 @@ const BUILT_SCREENS = {
     '': <BuyerHomePage />,
     cart: <CartPage />,
     orders: <BuyerOrdersPage />,
+    'orders/:id': <BuyerOrderDetailPage />,
+    notifications: <NotificationsPage />,
     'products/:id': <ProductDetailPage />,
     'farmers/:id': <FarmerPublicPage />,
   },
   farmer: {
     '': <FarmerHomePage />,
     products: <MyProductsPage />,
+    orders: <FarmerOrdersPage />,
+    'orders/:id': <FarmerOrderDetailPage />,
+    notifications: <NotificationsPage />,
     profile: <FarmerProfilePage />,
     sell: <SellPage />,
   },

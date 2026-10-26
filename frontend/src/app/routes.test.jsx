@@ -55,7 +55,7 @@ describe('routing and role guards', () => {
     await user.click(await screen.findByRole('link', { name: 'Orders' }));
 
     expect(router.state.location.pathname).toBe('/farmer/orders');
-    expect(screen.getByRole('heading', { name: 'Orders' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'My orders' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Orders' })).toHaveAttribute('aria-current', 'page');
   });
 

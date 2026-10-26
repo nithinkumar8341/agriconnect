@@ -151,6 +151,12 @@
     "cancelled": "Order cancelled.",
     "errors": {
       "INVALID_STATUS_CHANGE": "The farmer already accepted this order, so it cannot be cancelled here."
-    }
+    },
+    "detailTitle": "Order details",
+    "code": "Your delivery code",
+    "codeHint": "Tell this code to the farmer only when you have your vegetables in hand.",
+    "callFarmer": "Call {{name}}",
+    "open": "See order",
+    "autoRefresh": "This page updates by itself."
   }
 }

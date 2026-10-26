@@ -12,7 +12,8 @@ const BASE =
   'inline-flex min-h-14 items-center justify-center gap-3 rounded-2xl px-6 py-3 text-lg font-semibold leading-snug transition-colors disabled:cursor-not-allowed disabled:opacity-60';
 
 // Icon plus label on every action: the icon helps people who read slowly, the label removes doubt.
-// Pass `to` to render a link that looks like a button (navigation), otherwise it is a <button>.
+// Pass `to` to render a link that looks like a button (navigation), `href` for a plain link
+// (for example tel: to call someone), otherwise it is a <button>.
 export function BigButton({
   icon: Icon,
   children,
@@ -21,6 +22,7 @@ export function BigButton({
   loading = false,
   disabled = false,
   to,
+  href,
   type = 'button',
   className = '',
   ...rest
@@ -36,6 +38,14 @@ export function BigButton({
       <span>{children}</span>
     </>
   );
+
+  if (href) {
+    return (
+      <a href={href} className={classes} {...rest}>
+        {content}
+      </a>
+    );
+  }
 
   if (to) {
     return (

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../auth/authContext.js';
 import { LocationSheet } from '../../components/buyer/LocationSheet.jsx';
 import { MarketProductCard } from '../../components/buyer/MarketProductCard.jsx';
+import { NotificationBell } from '../../components/NotificationBell.jsx';
 import { FormAlert } from '../../components/form/FormAlert.jsx';
 import { TextField } from '../../components/form/TextField.jsx';
 import { Screen } from '../../components/Screen.jsx';
@@ -220,7 +221,11 @@ export function BuyerHomePage() {
   const filterCount = activeFilterCount(filters);
 
   return (
-    <Screen title={t('home.title')} showBack={false}>
+    <Screen
+      title={t('home.title')}
+      showBack={false}
+      actions={<NotificationBell to="/buyer/notifications" />}
+    >
       <button
         type="button"
         onClick={() => setChoosingLocation(true)}

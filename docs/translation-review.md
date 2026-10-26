@@ -256,6 +256,12 @@ Machine-written te and hi for every UI key, in all namespaces. The app falls bac
 | buyer:orders.cancelConfirm | Yes, cancel | అవును, రద్దు చేయండి |  | हाँ, रद्द करें |  |
 | buyer:orders.cancelled | Order cancelled. | ఆర్డర్ రద్దు అయింది. |  | ऑर्डर रद्द हुआ। |  |
 | buyer:orders.errors.INVALID_STATUS_CHANGE | The farmer already accepted this order, so it cannot be cancelled here. | రైతు ఇప్పటికే ఈ ఆర్డర్ అంగీకరించారు, కాబట్టి ఇక్కడ రద్దు చేయలేరు. |  | किसान ने यह ऑर्डर स्वीकार कर लिया है, इसलिए यहाँ रद्द नहीं हो सकता। |  |
+| buyer:orders.detailTitle | Order details | ఆర్డర్ వివరాలు |  | ऑर्डर की जानकारी |  |
+| buyer:orders.code | Your delivery code | మీ డెలివరీ కోడ్ |  | आपका डिलीवरी कोड |  |
+| buyer:orders.codeHint | Tell this code to the farmer only when you have your vegetables in hand. | కూరగాయలు మీ చేతికి వచ్చినప్పుడే ఈ కోడ్ రైతుకు చెప్పండి. |  | सब्ज़ियाँ हाथ में आने पर ही यह कोड किसान को बताएँ। |  |
+| buyer:orders.callFarmer | Call {{name}} | {{name}}కు కాల్ చేయండి |  | {{name}} को कॉल करें |  |
+| buyer:orders.open | See order | ఆర్డర్ చూడండి |  | ऑर्डर देखें |  |
+| buyer:orders.autoRefresh | This page updates by itself. | ఈ పేజీ దానంతట అదే అప్‌డేట్ అవుతుంది. |  | यह पेज अपने आप अपडेट होता है। |  |
 | common:app.name | AgriConnect | AgriConnect |  | AgriConnect |  |
 | common:app.tagline | Fresh vegetables and fruits, straight from nearby farmers | దగ్గరలోని రైతుల నుండి నేరుగా తాజా కూరగాయలు, పండ్లు |  | पास के किसानों से सीधे ताज़ी सब्ज़ियाँ और फल |  |
 | common:actions.back | Back | వెనుకకు |  | वापस |  |
@@ -321,6 +327,19 @@ Machine-written te and hi for every UI key, in all namespaces. The app falls bac
 | common:weekdays.sun | Sunday | ఆదివారం |  | रविवार |  |
 | common:states.andhraPradesh | Andhra Pradesh | ఆంధ్రప్రదేశ్ |  | आंध्र प्रदेश |  |
 | common:states.telangana | Telangana | తెలంగాణ |  | तेलंगाना |  |
+| common:notifications.title | Updates | అప్‌డేట్‌లు |  | अपडेट |  |
+| common:notifications.open | Updates ({{count}} new) | అప్‌డేట్‌లు ({{count}} కొత్తవి) |  | अपडेट ({{count}} नए) |  |
+| common:notifications.openNone | Updates | అప్‌డేట్‌లు |  | अपडेट |  |
+| common:notifications.empty | No updates yet. | ఇంకా అప్‌డేట్‌లు లేవు. |  | अभी कोई अपडेट नहीं। |  |
+| common:notifications.markAll | Mark all as read | అన్నీ చదివినట్లు గుర్తించండి |  | सब पढ़ा हुआ करें |  |
+| common:notifications.order.placed | New order from {{name}}. | {{name}} నుండి కొత్త ఆర్డర్. |  | {{name}} से नया ऑर्डर। |  |
+| common:notifications.order.accepted | {{name}} accepted your order. | {{name}} మీ ఆర్డర్ అంగీకరించారు. |  | {{name}} ने आपका ऑर्डर स्वीकार किया। |  |
+| common:notifications.order.out_for_delivery | {{name}} is on the way with your order. | {{name}} మీ ఆర్డర్‌తో దారిలో ఉన్నారు. |  | {{name}} आपका ऑर्डर लेकर रास्ते में हैं। |  |
+| common:notifications.order.delivered | Your order from {{name}} was delivered. | {{name}} నుండి మీ ఆర్డర్ డెలివరీ అయింది. |  | {{name}} से आपका ऑर्डर डिलीवर हुआ। |  |
+| common:notifications.order.cancelled | {{name}} cancelled the order. | {{name}} ఆర్డర్ రద్దు చేశారు. |  | {{name}} ने ऑर्डर रद्द किया। |  |
+| common:notifications.order.rejected | {{name}} could not take your order: {{reason}} | {{name}} మీ ఆర్డర్ తీసుకోలేకపోయారు: {{reason}} |  | {{name}} आपका ऑर्डर नहीं ले सके: {{reason}} |  |
+| common:notifications.order.failed | Delivery from {{name}} did not happen: {{reason}} | {{name}} నుండి డెలివరీ జరగలేదు: {{reason}} |  | {{name}} से डिलीवरी नहीं हुई: {{reason}} |  |
+| common:timeline | What happened | ఏం జరిగింది |  | क्या हुआ |  |
 | devui:title | Component gallery | కాంపోనెంట్ గ్యాలరీ |  | कंपोनेंट गैलरी |  |
 | devui:intro | Every reusable component, shown in the current language. Switch the language to check the layout. | ప్రతి కాంపోనెంట్ ప్రస్తుత భాషలో చూపబడింది. లేఅవుట్ చూడటానికి భాష మార్చండి. |  | हर कंपोनेंट मौजूदा भाषा में दिखाया गया है। लेआउट जाँचने के लिए भाषा बदलें। |  |
 | devui:sections.buttons | Big buttons | పెద్ద బటన్లు |  | बड़े बटन |  |
@@ -494,6 +513,55 @@ Machine-written te and hi for every UI key, in all namespaces. The app falls bac
 | farmer:sell.typePrice | Or type the price (₹) | లేదా ధర టైప్ చేయండి (₹) |  | या भाव टाइप करें (₹) |  |
 | farmer:sell.quickPick | Quick pick | త్వరగా ఎంచుకోండి |  | झटपट चुनें |  |
 | farmer:sell.priceRange | Enter a price from ₹1 to {{max}}. | ₹1 నుండి {{max}} వరకు ధర ఇవ్వండి. |  | ₹1 से {{max}} तक का भाव डालें। |  |
+| farmer:orders.title | My orders | నా ఆర్డర్లు |  | मेरे ऑर्डर |  |
+| farmer:orders.tabs.new | New | కొత్తవి |  | नए |  |
+| farmer:orders.tabs.active | To deliver | డెలివరీ చేయాలి |  | डिलीवर करने हैं |  |
+| farmer:orders.tabs.done | Finished | ముగిసినవి |  | पूरे हुए |  |
+| farmer:orders.status.placed | New order | కొత్త ఆర్డర్ |  | नया ऑर्डर |  |
+| farmer:orders.status.accepted | Accepted | అంగీకరించారు |  | स्वीकार किया |  |
+| farmer:orders.status.out_for_delivery | On the way | దారిలో ఉంది |  | रास्ते में |  |
+| farmer:orders.status.delivered | Delivered | డెలివరీ అయింది |  | डिलीवर हुआ |  |
+| farmer:orders.status.cancelled | Cancelled by buyer | కొనుగోలుదారు రద్దు చేశారు |  | खरीदार ने रद्द किया |  |
+| farmer:orders.status.rejected | Rejected | తిరస్కరించారు |  | मना किया |  |
+| farmer:orders.status.failed | Not delivered | డెలివరీ కాలేదు |  | डिलीवर नहीं हुआ |  |
+| farmer:orders.emptyTitle | No orders here | ఇక్కడ ఆర్డర్లు లేవు |  | यहाँ कोई ऑर्डर नहीं |  |
+| farmer:orders.emptyMessage | New orders from buyers appear here. | కొనుగోలుదారుల కొత్త ఆర్డర్లు ఇక్కడ కనిపిస్తాయి. |  | खरीदारों के नए ऑर्डर यहाँ दिखेंगे। |  |
+| farmer:orders.detailTitle | Order | ఆర్డర్ |  | ऑर्डर |  |
+| farmer:orders.deliverOn | Deliver on {{date}} | {{date}}న డెలివరీ |  | {{date}} को डिलीवरी |  |
+| farmer:orders.youGet | You get {{amount}} | మీకు {{amount}} |  | आपको {{amount}} |  |
+| farmer:orders.buyer | Buyer | కొనుగోలుదారు |  | खरीदार |  |
+| farmer:orders.callBuyer | Call {{name}} | {{name}}కు కాల్ చేయండి |  | {{name}} को कॉल करें |  |
+| farmer:orders.openMap | Open in maps | మ్యాప్‌లో తెరవండి |  | मैप में खोलें |  |
+| farmer:orders.addressAfterAccept | Full address and phone number appear after you accept. | మీరు అంగీకరించాక పూర్తి చిరునామా, ఫోన్ నంబర్ కనిపిస్తాయి. |  | स्वीकार करने के बाद पूरा पता और फ़ोन नंबर दिखेगा। |  |
+| farmer:orders.actions.accept | Accept order | ఆర్డర్ అంగీకరించండి |  | ऑर्डर स्वीकार करें |  |
+| farmer:orders.actions.reject | Reject | తిరస్కరించండి |  | मना करें |  |
+| farmer:orders.actions.dispatch | Out for delivery | డెలివరీకి బయలుదేరాను |  | डिलीवरी के लिए निकला |  |
+| farmer:orders.actions.deliver | Delivered | డెలివరీ చేశాను |  | डिलीवर किया |  |
+| farmer:orders.actions.fail | Could not deliver | డెలివరీ చేయలేకపోయాను |  | डिलीवर नहीं हो सका |  |
+| farmer:orders.done.accept | Order accepted. The buyer has been told. | ఆర్డర్ అంగీకరించారు. కొనుగోలుదారుకు తెలియజేశాము. |  | ऑर्डर स्वीकार हुआ। खरीदार को बता दिया गया। |  |
+| farmer:orders.done.reject | Order rejected. | ఆర్డర్ తిరస్కరించారు. |  | ऑर्डर मना किया। |  |
+| farmer:orders.done.dispatch | Marked out for delivery. | డెలివరీకి బయలుదేరినట్లు గుర్తించాము. |  | डिलीवरी के लिए निकलना दर्ज हुआ। |  |
+| farmer:orders.done.deliver | Delivered. Well done! | డెలివరీ అయింది. బాగా చేశారు! |  | डिलीवर हो गया। बहुत बढ़िया! |  |
+| farmer:orders.done.fail | Marked as not delivered. The stock is back on sale. | డెలివరీ కాలేదని గుర్తించాము. సరుకు మళ్ళీ అమ్మకానికి ఉంది. |  | डिलीवर नहीं हुआ दर्ज किया। माल फिर से बिक्री पर है। |  |
+| farmer:orders.rejectTitle | Why are you rejecting? | ఎందుకు తిరస్కరిస్తున్నారు? |  | आप मना क्यों कर रहे हैं? |  |
+| farmer:orders.failTitle | Why could you not deliver? | ఎందుకు డెలివరీ చేయలేకపోయారు? |  | डिलीवरी क्यों नहीं हो सकी? |  |
+| farmer:orders.reasonLabel | Reason | కారణం |  | कारण |  |
+| farmer:orders.otherReason | Or write the reason | లేదా కారణం రాయండి |  | या कारण लिखें |  |
+| farmer:orders.rejectReasons.stock | Not enough stock | సరిపడా సరుకు లేదు |  | पूरा माल नहीं है |  |
+| farmer:orders.rejectReasons.quality | Quality is not good today | ఈరోజు నాణ్యత బాగాలేదు |  | आज क्वालिटी अच्छी नहीं है |  |
+| farmer:orders.rejectReasons.distance | Cannot reach this place | ఈ ప్రాంతానికి రాలేను |  | इस जगह नहीं पहुँच सकता |  |
+| farmer:orders.rejectReasons.day | Cannot deliver that day | ఆ రోజు డెలివరీ చేయలేను |  | उस दिन डिलीवरी नहीं हो सकती |  |
+| farmer:orders.failReasons.not_home | Buyer was not at home | కొనుగోలుదారు ఇంట్లో లేరు |  | खरीदार घर पर नहीं थे |  |
+| farmer:orders.failReasons.refused | Buyer refused the order | కొనుగోలుదారు ఆర్డర్ తీసుకోలేదు |  | खरीदार ने ऑर्डर नहीं लिया |  |
+| farmer:orders.failReasons.no_code | Buyer did not give the code | కొనుగోలుదారు కోడ్ ఇవ్వలేదు |  | खरीदार ने कोड नहीं दिया |  |
+| farmer:orders.failReasons.vehicle | Vehicle problem | వాహనం సమస్య |  | गाड़ी की समस्या |  |
+| farmer:orders.confirm | Confirm | నిర్ధారించండి |  | पक्का करें |  |
+| farmer:orders.codeLabel | Code from the buyer (4 digits) | కొనుగోలుదారు కోడ్ (4 అంకెలు) |  | खरीदार का कोड (4 अंक) |  |
+| farmer:orders.codeHint | Ask the buyer for their delivery code after handing over the vegetables. | కూరగాయలు ఇచ్చిన తర్వాత కొనుగోలుదారుని డెలివరీ కోడ్ అడగండి. |  | सब्ज़ियाँ देने के बाद खरीदार से डिलीवरी कोड पूछें। |  |
+| farmer:orders.errors.DELIVERY_OTP_WRONG | That code is not right. {{attemptsLeft}} tries left. | కోడ్ సరిగ్గా లేదు. ఇంకా {{attemptsLeft}} ప్రయత్నాలు ఉన్నాయి. |  | कोड सही नहीं है। {{attemptsLeft}} कोशिशें बाकी हैं। |  |
+| farmer:orders.errors.DELIVERY_OTP_LOCKED | Too many wrong codes. Mark the delivery as failed, or call support. | చాలా సార్లు తప్పు కోడ్. డెలివరీ కాలేదని గుర్తించండి లేదా సపోర్ట్‌కు కాల్ చేయండి. |  | बहुत बार गलत कोड। डिलीवरी नहीं हुई दर्ज करें या सपोर्ट को कॉल करें। |  |
+| farmer:orders.errors.INVALID_STATUS_CHANGE | This order just changed. The page has been refreshed. | ఈ ఆర్డర్ ఇప్పుడే మారింది. పేజీ రిఫ్రెష్ అయింది. |  | यह ऑर्डर अभी बदला है। पेज रीफ़्रेश हो गया। |  |
+| farmer:orders.errors.REASON_REQUIRED | Please choose or write a reason. | దయచేసి కారణం ఎంచుకోండి లేదా రాయండి. |  | कृपया कारण चुनें या लिखें। |  |
 | onboarding:role.title | How will you use AgriConnect? | AgriConnectను మీరు ఎలా ఉపయోగిస్తారు? |  | आप AgriConnect का उपयोग कैसे करेंगे? |  |
 | onboarding:role.farmer | I am a farmer | నేను రైతును |  | मैं किसान हूँ |  |
 | onboarding:role.farmerHint | Sell my vegetables and fruits | నా కూరగాయలు, పండ్లు అమ్ముతాను |  | अपनी सब्ज़ियाँ और फल बेचें |  |

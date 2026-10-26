@@ -1,4 +1,4 @@
-import { ChevronDown, ClipboardList, XCircle } from 'lucide-react';
+import { ChevronDown, ClipboardList, Eye, XCircle } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../auth/authContext.js';
@@ -14,18 +14,10 @@ import {
 } from '../../components/ui/index.js';
 import { useApiRequest } from '../../hooks/useApiRequest.js';
 import { errorMessageKey } from '../../lib/apiErrors.js';
+import { ORDER_STATUS_STYLES } from '../../lib/orderStatus.js';
 import { formatDate, formatQuantity, formatRupees, localName } from '../../lib/format.js';
 
 const PAGE_SIZE = 20;
-const STATUS_STYLES = {
-  placed: 'bg-sun-100 text-ink',
-  accepted: 'bg-leaf-100 text-leaf-900',
-  out_for_delivery: 'bg-leaf-100 text-leaf-900',
-  delivered: 'bg-leaf-700 text-white',
-  cancelled: 'bg-soil-100 text-soil-700',
-  rejected: 'bg-danger-50 text-danger-800',
-  failed: 'bg-danger-50 text-danger-800',
-};
 
 function OrderCard({ order, onCancel }) {
   const { t, i18n } = useTranslation(['buyer', 'common']);
@@ -37,7 +29,7 @@ function OrderCard({ order, onCancel }) {
           {t('card.from', { name: order.farmer?.firstName, village: order.farmer?.village })}
         </h3>
         <span
-          className={`self-start rounded-full px-3 py-1 text-base font-semibold ${STATUS_STYLES[order.status]}`}
+          className={`self-start rounded-full px-3 py-1 text-base font-semibold ${ORDER_STATUS_STYLES[order.status]}`}
         >
           {t(`orders.status.${order.status}`)}
         </span>
@@ -59,6 +51,9 @@ function OrderCard({ order, onCancel }) {
           method: t('cart.cod'),
         })}
       </p>
+      <BigButton icon={Eye} to={`/buyer/orders/${order.id}`}>
+        {t('orders.open')}
+      </BigButton>
       {order.canCancel && (
         <BigButton icon={XCircle} variant="secondary" onClick={() => onCancel(order)}>
           {t('orders.cancel')}

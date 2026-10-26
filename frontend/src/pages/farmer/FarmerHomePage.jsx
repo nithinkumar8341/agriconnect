@@ -11,6 +11,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router';
 import { useAuth } from '../../auth/authContext.js';
+import { NotificationBell } from '../../components/NotificationBell.jsx';
 import { Screen } from '../../components/Screen.jsx';
 import { ErrorState, IconTile, Skeleton } from '../../components/ui/index.js';
 import { useApiRequest } from '../../hooks/useApiRequest.js';
@@ -62,7 +63,11 @@ export function FarmerHomePage() {
   }
 
   return (
-    <Screen title={t('common:home.title')} showBack={false}>
+    <Screen
+      title={t('common:home.title')}
+      showBack={false}
+      actions={<NotificationBell to="/farmer/notifications" />}
+    >
       <h2 className="text-2xl font-bold">
         {data?.farmerName
           ? t('home.greeting', { name: data.farmerName })
