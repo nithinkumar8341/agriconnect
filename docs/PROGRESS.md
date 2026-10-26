@@ -1,6 +1,6 @@
 # Progress
 
-NEXT: deployment prep (phase D), then README, CI check, final run.
+NEXT: deploy to Vercel, Render and Atlas by following docs/deploy.md (needs the owner's accounts), then add the live URL and screenshots to the README.
 
 ## MVP status (2026-10-26)
 
@@ -15,7 +15,12 @@ NEXT: deployment prep (phase D), then README, CI check, final run.
 | 7 Playwright smoke test | DONE (passes in 11 s, Edge) | frontend/e2e/smoke.spec.js; run `PW_CHANNEL=msedge npm run test:e2e` |
 | AI service: price hint, chatbot, review insights | DONE | ai-service/app/ (7 pytest), backend/src/services/ai.service.js, tests/ai.test.js |
 | AI frontend: price hint, chat widget, insights, voice (en/te/hi) | DONE | frontend/src/components/ai/, hooks/useSpeechInput.js |
-| Deploy, README, CI | TODO | |
+| Deploy configs (render.yaml, Dockerfiles, vercel.json, demo login) | DONE, not yet deployed | docs/deploy.md, ADR 0013; both images build and start |
+| README, CI | DONE | README.md; CI lints and tests all three services |
+
+Final run (2026-10-26): backend 325 passed / 1 skipped; frontend 150 passed; ai-service 7 passed; Playwright smoke passed; lint clean in all three.
+
+Known issues: toasts can cover buttons briefly; free Render services sleep (first request about 1 min); machine-written te/hi strings await native review (docs/translation-review.md); `npm audit` reports advisories in frontend dev dependencies.
 
 
 ## Done
