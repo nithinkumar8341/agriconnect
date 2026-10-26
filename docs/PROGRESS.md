@@ -17,6 +17,7 @@ NEXT: deploy to Vercel, Render and Atlas by following docs/deploy.md (needs the 
 | AI frontend: price hint, chat widget, insights, voice (en/te/hi) | DONE | frontend/src/components/ai/, hooks/useSpeechInput.js |
 | Deploy configs (render.yaml, Dockerfiles, vercel.json, demo login) | DONE, not yet deployed | docs/deploy.md, ADR 0013; both images build and start |
 | README, CI | DONE | README.md; CI lints and tests all three services |
+| Catalog photos, buyer grid, 3-step sell, sample data | DONE | frontend/public/crops (59 photos + CREDITS.md), MarketProductCard, SellPage/CropPicker, backend seed (npm run seed / seed:clear) |
 
 Final run (2026-10-26): backend 325 passed / 1 skipped; frontend 150 passed; ai-service 7 passed; Playwright smoke passed; lint clean in all three.
 

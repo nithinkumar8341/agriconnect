@@ -328,7 +328,7 @@ A change from any other status, or a listing that changed in between (an order a
 
 | Method | Path | Query | Success |
 | --- | --- | --- | --- |
-| GET | `/market/products` (also `/products/nearby`) | where: `lat`+`lng` and/or `pincode` (one is required); `q` (crop name in te/en/hi), `category`, `crop`, `minPrice`/`maxPrice` (paise), `day` (`mon`…`sun`), `inStock` (`true` default), `sort` (`distance` needs `lat`/`lng`; `price`; `freshness`), `page`, `limit` (1–50, default 20) | `200 { items, page, limit, total, sort }` |
+| GET | `/market/products` (also `/products/nearby`) | where: `lat`+`lng` and/or `pincode` (one is required); `q` (crop name in te/en/hi), `category`, `crop`, `minPrice`/`maxPrice` (paise), `day` (`mon`…`sun`), `inStock` (`true` default), `sort` (`distance` needs `lat`/`lng`; `price`; `freshness`; `rating`), `page`, `limit` (1–50, default 20) | `200 { items, page, limit, total, sort }` |
 | GET | `/market/products/:id` | optional `lat`/`lng`/`pincode` | `200 { product }`: card fields plus `photos[]`, `canDeliver`, `deliveryDays`, `cutoffTime`. `404` when paused, removed or the farmer is suspended. |
 | GET | `/market/farmers/:id` | optional `lat`/`lng`/`pincode` | `200 { farmer }`: `firstName`, `village`, `mandal`, `district`, `verificationLevel`, `isNew` (joined < 30 days), delivery terms, `memberSince`, `distanceKm`, `canDeliver`, `nextDeliveryDate`, `products[]` (available, newest harvest first) |
 
@@ -340,7 +340,7 @@ A change from any other status, or a listing that changed in between (an order a
 
 **Next delivery day:** an order before the farmer's `cutoffTime` (IST) can go out from tomorrow, after it from the day after; the first of the farmer's `deliveryDays` from then on.
 
-**Sorting:** `distance` (default with a location), `price`, `freshness` (default with a pincode only). Farmers without a known distance sort after those with one.
+**Sorting:** `distance` (default with a location), `price`, `freshness` (default with a pincode only), `rating` (farmer average, unrated last). Each card has `rating: { average, count }` (the farmer's reviews; count 0 = show New) and `crop.image` / `crop.shelfLifeDays`. Farmers without a known distance sort after those with one.
 
 ## Cart, checkout and orders
 

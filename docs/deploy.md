@@ -47,7 +47,7 @@ MONGODB_URI="mongodb+srv://..." NODE_ENV=production ALLOW_DEMO_SEED=true \
 JWT_ACCESS_SECRET=x-local-only-seed-secret-32-chars-min OTP_HMAC_SECRET=y-local-only-seed-secret-32-chars-min \
 CORS_ORIGINS=https://agriconnect.vercel.app SMS_PROVIDER=none STORAGE_PROVIDER=cloudinary \
 CLOUDINARY_CLOUD_NAME=x CLOUDINARY_API_KEY=x CLOUDINARY_API_SECRET=x \
-npm run seed:crops && npm run seed:demo
+npm run seed:crops && npm run seed
 ```
 
 The seed scripts load the same validated config as the server, hence the placeholder values; only `MONGODB_URI` is actually used.

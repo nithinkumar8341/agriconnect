@@ -129,8 +129,9 @@ Works end to end in the browser; tests pass; lint passes; i18n keys added (te + 
   - ai-service: `pytest`
 - Seed (in `backend/`, needs MongoDB running; every task syncs indexes first):
   - `npm run db:indexes`: sync all model indexes
-  - `npm run seed:crops`: upsert the 59-crop catalog (idempotent)
+  - `npm run seed:crops`: upsert the 59-crop catalog (idempotent; each crop has a stock photo at `frontend/public/crops/<slug>.jpg`, credits in `CREDITS.md` there)
   - `npm run seed:admin`: create the first admin from `SEED_ADMIN_PHONE` (add `-- --force` to promote an existing user); the admin sets a PIN on first login
-  - `npm run seed:demo`: replace all `isDemo` data with the demo marketplace (refused in production unless `ALLOW_DEMO_SEED=true`). Demo logins: farmers `9999900011`–`14`, buyers `9999900021`–`23`, agent `9999900001`; OTP `123456` in dev
+  - `npm run seed` (same as `seed:demo`): replace all `isDemo` data with the demo marketplace: 5 farmers, 36 listings, 11 orders, 7 reviews (refused in production unless `ALLOW_DEMO_SEED=true`). Safe to re-run. Demo logins: farmers `9999900011`–`15`, buyers `9999900021`–`23`, agent `9999900001`; OTP `123456` in dev
+  - `npm run seed:clear`: remove all demo data (users, listings, orders, reviews); real data is never touched
 
 The full prompt sequence lives in `docs/prompt-pack.md`.

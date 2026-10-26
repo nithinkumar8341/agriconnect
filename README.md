@@ -12,11 +12,12 @@ _(Screenshots: add phone-size captures to `docs/screenshots/`.)_
 
 **Farmers**
 - Phone OTP sign-in, onboarding with village, delivery radius/pincodes, delivery days and fees.
-- Sell in three screens: photo, crop, quantity and price. Drafts survive a closed app and weak network.
+- Sell in three short screens: tap a crop photo, enter quantity and price, publish (own photo optional). Drafts survive a closed app and weak network.
 - **Price suggestion**: median of recent sales of the crop in the district, or labelled mandi prices when data is thin.
 - Orders: accept or reject, mark out for delivery, confirm handover with the buyer's 4-digit delivery code. Earnings ledger.
 
 **Buyers**
+- Product grid (2/3/4 columns) with real crop photos, farmer rating or a New badge, freshness tag and one-tap Add; search, categories and sort by distance, price or rating.
 - Only farmers who deliver to the buyer's location are shown, with approximate distance (whole km).
 - Multi-farmer cart: one order per farmer, atomic stock reservation, cash on delivery or mock UPI.
 - Live order status, delivery code, notifications, verified-purchase reviews, problem reports (returns) with a photo.
@@ -59,6 +60,7 @@ Key design points (each has an ADR in [docs/decisions](docs/decisions)):
 
 | Part | Stack |
 | --- | --- |
+| Crop photos | 59 free-licensed Wikimedia Commons photos, credits in [frontend/public/crops/CREDITS.md](frontend/public/crops/CREDITS.md) |
 | Frontend | React 19, Vite, Tailwind CSS 4, React Router, i18next, vite-plugin-pwa, idb; Vitest + Testing Library + axe; Playwright smoke test |
 | Backend | Node.js 22, Express 5, Mongoose 9, zod, JWT + httpOnly refresh cookie, pino; Jest + supertest + in-memory MongoDB replica set |
 | AI service | Python 3.11, FastAPI, Anthropic SDK; pytest, ruff |
@@ -74,7 +76,7 @@ docker compose up -d
 
 # 2. Backend -> http://localhost:4000/api/v1/health
 cd backend && cp .env.example .env && npm install
-npm run seed:crops && npm run seed:demo
+npm run seed:crops && npm run seed     # demo data; npm run seed:clear removes it
 npm run dev
 
 # 3. AI service -> http://localhost:8000/health
