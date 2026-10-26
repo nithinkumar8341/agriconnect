@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { useAuth } from '../../auth/authContext.js';
+import { PriceHint } from '../../components/ai/PriceHint.jsx';
 import { CropPicker } from '../../components/farmer/CropPicker.jsx';
 import { PhotoStep } from '../../components/farmer/PhotoStep.jsx';
 import { FormAlert } from '../../components/form/FormAlert.jsx';
@@ -304,6 +305,11 @@ export function SellPage() {
               update({ priceRupees: value === '' ? null : Number(value) });
             }}
             error={errors.price}
+          />
+          <PriceHint
+            crop={crop.slug}
+            unit={draft.unit}
+            onUse={(priceRupees) => update({ priceRupees })}
           />
           {priceWarning && (
             <p role="status" className="rounded-2xl bg-sun-100 px-4 py-3 text-lg font-semibold">

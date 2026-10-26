@@ -416,3 +416,13 @@ Invalid moves answer `409 INVALID_STATUS_CHANGE` (`details.status`); the wrong r
 | --- | --- | --- |
 | GET | `/hello` | Bootstrap greeting. |
 | GET | `/docs` | FastAPI's auto-generated OpenAPI UI. |
+
+## AI helpers (`/api/v1/ai`)
+
+The backend gathers data and calls the stateless Python AI service (`AI_SERVICE_URL`, header `X-Internal-Key`). Every route answers `503 AI_UNAVAILABLE` when that service is down; the UI then hides the feature.
+
+| Method | Path | Who | What |
+| --- | --- | --- | --- |
+| GET | `/ai/price-hint?crop=<slug>&unit=kg` | farmer | Median and middle-half range of this crop's sale prices in the farmer's district (last 30 days). With fewer than 3 sales: mandi (wholesale) modal prices, labelled with market and date. `status`: `market_sales`, `mandi_reference`, `few_sales` or `no_data`. Paise. |
+| POST | `/ai/chat` `{ message, language }` | any signed-in user | FAQ answer plus the 5 cheapest live listings of any crop named in the question. Uses Claude when `ANTHROPIC_API_KEY` is set, otherwise the best FAQ answer. `{ reply, sources, usedLlm }` |
+| GET | `/ai/review-insights/:farmerId?language=te` | any signed-in user | Summary of the farmer's last 50 reviews (needs 3+). `usedLlm` tells the UI whether to label it "written by AI". Cached 10 minutes. |

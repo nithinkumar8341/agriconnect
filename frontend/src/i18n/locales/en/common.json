@@ -134,5 +134,37 @@
     "reason": "Reason: {{reason}}",
     "listingPhotos": "Listing photos",
     "done": "Saved."
+  },
+  "ai": {
+    "price": {
+      "title": "Price suggestion",
+      "range": "Most sold between {{low}} and {{high}}",
+      "sales": "From {{n}} recent sales in {{district}} (last {{days}} days).",
+      "mandi": "Wholesale mandi price at {{market}}, {{date}}. Retail prices are usually higher.",
+      "lowConfidence": "Little data, so treat this as a rough guide.",
+      "noData": "No recent prices nearby for this crop yet. Set your own price.",
+      "use": "Use {{price}}"
+    },
+    "insights": {
+      "title": "What buyers say",
+      "aiNote": "Summary written by AI from buyer reviews. It may miss details.",
+      "statsNote": "Based on star ratings."
+    },
+    "chat": {
+      "button": "Help",
+      "title": "Ask AgriConnect",
+      "note": "General guidance only. For pesticide or fertiliser doses, ask your agriculture officer.",
+      "ask": "Type or speak your question",
+      "send": "Send",
+      "speak": "Speak your question",
+      "stop": "Stop listening",
+      "you": "You",
+      "helper": "Helper",
+      "thinking": "Thinking…",
+      "unavailable": "The helper is not available right now. Please try again later.",
+      "example1": "How do I pay?",
+      "example2": "Is tomato available?",
+      "example3": "How do I report a rotten item?"
+    }
   }
 }

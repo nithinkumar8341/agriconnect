@@ -42,9 +42,15 @@ const envSchema = z
     // Strict works because the frontend reaches the API same-origin (Vite proxy in dev,
     // Vercel rewrite in production). "none" would additionally need CSRF tokens.
     COOKIE_SAMESITE: z.enum(['strict', 'lax', 'none']).default('strict'),
-    SMS_PROVIDER: z.enum(['console', 'msg91']).default('console'),
+    // "none" sends nothing (requests for real numbers fail), for a demo deploy without a gateway.
+    SMS_PROVIDER: z.enum(['console', 'msg91', 'none']).default('console'),
     MSG91_AUTH_KEY: z.string().optional(),
     DEV_FIXED_OTP: z
+      .string()
+      .regex(/^\d{6}$/, 'must be exactly 6 digits')
+      .optional(),
+    // Fixed code for seeded demo accounts only (User.isDemo). Allowed in production.
+    DEMO_OTP: z
       .string()
       .regex(/^\d{6}$/, 'must be exactly 6 digits')
       .optional(),
@@ -55,6 +61,9 @@ const envSchema = z
     CLOUDINARY_CLOUD_NAME: z.string().optional(),
     CLOUDINARY_API_KEY: z.string().optional(),
     CLOUDINARY_API_SECRET: z.string().optional(),
+    // The AI service (price hints, chatbot, review insights). Features answer 503 when it is down.
+    AI_SERVICE_URL: z.url().default('http://localhost:8000'),
+    AI_INTERNAL_KEY: z.string().default(''),
   })
   .superRefine((env, ctx) => {
     const fail = (path, message) => ctx.addIssue({ code: 'custom', path: [path], message });
@@ -119,6 +128,7 @@ export function loadConfig(env = process.env) {
       refreshTokenTtlDays: parsed.REFRESH_TOKEN_TTL_DAYS,
       cookieSameSite: parsed.COOKIE_SAMESITE,
       devFixedOtp: parsed.DEV_FIXED_OTP,
+      demoOtp: parsed.DEMO_OTP,
     }),
     sms: Object.freeze({ provider: parsed.SMS_PROVIDER, msg91AuthKey: parsed.MSG91_AUTH_KEY }),
     storage: Object.freeze({
@@ -130,5 +140,6 @@ export function loadConfig(env = process.env) {
         apiSecret: parsed.CLOUDINARY_API_SECRET,
       },
     }),
+    ai: Object.freeze({ url: parsed.AI_SERVICE_URL, internalKey: parsed.AI_INTERNAL_KEY }),
   });
 }

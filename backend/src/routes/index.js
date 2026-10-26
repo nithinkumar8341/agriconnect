@@ -7,6 +7,7 @@ import { createMediaService } from '../services/media.service.js';
 import { createOrderLifecycle } from '../services/orderLifecycle.service.js';
 import { createSessionService } from '../services/session.service.js';
 import { createAdminRouter } from './admin.routes.js';
+import { createAiRouter } from './ai.routes.js';
 import { createAuthRouter } from './auth.routes.js';
 import { createCropsRouter } from './crops.routes.js';
 import { createFarmerRouter, createProductsRouter } from './farmer.routes.js';
@@ -49,5 +50,6 @@ export function createApiRouter({ config, logger, smsProvider, storage }) {
   router.use('/notifications', createNotificationsRouter({ requireAuth }));
   router.use('/admin', createAdminRouter({ requireAuth }));
   router.use('/uploads', createUploadsRouter({ requireAuth, mediaService }));
+  router.use('/ai', createAiRouter({ config, requireAuth }));
   return router;
 }

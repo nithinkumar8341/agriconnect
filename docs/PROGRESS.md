@@ -1,6 +1,6 @@
 # Progress
 
-NEXT: AI service (phase B), then AI frontend, deploy, README, CI.
+NEXT: deployment prep (phase D), then README, CI check, final run.
 
 ## MVP status (2026-10-26)
 
@@ -13,7 +13,9 @@ NEXT: AI service (phase B), then AI frontend, deploy, README, CI.
 | 5 Returns | DONE (admin page in item 6) | backend/src/services/return.service.js, frontend/src/components/buyer/ReturnSheet.jsx |
 | 6 Admin panel pages | DONE | frontend/src/pages/admin/AdminPages.jsx |
 | 7 Playwright smoke test | DONE (passes in 11 s, Edge) | frontend/e2e/smoke.spec.js; run `PW_CHANNEL=msedge npm run test:e2e` |
-| AI service, voice, deploy, README, CI | TODO | ai-service/app/main.py has health only |
+| AI service: price hint, chatbot, review insights | DONE | ai-service/app/ (7 pytest), backend/src/services/ai.service.js, tests/ai.test.js |
+| AI frontend: price hint, chat widget, insights, voice (en/te/hi) | DONE | frontend/src/components/ai/, hooks/useSpeechInput.js |
+| Deploy, README, CI | TODO | |
 
 
 ## Done

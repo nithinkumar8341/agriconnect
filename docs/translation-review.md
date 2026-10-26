@@ -752,3 +752,8 @@ The English name is the stored value; te and hi are display names. Newer distric
 | Telangana | Nagarkurnool | నాగర్‌కర్నూల్ | | नागरकुरनूल | |
 | Telangana | Wanaparthy | వనపర్తి | | वनपर्ती | |
 | Telangana | Jogulamba Gadwal | జోగులాంబ గద్వాల | | जोगुलाम्बा गदवाल | |
+
+## AI helpers (machine-written, needs review)
+
+- `common.json` -> `ai.price.*`, `ai.insights.*`, `ai.chat.*` (te, hi)
+- `ai-service/app/chat.py` -> `UNSURE`, `AVAILABLE`; `ai-service/app/insights.py` -> `FALLBACK` (te, hi)

@@ -2,6 +2,7 @@ import { BadgeCheck, CircleAlert, MapPin, MessageSquareText } from 'lucide-react
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { useAuth } from '../../auth/authContext.js';
+import { ReviewInsights } from '../../components/ai/ReviewInsights.jsx';
 import { DistanceText, MarketProductCard } from '../../components/buyer/MarketProductCard.jsx';
 import { TrustLine } from '../../components/buyer/Trust.jsx';
 import { Screen } from '../../components/Screen.jsx';
@@ -140,6 +141,7 @@ export function FarmerPublicPage() {
 
       <section className="flex flex-col gap-2">
         <h2 className="text-2xl font-bold">{t('farmer.reviews')}</h2>
+        <ReviewInsights farmerId={farmer.id} />
         <ReviewList farmerId={farmer.id} />
       </section>
     </Screen>

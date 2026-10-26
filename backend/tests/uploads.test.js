@@ -174,9 +174,10 @@ describe('photo uploads', () => {
     expect(future.body.error.details[0].field).toBe('body.capturedAt');
   });
 
-  it('lets farmers and agents upload, nobody else', async () => {
+  // Buyers upload too: a return request needs a photo of the problem.
+  it('lets farmers, agents and buyers upload, not anonymous users', async () => {
     expect((await upload(users.agent, await jpeg(7))).status).toBe(201);
-    expect((await upload(users.buyer, await jpeg(8))).status).toBe(403);
+    expect((await upload(users.buyer, await jpeg(8))).status).toBe(201);
     const anonymous = await request(app)
       .post('/api/v1/uploads/photos')
       .attach('photo', await jpeg(9), 'photo.jpg');
