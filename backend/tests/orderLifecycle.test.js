@@ -369,4 +369,37 @@ describe('order lifecycle API', () => {
       .set(as(other));
     expect(res.status).toBe(404);
   });
+
+  it('verified-purchase review feeds the trust score; only once, only after delivery', async () => {
+    const id = await placeOrder();
+    const review = (body) =>
+      request(app).post(`/api/v1/orders/${id}/review`).set(as(buyer)).send(body);
+    expect((await review({ stars: 5 })).body.error.code).toBe('NOT_DELIVERED');
+
+    await act(farmer, id, 'accept');
+    await act(farmer, id, 'dispatch');
+    const code = (await view(buyer, id)).body.order.deliveryCode;
+    await act(farmer, id, 'deliver', { code });
+    expect((await view(buyer, id)).body.order.canReview).toBe(true);
+
+    expect((await review({ stars: 4, comment: 'Fresh tomatoes' })).status).toBe(201);
+    expect((await review({ stars: 1 })).body.error.code).toBe('ALREADY_REVIEWED');
+    expect((await view(buyer, id)).body.order.canReview).toBe(false);
+
+    const page = await request(app).get(`/api/v1/market/farmers/${farmer.id}`).set(as(buyer));
+    expect(page.body.farmer.trust).toEqual({
+      averageRating: 4,
+      reviewCount: 1,
+      completedOrders: 1,
+      isNew: true,
+    });
+    const reviews = await request(app)
+      .get(`/api/v1/market/farmers/${farmer.id}/reviews`)
+      .set(as(buyer));
+    expect(reviews.body.items[0]).toMatchObject({
+      stars: 4,
+      comment: 'Fresh tomatoes',
+      buyerFirstName: 'Padma',
+    });
+  });
 });

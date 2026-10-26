@@ -3,12 +3,47 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { useAuth } from '../../auth/authContext.js';
 import { DistanceText, MarketProductCard } from '../../components/buyer/MarketProductCard.jsx';
+import { TrustLine } from '../../components/buyer/Trust.jsx';
 import { Screen } from '../../components/Screen.jsx';
 import { ErrorState, SkeletonList } from '../../components/ui/index.js';
 import { useApiRequest } from '../../hooks/useApiRequest.js';
 import { useBuyerLocationParams } from '../../hooks/useBuyerLocationParams.js';
 import { formatDate, formatRupees, formatTime } from '../../lib/format.js';
 import { DetailRow } from './ProductDetailPage.jsx';
+
+function ReviewList({ farmerId }) {
+  const { t, i18n } = useTranslation('buyer');
+  const { client } = useAuth();
+  const reviews = useApiRequest(
+    (signal) => client.get(`/market/farmers/${farmerId}/reviews?limit=20`, { signal }),
+    `reviews:${farmerId}`,
+  );
+  if (!reviews.data) return null;
+  if (reviews.data.total === 0) {
+    return (
+      <p className="flex items-start gap-2 text-lg text-ink-muted">
+        <MessageSquareText aria-hidden="true" className="mt-1 size-5 shrink-0" />
+        {t('trust.noReviews')}
+      </p>
+    );
+  }
+  return (
+    <ul className="flex flex-col gap-2">
+      {reviews.data.items.map((review) => (
+        <li key={review.id} className="rounded-2xl bg-white p-4">
+          <p className="text-lg font-semibold">
+            {'★'.repeat(review.stars)}
+            <span className="text-soil-200">{'★'.repeat(5 - review.stars)}</span>{' '}
+            <span className="text-base font-normal text-ink-muted">
+              {review.buyerFirstName} · {formatDate(review.createdAt, i18n.language)}
+            </span>
+          </p>
+          {review.comment && <p className="text-lg">{review.comment}</p>}
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 // A farmer's public page: first name and village only (no phone or exact location), delivery
 // terms, what they sell now, and a place for reviews (verified purchases, Prompt 14).
@@ -48,12 +83,8 @@ export function FarmerPublicPage() {
             <BadgeCheck aria-hidden="true" className="size-5" />
             {t(`farmer.levels.${farmer.verificationLevel}`)}
           </span>
-          {farmer.isNew && (
-            <span className="rounded-full bg-sun-100 px-3 py-1 font-semibold">
-              {t('farmer.new')}
-            </span>
-          )}
         </div>
+        <TrustLine trust={farmer.trust} />
         {farmer.distanceKm !== null && (
           <p className="flex items-center gap-2 text-lg">
             <MapPin aria-hidden="true" className="size-5 shrink-0" />
@@ -109,10 +140,7 @@ export function FarmerPublicPage() {
 
       <section className="flex flex-col gap-2">
         <h2 className="text-2xl font-bold">{t('farmer.reviews')}</h2>
-        <p className="flex items-start gap-2 text-lg text-ink-muted">
-          <MessageSquareText aria-hidden="true" className="mt-1 size-5 shrink-0" />
-          {t('farmer.reviewsSoon')}
-        </p>
+        <ReviewList farmerId={farmer.id} />
       </section>
     </Screen>
   );

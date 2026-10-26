@@ -5,13 +5,13 @@ import { WEEKDAYS } from '../models/shared.js';
 import { User } from '../models/User.js';
 import { AppError } from '../utils/AppError.js';
 import { listCrops } from './crops.service.js';
+import { farmerTrust } from './review.service.js';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
 const IST_OFFSET_MS = (5 * 60 + 30) * 60 * 1000;
 // The largest delivery radius a farmer can set (FarmerProfile.deliveryRadiusKm max).
 const MAX_RADIUS_M = 50_000;
 const EARTH_RADIUS_M = 6_371_000;
-const NEW_SELLER_DAYS = 30;
 const VISIBLE_STATUSES = ['available', 'out_of_stock'];
 
 const notFound = () => new AppError(404, 'NOT_FOUND', 'Not found');
@@ -247,6 +247,7 @@ export async function getMarketProduct(id, location, { now = new Date() } = {}) 
       thumbnailUrl: photo.thumbnailUrl ?? photo.url,
     })),
     canDeliver: servesBuyer(profile, { point, pincode: location.pincode }),
+    trust: await farmerTrust(profile.userId),
     deliveryDays: profile.deliveryDays,
     cutoffTime: profile.cutoffTime,
   };
@@ -260,7 +261,10 @@ export async function getMarketFarmer(userId, location, { now = new Date() } = {
     .sort({ harvestDate: -1 })
     .limit(50)
     .lean();
-  const crops = await cropsById(products.map((product) => product.cropId));
+  const [crops, trust] = await Promise.all([
+    cropsById(products.map((product) => product.cropId)),
+    farmerTrust(profile.userId),
+  ]);
   return {
     ...toFarmerSummary(profile),
     mandal: profile.mandal,
@@ -270,7 +274,8 @@ export async function getMarketFarmer(userId, location, { now = new Date() } = {
     deliveryFee: profile.deliveryFee,
     minOrderValue: profile.minOrderValue,
     memberSince: profile.createdAt,
-    isNew: now.getTime() - new Date(profile.createdAt).getTime() < NEW_SELLER_DAYS * DAY_MS,
+    trust,
+    isNew: trust.isNew,
     distanceKm: approximateKm(distanceM),
     canDeliver: servesBuyer(profile, { point, pincode: location.pincode }),
     nextDeliveryDate: nextDeliveryDate(profile, now),

@@ -2,6 +2,7 @@ import { Router } from 'express';
 import * as orders from '../controllers/orders.controller.js';
 import { requireRole } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
+import { createReview } from '../services/review.service.js';
 import {
   checkoutSchema,
   farmerOrdersQuerySchema,
@@ -10,6 +11,7 @@ import {
   ordersQuerySchema,
   checkoutGroupParams,
   quoteSchema,
+  reviewSchema,
 } from '../validators/checkout.validators.js';
 
 const objectIdParams = orderIdParams;
@@ -44,6 +46,13 @@ export function createOrdersRouter({ requireAuth, lifecycle }) {
   );
   router.get('/:id', ...either, params, getOne);
   router.post('/:id/cancel', ...buyer, action, act('cancel'));
+  router.post(
+    '/:id/review',
+    ...buyer,
+    validate({ params: orderIdParams, body: reviewSchema }),
+    async (req, res) =>
+      res.status(201).json({ review: await createReview(req.user, req.params.id, req.body) }),
+  );
   for (const name of ['accept', 'reject', 'dispatch', 'deliver', 'fail']) {
     router.post(`/:id/${name}`, ...farmer, action, act(name));
   }

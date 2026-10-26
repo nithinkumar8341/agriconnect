@@ -14,6 +14,7 @@ import {
   toFarmerOrder,
 } from './orders.service.js';
 import { refundOrder, settleDeliveredOrder } from './payment.service.js';
+import { hasReview } from './review.service.js';
 import { orderSmsMessage } from './sms/templates.js';
 
 const notFound = () => new AppError(404, 'NOT_FOUND', 'Not found');
@@ -50,7 +51,9 @@ export function createOrderLifecycle({ config, smsProvider, logger }) {
     const deliveryCode = order.deliveryOtpSalt
       ? otp.codeFor(order._id.toString(), order.deliveryOtpSalt)
       : null;
-    return toBuyerOrder(order, { ...context, deliveryCode });
+    const view = toBuyerOrder(order, { ...context, deliveryCode });
+    view.canReview = order.status === 'delivered' && !(await hasReview(order._id));
+    return view;
   }
 
   async function getOrder(user, id) {

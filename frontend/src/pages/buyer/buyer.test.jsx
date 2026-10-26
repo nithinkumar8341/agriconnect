@@ -191,6 +191,21 @@ describe('Product and farmer pages', () => {
     const { user, calls, router } = buyerApp('/buyer/products/p1', {
       routes: {
         'GET /market/products/p1': () => [200, { product: detail }],
+        'GET /market/farmers/f1/reviews': () => [
+          200,
+          {
+            items: [
+              {
+                id: 'r1',
+                stars: 5,
+                comment: 'Very fresh',
+                buyerFirstName: 'Padma',
+                createdAt: '2026-10-20T00:00:00Z',
+              },
+            ],
+            total: 1,
+          },
+        ],
         'GET /market/farmers/f1': () => [
           200,
           {
@@ -204,6 +219,7 @@ describe('Product and farmer pages', () => {
               minOrderValue: 10000,
               memberSince: '2026-10-01T00:00:00Z',
               isNew: true,
+              trust: { averageRating: 4.5, reviewCount: 2, completedOrders: 1, isNew: true },
               distanceKm: 3,
               canDeliver: false,
               nextDeliveryDate: '2026-10-30',
@@ -227,7 +243,8 @@ describe('Product and farmer pages', () => {
     expect(router.state.location.pathname).toBe('/buyer/farmers/f1');
     expect(await screen.findByRole('heading', { name: 'Ramu' })).toBeInTheDocument();
     expect(screen.getByText('New')).toBeInTheDocument();
-    expect(screen.getByText(/Reviews from buyers will appear here/)).toBeInTheDocument();
+    expect(screen.getByText('★ 4.5 (2 reviews)')).toBeInTheDocument();
+    expect(await screen.findByText('Very fresh')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Tomato/ })).toBeInTheDocument();
   });
 });

@@ -4,16 +4,12 @@ const rating = { type: Number, required: true, min: 1, max: 5, validate: Number.
 
 const reviewSchema = new mongoose.Schema(
   {
-    // Unique: one review per order, and only for delivered orders (checked by the service, Prompt 16).
+    // Unique: one review per order, and only for delivered orders (checked by review.service).
     orderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', required: true, unique: true },
     buyerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     farmerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    ratings: {
-      quality: rating,
-      freshness: rating,
-      packaging: rating,
-      delivery: rating,
-    },
+    // One 1-5 star rating keeps reviewing to a single tap (MVP).
+    stars: rating,
     comment: { type: String, trim: true, maxlength: 500, default: '' },
     farmerResponse: {
       text: { type: String, trim: true, maxlength: 500 },

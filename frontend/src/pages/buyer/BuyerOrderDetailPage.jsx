@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router';
 import { useAuth } from '../../auth/authContext.js';
 import { FormAlert } from '../../components/form/FormAlert.jsx';
+import { ReviewForm } from '../../components/buyer/Trust.jsx';
 import { OrderTimeline } from '../../components/orders/OrderTimeline.jsx';
 import { Screen } from '../../components/Screen.jsx';
 import {
@@ -147,6 +148,8 @@ export function BuyerOrderDetailPage() {
           {t('orders.payNow', { amount: money(order.priceBreakdown.buyerTotal) })}
         </BigButton>
       )}
+
+      {order.canReview && <ReviewForm orderId={order.id} onDone={live.reload} />}
 
       <OrderTimeline
         history={order.statusHistory}

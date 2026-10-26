@@ -48,3 +48,8 @@ export const ordersQuerySchema = z.object({
 });
 
 export const checkoutGroupParams = z.object({ checkoutGroupId: z.uuid() });
+
+export const reviewSchema = z.object({
+  stars: z.number().int().min(1).max(5),
+  comment: z.string().trim().max(500).optional(),
+});

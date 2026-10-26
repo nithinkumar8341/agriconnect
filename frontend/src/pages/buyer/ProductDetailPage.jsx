@@ -5,6 +5,7 @@ import { Link, useParams } from 'react-router';
 import { useAuth } from '../../auth/authContext.js';
 import { toCartItem, useCart } from '../../cart/cartContext.js';
 import { DistanceText } from '../../components/buyer/MarketProductCard.jsx';
+import { TrustLine } from '../../components/buyer/Trust.jsx';
 import { Screen } from '../../components/Screen.jsx';
 import {
   BigButton,
@@ -108,6 +109,7 @@ export function ProductDetailPage() {
         <p className="text-xl font-bold">
           {t('card.from', { name: product.farmer.firstName, village: product.farmer.village })}
         </p>
+        <TrustLine trust={product.trust} />
         {product.distanceKm !== null && (
           <p className="flex items-center gap-2 text-lg">
             <MapPin aria-hidden="true" className="size-5 shrink-0" />

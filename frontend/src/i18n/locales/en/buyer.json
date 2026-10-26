@@ -172,5 +172,18 @@
       "failed": "Payment failed"
     },
     "upi": "UPI (test mode)"
+  },
+  "review": {
+    "title": "How was your order?",
+    "stars": "Stars",
+    "starLabel": "{{count}} ★",
+    "comment": "Anything to add? (optional)",
+    "submit": "Send review",
+    "thanks": "Thank you for your review!"
+  },
+  "trust": {
+    "rating": "★ {{rating}} ({{count}} reviews)",
+    "orders": "{{count}} orders delivered",
+    "noReviews": "No reviews yet."
   }
 }

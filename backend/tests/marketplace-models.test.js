@@ -261,7 +261,7 @@ describe('marketplace models', () => {
         orderId: id(),
         buyerId: id(),
         farmerId: id(),
-        ratings: { quality: 5, freshness: 4, packaging: 4, delivery: 5 },
+        stars: 5,
       };
       await Review.create(review);
 
@@ -273,12 +273,12 @@ describe('marketplace models', () => {
         orderId: id(),
         buyerId: id(),
         farmerId: id(),
-        ratings: { quality: 6, freshness: 0, packaging: 3.5, delivery: 5 },
+        stars: 3.5,
       });
 
-      expect(await validationErrorPaths(review)).toEqual(
-        expect.arrayContaining(['ratings.quality', 'ratings.freshness', 'ratings.packaging']),
-      );
+      expect(await validationErrorPaths(review)).toEqual(['stars']);
+      review.stars = 6;
+      expect(await validationErrorPaths(review)).toEqual(['stars']);
     });
   });
 
