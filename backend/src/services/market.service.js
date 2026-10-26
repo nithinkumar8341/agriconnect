@@ -1,6 +1,7 @@
 import { Crop } from '../models/Crop.js';
 import { FarmerProfile } from '../models/FarmerProfile.js';
 import { Product } from '../models/Product.js';
+import { Review } from '../models/Review.js';
 import { WEEKDAYS } from '../models/shared.js';
 import { User } from '../models/User.js';
 import { AppError } from '../utils/AppError.js';
@@ -112,16 +113,19 @@ export function toFarmerSummary(profile) {
   };
 }
 
-function toMarketProduct(product, crop, { profile, distanceM }, now) {
+function toMarketProduct(product, crop, { profile, distanceM }, now, rating) {
   return {
     id: product._id.toString(),
     crop: crop && {
       slug: crop.slug,
       names: crop.names,
-      icon: crop.icon,
+      image: crop.image,
       category: crop.category,
       quantityStep: crop.quantityStep,
+      shelfLifeDays: crop.shelfLifeDays,
     },
+    // The farmer's rating (reviews are per farmer); count 0 means show "New".
+    rating: rating ?? { average: null, count: 0 },
     pricePerUnit: product.pricePerUnit,
     unit: product.unit,
     availableQuantity: product.availableQuantity,
@@ -156,7 +160,22 @@ const SORTS = {
   distance: { sortDistance: 1, harvestDate: -1, _id: 1 },
   price: { pricePerUnit: 1, sortDistance: 1, _id: 1 },
   freshness: { harvestDate: -1, sortDistance: 1, _id: 1 },
+  rating: { sortRating: -1, sortDistance: 1, _id: 1 },
 };
+
+// Average stars and review count per farmer, for the cards and the "rating" sort.
+async function farmerRatings(farmerIds) {
+  const rows = await Review.aggregate([
+    { $match: { farmerId: { $in: farmerIds }, isHidden: false } },
+    { $group: { _id: '$farmerId', average: { $avg: '$stars' }, count: { $sum: 1 } } },
+  ]);
+  return new Map(
+    rows.map((row) => [
+      row._id.toString(),
+      { average: Math.round(row.average * 10) / 10, count: row.count },
+    ]),
+  );
+}
 
 export async function listNearbyProducts(query, { now = new Date() } = {}) {
   const { lat, lng, pincode, day, inStock, minPrice, maxPrice, page, limit } = query;
@@ -178,6 +197,9 @@ export async function listNearbyProducts(query, { now = new Date() } = {}) {
   const entries = [...farmers.values()];
   const farmerIds = entries.map(({ profile }) => profile.userId);
   const distances = entries.map(({ distanceM }) => distanceM ?? null);
+  const ratings = await farmerRatings(farmerIds);
+  // Farmers without reviews sort after rated ones.
+  const averages = farmerIds.map((id) => ratings.get(id.toString())?.average ?? 0);
   const match = {
     farmerId: { $in: farmerIds },
     status: inStock ? 'available' : { $in: VISIBLE_STATUSES },
@@ -200,6 +222,7 @@ export async function listNearbyProducts(query, { now = new Date() } = {}) {
             Number.MAX_SAFE_INTEGER,
           ],
         },
+        sortRating: { $arrayElemAt: [averages, { $indexOfArray: [farmerIds, '$farmerId'] }] },
       },
     },
     { $sort: SORTS[sort] },
@@ -218,6 +241,7 @@ export async function listNearbyProducts(query, { now = new Date() } = {}) {
       crops.get(product.cropId.toString()),
       farmers.get(product.farmerId.toString()),
       now,
+      ratings.get(product.farmerId.toString()),
     ),
   );
   return { items, page, limit, total: result.total[0]?.n ?? 0, sort };
@@ -239,15 +263,25 @@ export async function getMarketProduct(id, location, { now = new Date() } = {}) 
   if (!product) throw notFound();
   const profile = await activeFarmerProfile(product.farmerId);
   const point = buyerPoint(location);
-  const crop = await Crop.findById(product.cropId).lean();
+  const [crop, trust] = await Promise.all([
+    Crop.findById(product.cropId).lean(),
+    farmerTrust(profile.userId),
+  ]);
+  const rating = { average: trust.averageRating, count: trust.reviewCount };
   return {
-    ...toMarketProduct(product, crop, { profile, distanceM: distanceTo(profile, point) }, now),
+    ...toMarketProduct(
+      product,
+      crop,
+      { profile, distanceM: distanceTo(profile, point) },
+      now,
+      rating,
+    ),
     photos: (product.photos ?? []).map((photo) => ({
       url: photo.url,
       thumbnailUrl: photo.thumbnailUrl ?? photo.url,
     })),
     canDeliver: servesBuyer(profile, { point, pincode: location.pincode }),
-    trust: await farmerTrust(profile.userId),
+    trust,
     deliveryDays: profile.deliveryDays,
     cutoffTime: profile.cutoffTime,
   };
@@ -280,7 +314,10 @@ export async function getMarketFarmer(userId, location, { now = new Date() } = {
     canDeliver: servesBuyer(profile, { point, pincode: location.pincode }),
     nextDeliveryDate: nextDeliveryDate(profile, now),
     products: products.map((product) =>
-      toMarketProduct(product, crops.get(product.cropId.toString()), { profile, distanceM }, now),
+      toMarketProduct(product, crops.get(product.cropId.toString()), { profile, distanceM }, now, {
+        average: trust.averageRating,
+        count: trust.reviewCount,
+      }),
     ),
   };
 }

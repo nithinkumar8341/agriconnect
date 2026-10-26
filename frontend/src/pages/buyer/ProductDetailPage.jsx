@@ -4,8 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router';
 import { useAuth } from '../../auth/authContext.js';
 import { toCartItem, useCart } from '../../cart/cartContext.js';
-import { DistanceText } from '../../components/buyer/MarketProductCard.jsx';
+import {
+  DistanceText,
+  FreshnessTag,
+  RatingLine,
+} from '../../components/buyer/MarketProductCard.jsx';
+import { ReviewList } from '../../components/buyer/ReviewList.jsx';
 import { TrustLine } from '../../components/buyer/Trust.jsx';
+import { CropPhoto } from '../../components/CropPhoto.jsx';
 import { Screen } from '../../components/Screen.jsx';
 import {
   BigButton,
@@ -66,24 +72,27 @@ export function ProductDetailPage() {
               <img
                 src={photo.url}
                 alt={`${cropName} ${index + 1}/${product.photos.length}`}
-                className="aspect-[4/3] w-full rounded-2xl object-cover"
+                className="aspect-square w-full rounded-2xl object-cover"
               />
             </li>
           ))}
         </ul>
       ) : (
-        <span
-          aria-hidden="true"
-          className="grid aspect-[4/3] place-items-center rounded-2xl bg-leaf-50 text-7xl"
-        >
-          {product.crop?.icon}
-        </span>
+        <CropPhoto
+          crop={product.crop}
+          alt={localName(product.crop?.names, language)}
+          className="aspect-square w-full rounded-2xl"
+        />
       )}
 
-      <section className="flex flex-col gap-1">
+      <section className="flex flex-col gap-2">
         <p className="text-3xl font-bold text-leaf-800">
           {t('card.price', { price: formatRupees(product.pricePerUnit, language), unit })}
         </p>
+        <div className="flex flex-wrap items-center gap-2">
+          <RatingLine rating={product.rating} />
+          <FreshnessTag product={product} />
+        </div>
         <p className="text-lg">
           {product.status === 'out_of_stock'
             ? t('card.outOfStock')
@@ -144,6 +153,11 @@ export function ProductDetailPage() {
       {product.canDeliver && product.status === 'available' && (
         <AddToCart product={product} unit={unit} />
       )}
+
+      <section className="flex flex-col gap-2">
+        <h2 className="text-2xl font-bold">{t('farmer.reviews')}</h2>
+        <ReviewList farmerId={product.farmer.id} />
+      </section>
     </Screen>
   );
 }

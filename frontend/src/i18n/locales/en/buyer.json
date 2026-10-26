@@ -21,8 +21,9 @@
   },
   "sort": {
     "distance": "Nearest",
-    "price": "Lowest price",
-    "freshness": "Freshest"
+    "price": "Price: low to high",
+    "freshness": "Freshest",
+    "rating": "Top rated"
   },
   "location": {
     "near": "Near your location",
@@ -55,7 +56,13 @@
     "under1": "Under 1 km",
     "from": "{{name}}, {{village}}",
     "delivery": "Delivery {{date}}",
-    "outOfStock": "Out of stock"
+    "outOfStock": "Out of stock",
+    "freshToday": "Fresh today",
+    "keeps": "Keeps {{days}} more days",
+    "new": "New",
+    "ratingLabel": "Rated {{rating}} out of 5 by {{count}} buyers",
+    "add": "Add",
+    "addLabel": "Add {{crop}} to cart"
   },
   "product": {
     "title": "Product details",

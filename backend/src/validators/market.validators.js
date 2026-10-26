@@ -26,7 +26,7 @@ export const nearbyQuerySchema = z
       .enum(['true', 'false'])
       .default('true')
       .transform((value) => value === 'true'),
-    sort: z.enum(['distance', 'price', 'freshness']).optional(),
+    sort: z.enum(['distance', 'price', 'freshness', 'rating']).optional(),
     page: z.coerce.number().int().min(1).max(1000).default(1),
     limit: z.coerce.number().int().min(1).max(50).default(20),
   })

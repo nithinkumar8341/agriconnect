@@ -1,9 +1,11 @@
+import mongoose from 'mongoose';
 import request from 'supertest';
 import { createLogger } from '../src/config/logger.js';
 import { Crop } from '../src/models/Crop.js';
 import { FarmerProfile } from '../src/models/FarmerProfile.js';
 import { syncAllIndexes } from '../src/models/index.js';
 import { Product } from '../src/models/Product.js';
+import { Review } from '../src/models/Review.js';
 import { User } from '../src/models/User.js';
 import { seedCrops } from '../src/seeds/seedCrops.js';
 import { approximateKm, nextDeliveryDate } from '../src/services/market.service.js';
@@ -170,12 +172,31 @@ describe('buyer discovery (market)', () => {
       expect(res.body.items.map((i) => i.distanceKm)).toEqual([0, 3]);
       expect(res.body.items[0]).toMatchObject({
         farmer: { id: close.id, firstName: 'Lakshmi', village: 'Kankipadu' },
-        crop: { slug: 'tomato', icon: expect.any(String) },
+        crop: { slug: 'tomato', image: '/crops/tomato.jpg' },
         photoUrl: '/uploads/a-thumb.webp',
         deliveryFee: 2000,
         nextDeliveryDate: expect.stringMatching(/^\d{4}-\d{2}-\d{2}$/),
       });
       expect(JSON.stringify(res.body)).not.toMatch(/coordinates|"location"|\+91/);
+    });
+
+    it("shows each farmer's rating on cards and sorts by it (unrated last)", async () => {
+      const rated = await farmer({ coordinates: northBy(3_000) });
+      const unrated = await farmer({ coordinates: northBy(500) });
+      await product(rated);
+      await product(unrated);
+      const reviewer = new mongoose.Types.ObjectId();
+      await Review.create([
+        { orderId: new mongoose.Types.ObjectId(), buyerId: reviewer, farmerId: rated.id, stars: 5 },
+        { orderId: new mongoose.Types.ObjectId(), buyerId: reviewer, farmerId: rated.id, stars: 4 },
+      ]);
+
+      const res = await near({ sort: 'rating' });
+
+      expect(res.body.items.map((i) => i.rating)).toEqual([
+        { average: 4.5, count: 2 },
+        { average: null, count: 0 },
+      ]);
     });
 
     it('rounds distances and computes the next delivery day in IST', () => {

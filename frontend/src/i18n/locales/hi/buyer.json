@@ -21,8 +21,9 @@
   },
   "sort": {
     "distance": "सबसे पास",
-    "price": "सबसे कम भाव",
-    "freshness": "सबसे ताज़ा"
+    "price": "कीमत: कम से ज़्यादा",
+    "freshness": "सबसे ताज़ा",
+    "rating": "सबसे अच्छी रेटिंग"
   },
   "location": {
     "near": "आपकी जगह के पास",
@@ -55,7 +56,13 @@
     "under1": "1 किमी से कम",
     "from": "{{name}}, {{village}}",
     "delivery": "डिलीवरी {{date}}",
-    "outOfStock": "ख़त्म"
+    "outOfStock": "ख़त्म",
+    "freshToday": "आज ताज़ा",
+    "keeps": "{{days}} दिन और चलेगा",
+    "new": "नया",
+    "ratingLabel": "{{count}} खरीदारों ने 5 में से {{rating}} रेटिंग दी",
+    "add": "जोड़ें",
+    "addLabel": "{{crop}} कार्ट में जोड़ें"
   },
   "product": {
     "title": "फ़सल की जानकारी",

@@ -3,7 +3,10 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../auth/authContext.js';
 import { LocationSheet } from '../../components/buyer/LocationSheet.jsx';
-import { MarketProductCard } from '../../components/buyer/MarketProductCard.jsx';
+import {
+  MarketProductCard,
+  ProductGridSkeleton,
+} from '../../components/buyer/MarketProductCard.jsx';
 import { NotificationBell } from '../../components/NotificationBell.jsx';
 import { FormAlert } from '../../components/form/FormAlert.jsx';
 import { TextField } from '../../components/form/TextField.jsx';
@@ -14,7 +17,6 @@ import {
   EmptyState,
   ErrorState,
   PresetChips,
-  SkeletonList,
 } from '../../components/ui/index.js';
 import { useApiRequest } from '../../hooks/useApiRequest.js';
 import { errorMessageKey } from '../../lib/apiErrors.js';
@@ -26,7 +28,7 @@ import {
 } from '../../lib/buyerLocation.js';
 
 const PAGE_SIZE = 20;
-const CATEGORIES = ['all', 'vegetable', 'leafy', 'fruit', 'other'];
+const CATEGORIES = ['all', 'vegetable', 'fruit', 'leafy'];
 const DAYS = ['any', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 const NO_FILTERS = { minPrice: '', maxPrice: '', day: 'any', stock: 'in' };
 const SEARCH_DELAY_MS = 350;
@@ -87,7 +89,7 @@ function ResultList({ base }) {
     return () => observer.disconnect();
   }, [hasMore, more.error, more.page]);
 
-  if (first.loading) return <SkeletonList rows={4} />;
+  if (first.loading) return <ProductGridSkeleton />;
   if (first.error) return <ErrorState error={first.error} onRetry={first.reload} />;
   if (first.data.total === 0) {
     return (
@@ -100,7 +102,7 @@ function ResultList({ base }) {
       <p className="text-ink-muted" aria-live="polite">
         {t('home.showing', { shown: loaded.length, total: first.data.total })}
       </p>
-      <ul className="grid grid-cols-2 gap-3">
+      <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
         {loaded.map((product) => (
           <li key={product.id}>
             <MarketProductCard product={product} />
@@ -201,7 +203,9 @@ export function BuyerHomePage() {
   }, [searchText]);
 
   const hasCoordinates = Number.isFinite(location?.lat);
-  const sortOptions = hasCoordinates ? ['distance', 'price', 'freshness'] : ['freshness', 'price'];
+  const sortOptions = hasCoordinates
+    ? ['distance', 'price', 'rating']
+    : ['freshness', 'price', 'rating'];
   const activeSort = sortOptions.includes(sort) ? sort : sortOptions[0];
 
   function chooseLocation(next) {
@@ -225,7 +229,17 @@ export function BuyerHomePage() {
       title={t('home.title')}
       showBack={false}
       actions={<NotificationBell to="/buyer/notifications" />}
+      wide
     >
+      {location && (
+        <TextField
+          label={t('home.search')}
+          type="search"
+          value={searchText}
+          onChange={(event) => setSearchText(event.target.value)}
+          prefix={<Search className="size-5" />}
+        />
+      )}
       <button
         type="button"
         onClick={() => setChoosingLocation(true)}
@@ -244,13 +258,6 @@ export function BuyerHomePage() {
 
       {location ? (
         <>
-          <TextField
-            label={t('home.search')}
-            type="search"
-            value={searchText}
-            onChange={(event) => setSearchText(event.target.value)}
-            prefix={<Search className="size-5" />}
-          />
           <PresetChips
             label={t('home.categoryLabel')}
             options={CATEGORIES}

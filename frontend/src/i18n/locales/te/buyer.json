@@ -21,8 +21,9 @@
   },
   "sort": {
     "distance": "దగ్గరవి",
-    "price": "తక్కువ ధర",
-    "freshness": "తాజావి"
+    "price": "ధర: తక్కువ నుండి ఎక్కువ",
+    "freshness": "తాజావి",
+    "rating": "ఎక్కువ రేటింగ్"
   },
   "location": {
     "near": "మీ ప్రాంతం దగ్గర",
@@ -55,7 +56,13 @@
     "under1": "1 కి.మీ లోపు",
     "from": "{{name}}, {{village}}",
     "delivery": "డెలివరీ {{date}}",
-    "outOfStock": "అయిపోయింది"
+    "outOfStock": "అయిపోయింది",
+    "freshToday": "ఈరోజే తాజా",
+    "keeps": "ఇంకా {{days}} రోజులు నిలుస్తుంది",
+    "new": "కొత్త",
+    "ratingLabel": "{{count}} మంది కొనుగోలుదారులు 5కి {{rating}} రేటింగ్ ఇచ్చారు",
+    "add": "చేర్చండి",
+    "addLabel": "{{crop}} ను కార్ట్‌లో చేర్చండి"
   },
   "product": {
     "title": "పంట వివరాలు",
