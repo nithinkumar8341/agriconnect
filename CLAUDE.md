@@ -16,6 +16,30 @@ Two goals, in this order:
 - **Agent**: village helper. Registers farmers (with the farmer's OTP consent), creates listings on a farmer's behalf. Every action is audit-logged. Cannot change bank details, price or quantity without the farmer's approval.
 - **Admin**: manages users, listings, orders, fraud flags, returns, complaints, app settings.
 
+## MVP scope (current priority, overrides the full feature list below)
+
+Goal: a deployed, demo-ready project. Done before this section: auth, onboarding, catalog, photo uploads, listing flow, nearby discovery, cart/checkout with atomic stock, order lifecycle with delivery OTP and notifications.
+
+Remaining, in order:
+
+1. Short docs update (api.md, PROGRESS).
+2. Payments: COD plus a **mock UPI test mode** that marks an order paid; ledger entries and platform fee. No Razorpay, no webhooks, no gateway refunds.
+3. Fraud: keep the COD caps; add a duplicate-address FraudFlag and an admin list of flagged orders.
+4. Reviews and trust: verified-purchase 1–5 star reviews, "New" label, trust score = average rating + completed orders.
+5. Returns: buyer requests a return with a reason and photo; admin approves or rejects; stock and ledger update.
+6. Admin panel: users, orders, fraud flags, returns.
+7. AI service (FastAPI, key in env): price recommendation (median recent price by crop and district), chatbot (FAQ + live product data), review insights (LLM summary). Voice input in the frontend via the Web Speech API (en/te/hi).
+8. One Playwright smoke test of the core flow.
+9. Deploy (Vercel, Render, Atlas) and a README with a "Future scope" section.
+
+Out of scope for the MVP: field agent module, real Razorpay, offline retry queue, crop quality image model.
+
+Working rules in MVP mode:
+- Do several steps per run; ask only when blocked.
+- Minimal tests: one happy-path and one failure test per feature.
+- No extra refactoring or long docs; reuse existing services and models; keep code simple enough to explain.
+- Commit after each step. Push at the end of the run (the owner has allowed this).
+
 ## 3. Tech stack (do not change without asking)
 
 - `frontend/`: React (Vite), Tailwind CSS, React Router, i18next, vite-plugin-pwa, IndexedDB (idb) for offline drafts. JavaScript (ES modules).
