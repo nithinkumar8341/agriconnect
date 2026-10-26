@@ -165,6 +165,20 @@
       "example1": "How do I pay?",
       "example2": "Is tomato available?",
       "example3": "How do I report a rotten item?"
+    },
+    "voice": {
+      "listening": "Listening… speak now. Tap the red button to stop.",
+      "processing": "Understanding what you said…",
+      "errors": {
+        "unsupported": "Voice input does not work in this browser. Please use Chrome or Edge, or type.",
+        "insecure": "Voice input needs a secure (https) page. Please type your question.",
+        "notAllowed": "Microphone is blocked. Tap the lock icon in the address bar, allow the microphone, and try again.",
+        "noSpeech": "I did not hear anything. Tap the mic and speak a little louder.",
+        "audioCapture": "No microphone found. Check that your microphone is connected.",
+        "network": "Voice needs the internet to work. Check your connection, or type your question.",
+        "language": "Voice is not available in this language on this phone. Please type, or switch to English.",
+        "generic": "Voice input stopped. Please try again or type your question."
+      }
     }
   }
 }

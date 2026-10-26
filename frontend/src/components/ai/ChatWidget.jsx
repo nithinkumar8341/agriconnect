@@ -1,4 +1,4 @@
-import { Bot, MessageCircleQuestion, Mic, MicOff, Send } from 'lucide-react';
+import { Bot, MessageCircleQuestion, Mic, MicOff, Send, Square } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../auth/authContext.js';
@@ -7,6 +7,43 @@ import { TextField } from '../form/TextField.jsx';
 import { BottomSheet } from '../ui/index.js';
 
 const EXAMPLES = ['ai.chat.example1', 'ai.chat.example2', 'ai.chat.example3'];
+
+// Mic / Stop toggle. Without speech recognition in this browser it stays visible but greyed out,
+// with a tooltip, and a tap explains why instead of doing nothing.
+function MicButton({ speech }) {
+  const { t } = useTranslation('common');
+  const active = speech.status === 'listening' || speech.status === 'processing';
+  const label = !speech.supported
+    ? t('ai.voice.errors.unsupported')
+    : active
+      ? t('ai.chat.stop')
+      : t('ai.chat.speak');
+  return (
+    <button
+      type="button"
+      title={label}
+      aria-label={label}
+      aria-pressed={speech.supported ? active : undefined}
+      aria-disabled={!speech.supported || undefined}
+      onClick={active ? speech.stop : speech.start}
+      className={`flex size-14 shrink-0 items-center justify-center rounded-2xl border-2 ${
+        !speech.supported
+          ? 'border-soil-200 bg-soil-50 text-ink-muted'
+          : active
+            ? 'animate-pulse border-danger-700 bg-danger-700 text-white'
+            : 'border-leaf-700 bg-white text-leaf-800'
+      }`}
+    >
+      {!speech.supported ? (
+        <MicOff aria-hidden="true" className="size-6" />
+      ) : active ? (
+        <Square aria-hidden="true" className="size-5 fill-current" />
+      ) : (
+        <Mic aria-hidden="true" className="size-6" />
+      )}
+    </button>
+  );
+}
 
 // Floating "Help" button that opens a small chat: questions about how AgriConnect works and what
 // is on sale now. Type or speak (Web Speech API, in the app's language).
@@ -18,7 +55,8 @@ export function ChatWidget() {
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState('');
   const [busy, setBusy] = useState(false);
-  const speech = useSpeechInput(language, setText);
+  // Spoken questions are sent straight away: tapping Send is one more step for low-literacy users.
+  const speech = useSpeechInput(language, (heard) => ask(heard));
 
   async function ask(question) {
     const message = question.trim();
@@ -90,27 +128,14 @@ export function ChatWidget() {
             }}
           >
             <TextField
-              className="flex-1"
+              // min-w-0 lets the field shrink so the mic and send buttons fit on a 360px phone.
+              className="min-w-0 flex-1"
               label={t('ai.chat.ask')}
               value={text}
               maxLength={500}
               onChange={(event) => setText(event.target.value)}
             />
-            {speech.supported && (
-              <button
-                type="button"
-                aria-pressed={speech.listening}
-                aria-label={speech.listening ? t('ai.chat.stop') : t('ai.chat.speak')}
-                onClick={speech.listening ? speech.stop : speech.start}
-                className="flex size-14 shrink-0 items-center justify-center rounded-2xl border-2 border-leaf-700 bg-white text-leaf-800"
-              >
-                {speech.listening ? (
-                  <MicOff aria-hidden="true" className="size-6" />
-                ) : (
-                  <Mic aria-hidden="true" className="size-6" />
-                )}
-              </button>
-            )}
+            <MicButton speech={speech} />
             <button
               type="submit"
               aria-label={t('ai.chat.send')}
@@ -120,6 +145,14 @@ export function ChatWidget() {
               <Send aria-hidden="true" className="size-6" />
             </button>
           </form>
+          <p
+            role="status"
+            className={`min-h-7 text-lg ${speech.status === 'error' ? 'font-semibold text-danger-700' : 'text-ink-muted'}`}
+          >
+            {speech.status === 'listening' && t('ai.voice.listening')}
+            {speech.status === 'processing' && t('ai.voice.processing')}
+            {speech.status === 'error' && t(`ai.voice.errors.${speech.error}`)}
+          </p>
         </div>
       </BottomSheet>
     </>

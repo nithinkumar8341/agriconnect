@@ -758,3 +758,4 @@ The English name is the stored value; te and hi are display names. Newer distric
 - `common.json` -> `ai.price.*`, `ai.insights.*`, `ai.chat.*` (te, hi)
 - `ai-service/app/chat.py` -> `UNSURE`, `AVAILABLE`; `ai-service/app/insights.py` -> `FALLBACK` (te, hi)
 - `onboarding.json` -> `farmer.districtClear` (te, hi)
+- `common.json` -> `ai.voice.*` (te, hi)
