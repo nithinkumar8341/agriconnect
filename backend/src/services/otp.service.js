@@ -56,7 +56,13 @@ export function createOtpService({ config, smsProvider, logger }) {
       );
     }
 
-    const code = config.auth.devFixedOtp ?? randomDigits(OTP_RULES.length);
+    const existingUser = await User.findOne({ phone }).select('language isDemo');
+    // Seeded demo accounts (isDemo) sign in with the published DEMO_OTP and get no SMS, so a
+    // public demo works without an SMS gateway. Real accounts always get a random code by SMS.
+    const isDemoLogin = Boolean(config.auth.demoOtp && existingUser?.isDemo);
+    const code = isDemoLogin
+      ? config.auth.demoOtp
+      : (config.auth.devFixedOtp ?? randomDigits(OTP_RULES.length));
     const otpRequest = await OtpRequest.create({
       phone,
       purpose,
@@ -66,11 +72,12 @@ export function createOtpService({ config, smsProvider, logger }) {
     });
 
     // A returning user gets the SMS in their saved language; a new one in the language they picked.
-    const existingUser = await User.findOne({ phone }).select('language');
     const smsLanguage = existingUser?.language ?? language ?? 'te';
 
     try {
-      await smsProvider.send({ to: phone, message: otpMessage(smsLanguage, code) });
+      if (!isDemoLogin) {
+        await smsProvider.send({ to: phone, message: otpMessage(smsLanguage, code) });
+      }
     } catch (err) {
       // Remove the unsent code so the failed attempt does not trigger the cooldown or count toward the cap.
       await OtpRequest.deleteOne({ _id: otpRequest._id });

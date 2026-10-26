@@ -8,6 +8,12 @@ export function createSmsProvider(smsConfig) {
       return new Msg91SmsProvider({ authKey: smsConfig.msg91AuthKey });
     case 'console':
       return new ConsoleSmsProvider();
+    case 'none':
+      return {
+        async send() {
+          throw new Error('SMS is not configured');
+        },
+      };
     default:
       throw new Error(`Unknown SMS provider: ${smsConfig.provider}`);
   }

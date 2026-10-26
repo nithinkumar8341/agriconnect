@@ -1,0 +1,63 @@
+# Render Blueprint: backend + AI service as Docker web services (New > Blueprint in Render).
+# Values marked sync: false are asked for once in the Render dashboard; see docs/deploy.md.
+envVarGroups:
+  - name: agriconnect-shared
+    envVars:
+      # Shared secret: the backend sends it, the AI service checks it.
+      - key: AI_INTERNAL_KEY
+        generateValue: true
+
+services:
+  - type: web
+    name: agriconnect-backend
+    runtime: docker
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: singapore
+    healthCheckPath: /api/v1/health
+    envVars:
+      - fromGroup: agriconnect-shared
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: OTP_HMAC_SECRET
+        generateValue: true
+      - key: CORS_ORIGINS
+        sync: false
+      # Vercel rewrite + Render proxy in front of the app.
+      - key: TRUST_PROXY
+        value: '2'
+      # No SMS gateway for the public demo: only seeded demo accounts can sign in, with DEMO_OTP.
+      - key: SMS_PROVIDER
+        value: none
+      - key: DEMO_OTP
+        sync: false
+      - key: STORAGE_PROVIDER
+        value: cloudinary
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: AI_SERVICE_URL
+        sync: false
+
+  - type: web
+    name: agriconnect-ai
+    runtime: docker
+    rootDir: ai-service
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: singapore
+    healthCheckPath: /health
+    envVars:
+      - fromGroup: agriconnect-shared
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: LLM_MODEL
+        value: claude-opus-5-5
