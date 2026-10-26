@@ -314,7 +314,10 @@ describe('Sell screen photo step', () => {
 
     const photos = screen.getByRole('region', { name: /ఫోటో/ });
     const tile = (await within(photos).findAllByRole('listitem'))[0];
-    expect(within(tile).getByRole('status')).toHaveTextContent('ఇంటర్నెట్ కోసం వేచి ఉంది');
+    // Compression runs first ("preparing"), so wait for the final offline status.
+    await waitFor(() =>
+      expect(within(tile).getByRole('status')).toHaveTextContent('ఇంటర్నెట్ కోసం వేచి ఉంది'),
+    );
     expect(screen.getByText(/ఫోటోలు ఈ ఫోన్‌లో సేవ్ అయ్యాయి/)).toBeInTheDocument();
   });
 });
