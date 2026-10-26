@@ -4,11 +4,12 @@ import { Crop } from '../models/Crop.js';
 import { FarmerProfile } from '../models/FarmerProfile.js';
 import { Order } from '../models/Order.js';
 import { Product } from '../models/Product.js';
+import { Review } from '../models/Review.js';
 import { Session } from '../models/Session.js';
 import { User } from '../models/User.js';
 import { getAppConfig } from '../services/appConfig.service.js';
 import { computeOrderPricing } from '../services/pricing.service.js';
-import { DEMO_AGENT, DEMO_BUYERS, DEMO_FARMERS, DEMO_ORDERS } from './demo.data.js';
+import { DEMO_AGENT, DEMO_BUYERS, DEMO_FARMERS, DEMO_ORDERS, DEMO_REVIEWS } from './demo.data.js';
 import { seedCrops } from './seedCrops.js';
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -17,17 +18,27 @@ const STOCK_HOLDING_STATUSES = new Set(['placed', 'accepted', 'out_for_delivery'
 
 const DEMO_PHONES = [DEMO_AGENT, ...DEMO_FARMERS, ...DEMO_BUYERS].map((entry) => entry.phone);
 
-// Only ever touches records flagged isDemo, so real data in the same database is never affected.
-async function removeExistingDemoData() {
+// Only ever touches records flagged isDemo (and reviews of or by demo accounts), so real data in
+// the same database is never affected. Also used by seed:clear.
+export async function removeExistingDemoData() {
   const demoUserIds = (await User.find({ isDemo: true }).select('_id')).map((u) => u._id);
-  await Promise.all([
+  const reviews = await Review.deleteMany({
+    $or: [{ isDemo: true }, { farmerId: { $in: demoUserIds } }, { buyerId: { $in: demoUserIds } }],
+  });
+  const [orders, products] = await Promise.all([
     Order.deleteMany({ isDemo: true }),
     Product.deleteMany({ isDemo: true }),
     FarmerProfile.deleteMany({ isDemo: true }),
     BuyerProfile.deleteMany({ isDemo: true }),
     Session.deleteMany({ userId: { $in: demoUserIds } }),
   ]);
-  await User.deleteMany({ isDemo: true });
+  const users = await User.deleteMany({ isDemo: true });
+  return {
+    users: users.deletedCount,
+    products: products.deletedCount,
+    orders: orders.deletedCount,
+    reviews: reviews.deletedCount,
+  };
 }
 
 async function assertDemoPhonesAreFree() {
@@ -93,7 +104,7 @@ export async function seedDemo({ isProduction, allowProduction = false }) {
         availableQuantity: listing.quantity,
         unit: crop.defaultUnit,
         pricePerUnit: listing.pricePerUnit,
-        harvestDate: startOfDay(-1),
+        harvestDate: startOfDay(-(listing.harvestedDaysAgo ?? 1)),
         createdByAgentId: farmer.assistedByAgent ? agent._id : null,
         isDemo: true,
       });
@@ -114,7 +125,7 @@ export async function seedDemo({ isProduction, allowProduction = false }) {
     buyers.set(buyer.key, { user, profile });
   }
 
-  for (const demoOrder of DEMO_ORDERS) {
+  async function createOrder(demoOrder) {
     const farmer = farmers.get(demoOrder.farmer);
     const buyer = buyers.get(demoOrder.buyer);
     const address = buyer.profile.addresses.find((a) => a.isDefault);
@@ -137,7 +148,7 @@ export async function seedDemo({ isProduction, allowProduction = false }) {
       platformFeePercent,
     });
 
-    await Order.create({
+    const order = await Order.create({
       checkoutGroupId: randomUUID(),
       buyerId: buyer.user._id,
       farmerId: farmer.user._id,
@@ -176,6 +187,29 @@ export async function seedDemo({ isProduction, allowProduction = false }) {
         );
       }
     }
+    return order;
+  }
+
+  for (const demoOrder of DEMO_ORDERS) await createOrder(demoOrder);
+
+  // A review needs a delivered order of its own (verified purchase, one review per order).
+  for (const review of DEMO_REVIEWS) {
+    const order = await createOrder({
+      buyer: review.buyer,
+      farmer: review.farmer,
+      items: [{ crop: review.crop, quantity: 1 }],
+      paymentMethod: 'cod',
+      statusPath: ['placed', 'accepted', 'out_for_delivery', 'delivered'],
+      slotInDays: -2,
+    });
+    await Review.create({
+      orderId: order._id,
+      buyerId: order.buyerId,
+      farmerId: order.farmerId,
+      stars: review.stars,
+      comment: review.comment,
+      isDemo: true,
+    });
   }
 
   return {
@@ -183,6 +217,7 @@ export async function seedDemo({ isProduction, allowProduction = false }) {
     farmers: farmers.size,
     buyers: buyers.size,
     products: await Product.countDocuments({ isDemo: true }),
-    orders: DEMO_ORDERS.length,
+    orders: DEMO_ORDERS.length + DEMO_REVIEWS.length,
+    reviews: DEMO_REVIEWS.length,
   };
 }

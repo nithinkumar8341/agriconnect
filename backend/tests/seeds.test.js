@@ -5,12 +5,13 @@ import { FarmerProfile } from '../src/models/FarmerProfile.js';
 import { syncAllIndexes } from '../src/models/index.js';
 import { Order } from '../src/models/Order.js';
 import { Product } from '../src/models/Product.js';
+import { Review } from '../src/models/Review.js';
 import { User } from '../src/models/User.js';
 import { CROPS } from '../src/seeds/crops.data.js';
-import { DEMO_ORDERS } from '../src/seeds/demo.data.js';
+import { DEMO_ORDERS, DEMO_REVIEWS } from '../src/seeds/demo.data.js';
 import { seedAdmin } from '../src/seeds/seedAdmin.js';
 import { seedCrops } from '../src/seeds/seedCrops.js';
-import { seedDemo } from '../src/seeds/seedDemo.js';
+import { removeExistingDemoData, seedDemo } from '../src/seeds/seedDemo.js';
 import { connectTestDb, dropTestDbAndDisconnect } from './helpers/db.js';
 
 const TELUGU = /[ఀ-౿]/;
@@ -129,17 +130,54 @@ describe('seed scripts', () => {
         BuyerProfile.deleteMany({}),
         Product.deleteMany({}),
         Order.deleteMany({}),
+        Review.deleteMany({}),
       ]);
     });
 
     it('creates a demo marketplace where every record is flagged isDemo', async () => {
       const summary = await seedDemo({ isProduction: false });
 
-      expect(summary).toEqual({ agents: 1, farmers: 4, buyers: 3, products: 13, orders: 4 });
-      for (const model of [User, FarmerProfile, BuyerProfile, Product, Order]) {
+      expect(summary).toEqual({
+        agents: 1,
+        farmers: 5,
+        buyers: 3,
+        products: 36,
+        orders: 11,
+        reviews: 7,
+      });
+      for (const model of [User, FarmerProfile, BuyerProfile, Product, Order, Review]) {
         expect(await model.countDocuments({ isDemo: { $ne: true } })).toBe(0);
       }
-      expect(await FarmerProfile.countDocuments({ name: /\(Demo\)$/ })).toBe(4);
+      expect(await FarmerProfile.countDocuments({ name: /\(Demo\)$/ })).toBe(5);
+    });
+
+    it('rates some farmers through verified orders and leaves others New', async () => {
+      await seedDemo({ isProduction: false });
+
+      for (const review of await Review.find({ isDemo: true })) {
+        const order = await Order.findById(review.orderId);
+        expect(order).toMatchObject({ status: 'delivered', buyerId: review.buyerId });
+      }
+      const rated = await Review.distinct('farmerId');
+      expect(rated).toHaveLength(3);
+      expect(await FarmerProfile.countDocuments({ userId: { $nin: rated } })).toBe(2);
+    });
+
+    it('seed:clear removes every demo record and keeps real ones', async () => {
+      const realFarmer = await User.create({ phone: '+919876543210', role: 'farmer' });
+      await seedDemo({ isProduction: false });
+
+      expect(await removeExistingDemoData()).toEqual({
+        users: 9,
+        products: 36,
+        orders: 11,
+        reviews: 7,
+      });
+      for (const model of [FarmerProfile, BuyerProfile, Product, Order, Review]) {
+        expect(await model.countDocuments()).toBe(0);
+      }
+      const left = await User.find();
+      expect(left.map((u) => u._id.toString())).toEqual([realFarmer._id.toString()]);
     });
 
     it('is idempotent: a second run leaves the same amount of data', async () => {
@@ -189,16 +227,13 @@ describe('seed scripts', () => {
           .reduce((sum, item) => sum + item.quantity, 0);
         expect(product.availableQuantity).toBe(product.quantity - reserved);
       }
-      const cancelled = await Order.findOne({ status: 'cancelled' });
-      const mango = await Product.findById(cancelled.items[0].productId);
-      expect(mango.availableQuantity).toBe(mango.quantity);
     });
 
     it('stores orders with consistent price breakdowns and status histories', async () => {
       await seedDemo({ isProduction: false });
 
       const orders = await Order.find({ isDemo: true });
-      expect(orders).toHaveLength(DEMO_ORDERS.length);
+      expect(orders).toHaveLength(DEMO_ORDERS.length + DEMO_REVIEWS.length);
       for (const order of orders) {
         const { itemsTotal, deliveryFee, platformFee, buyerTotal, farmerEarnings } =
           order.priceBreakdown;

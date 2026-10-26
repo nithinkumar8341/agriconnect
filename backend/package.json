@@ -12,6 +12,8 @@
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "test": "node --experimental-vm-modules --disable-warning=ExperimentalWarning node_modules/jest/bin/jest.js",
+    "seed": "node --env-file-if-exists=.env scripts/seed.js demo",
+    "seed:clear": "node --env-file-if-exists=.env scripts/seed.js clear",
     "seed:crops": "node --env-file-if-exists=.env scripts/seed.js crops",
     "seed:admin": "node --env-file-if-exists=.env scripts/seed.js admin",
     "seed:demo": "node --env-file-if-exists=.env scripts/seed.js demo",

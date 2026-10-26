@@ -21,6 +21,8 @@ const reviewSchema = new mongoose.Schema(
     },
     // Hidden reviews (after a successful appeal) stay stored for audit but are not shown or scored.
     isHidden: { type: Boolean, default: false },
+    // Seeded sample review (npm run seed), removed by npm run seed:clear.
+    isDemo: { type: Boolean, default: false },
   },
   { timestamps: true },
 );

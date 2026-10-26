@@ -1,12 +1,12 @@
-// Usage: node scripts/seed.js <crops|admin|demo|indexes> [--force]
-// Run through npm: npm run seed:crops | seed:admin | seed:demo | db:indexes
+// Usage: node scripts/seed.js <crops|admin|demo|clear|indexes> [--force]
+// Run through npm: npm run seed (= seed:demo) | seed:clear | seed:crops | seed:admin | db:indexes
 import { connectDb, disconnectDb } from '../src/config/db.js';
 import { loadConfig } from '../src/config/env.js';
 import { createLogger } from '../src/config/logger.js';
 import { syncAllIndexes } from '../src/models/index.js';
 import { seedAdmin } from '../src/seeds/seedAdmin.js';
 import { seedCrops } from '../src/seeds/seedCrops.js';
-import { seedDemo } from '../src/seeds/seedDemo.js';
+import { removeExistingDemoData, seedDemo } from '../src/seeds/seedDemo.js';
 
 const TASKS = {
   indexes: async () => ({ indexes: 'synced' }),
@@ -18,6 +18,13 @@ const TASKS = {
       isProduction: config.isProduction,
       allowProduction: process.env.ALLOW_DEMO_SEED === 'true',
     }),
+  // Removes every isDemo record (and reviews of demo accounts); real data is never touched.
+  clear: (config) => {
+    if (config.isProduction && process.env.ALLOW_DEMO_SEED !== 'true') {
+      throw new Error('Refusing to clear demo data in production. Set ALLOW_DEMO_SEED=true.');
+    }
+    return removeExistingDemoData();
+  },
 };
 
 const taskName = process.argv[2];
