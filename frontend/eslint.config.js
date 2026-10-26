@@ -4,7 +4,7 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 
 export default [
-  { ignores: ['dist', 'node_modules', 'coverage'] },
+  { ignores: ['dist', 'node_modules', 'coverage', 'playwright-report', 'test-results'] },
   js.configs.recommended,
   {
     files: ['**/*.{js,jsx}'],
@@ -29,7 +29,7 @@ export default [
     languageOptions: { globals: { ...globals.vitest } },
   },
   {
-    files: ['*.config.js'],
+    files: ['*.config.js', 'e2e/**'],
     languageOptions: { globals: { ...globals.node } },
   },
 ];

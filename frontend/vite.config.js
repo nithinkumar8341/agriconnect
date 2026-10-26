@@ -69,6 +69,8 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: './src/test/setup.js',
+    // e2e/ holds the Playwright smoke test, which runs against the real app instead.
+    include: ['src/**/*.test.{js,jsx}'],
     // Full-screen flow tests type and click through several screens; under machine load they
     // exceeded the 5 s default and failed at random. A truly stuck test still fails at 20 s.
     testTimeout: 20_000,

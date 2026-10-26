@@ -1,6 +1,6 @@
 # Progress
 
-NEXT: MVP item 7 (Playwright smoke), then AI service, deploy, README, CI.
+NEXT: AI service (phase B), then AI frontend, deploy, README, CI.
 
 ## MVP status (2026-10-26)
 
@@ -12,7 +12,7 @@ NEXT: MVP item 7 (Playwright smoke), then AI service, deploy, README, CI.
 | 4 Reviews and trust | DONE | backend/src/services/review.service.js, frontend/src/components/buyer/Trust.jsx |
 | 5 Returns | DONE (admin page in item 6) | backend/src/services/return.service.js, frontend/src/components/buyer/ReturnSheet.jsx |
 | 6 Admin panel pages | DONE | frontend/src/pages/admin/AdminPages.jsx |
-| 7 Playwright smoke test | TODO | |
+| 7 Playwright smoke test | DONE (passes in 11 s, Edge) | frontend/e2e/smoke.spec.js; run `PW_CHANNEL=msedge npm run test:e2e` |
 | AI service, voice, deploy, README, CI | TODO | ai-service/app/main.py has health only |
 
 
