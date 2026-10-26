@@ -29,7 +29,7 @@ async function openSell(routes) {
   });
   const user = userEvent.setup();
   const app = renderApp('/farmer/sell', handlers);
-  await screen.findByRole('radio', { name: /Tomato/ });
+  await screen.findByRole('button', { name: /Tomato/ });
   return { user, ...app };
 }
 
@@ -56,8 +56,7 @@ describe('AI helpers', () => {
         },
       ],
     });
-    await user.click(screen.getByRole('radio', { name: /Tomato/ }));
-    await user.click(screen.getByRole('button', { name: 'Next' }));
+    await user.click(screen.getByRole('button', { name: /Tomato/ }));
 
     const hint = await screen.findByRole('region', { name: 'Price suggestion' });
     expect(within(hint).getByText('From 6 recent sales in Krishna (last 30 days).')).toBeVisible();

@@ -292,11 +292,20 @@ describe('usePhotoUploads', () => {
 describe('Sell screen photo step', () => {
   beforeEach(() => changeLanguage('en'));
 
-  it('opens from the Sell tile with camera and gallery buttons', async () => {
+  // The own-photo choice is on the last Sell screen; start there with crop and amount chosen.
+  function openPublishStep() {
+    localStorage.setItem(
+      'agc.sellDraft',
+      JSON.stringify({ step: 3, cropSlug: 'tomato', unit: 'kg', quantity: 10, priceRupees: 30 }),
+    );
     renderApp('/farmer/sell', sellHandlers(signedInHandlers(testUsers.farmer)));
+  }
+
+  it('offers camera and gallery buttons on the last Sell screen', async () => {
+    openPublishStep();
 
     expect(
-      await screen.findByRole('heading', { name: 'Photos of your produce' }),
+      await screen.findByRole('heading', { name: 'Your own photo (optional)' }),
     ).toBeInTheDocument();
     const camera = screen.getByLabelText('Take photo');
     expect(camera).toHaveAttribute('capture', 'environment');
@@ -308,7 +317,7 @@ describe('Sell screen photo step', () => {
     await changeLanguage('te');
     setOnline(false);
     const user = userEvent.setup();
-    renderApp('/farmer/sell', sellHandlers(signedInHandlers(testUsers.farmer)));
+    openPublishStep();
 
     await user.upload(await screen.findByLabelText('ఫోటో తీయండి'), photoFile());
 

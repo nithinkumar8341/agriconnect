@@ -159,7 +159,13 @@ describe('product listings', () => {
       expect(res.body.error.code).toBe(code);
     });
 
-    it('validates quantity, price bounds and photos', async () => {
+    it('lists without a photo (the crop stock photo is shown instead)', async () => {
+      const res = await listing(farmer, { photoAssetIds: [] });
+      expect(res.status).toBe(201);
+      expect(res.body.product.photos).toEqual([]);
+    });
+
+    it('validates quantity and price bounds', async () => {
       const res = await api(farmer).post('', {
         cropSlug: 'tomato',
         photoAssetIds: [],
@@ -172,7 +178,6 @@ describe('product listings', () => {
       expect(res.status).toBe(400);
       expect(res.body.error.details.map((d) => d.field).sort()).toEqual([
         'body.harvestDate',
-        'body.photoAssetIds',
         'body.pricePerUnit',
         'body.quantity',
       ]);

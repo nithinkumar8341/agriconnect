@@ -759,3 +759,5 @@ The English name is the stored value; te and hi are display names. Newer distric
 - `ai-service/app/chat.py` -> `UNSURE`, `AVAILABLE`; `ai-service/app/insights.py` -> `FALLBACK` (te, hi)
 - `onboarding.json` -> `farmer.districtClear` (te, hi)
 - `common.json` -> `ai.voice.*` (te, hi)
+- `buyer.json` -> `card.freshToday/keeps/new/ratingLabel/add/addLabel`, `sort.rating`, `sort.price` (te, hi)
+- `farmer.json` -> `sell.stepCrop/stepAmountOnly/stepPublish/perUnit/totalLine/moreDetails/ownPhotoHeading/ownPhotoHint` (te, hi)

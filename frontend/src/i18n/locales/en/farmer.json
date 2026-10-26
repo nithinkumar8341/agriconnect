@@ -164,7 +164,15 @@
     "offlineQueued": "You are offline. Your listing is saved and will be published automatically when the internet is back.",
     "typePrice": "Or type the price (₹)",
     "quickPick": "Quick pick",
-    "priceRange": "Enter a price from ₹1 to {{max}}."
+    "priceRange": "Enter a price from ₹1 to {{max}}.",
+    "stepCrop": "Which crop?",
+    "stepAmountOnly": "How much, and what price?",
+    "stepPublish": "Photo and publish",
+    "perUnit": "{{price}} per {{unit}}",
+    "totalLine": "Total {{total}}",
+    "moreDetails": "More details (optional)",
+    "ownPhotoHeading": "Your own photo (optional)",
+    "ownPhotoHint": "Buyers trust a real photo of your produce. Without one, a sample photo is shown."
   },
   "orders": {
     "title": "My orders",

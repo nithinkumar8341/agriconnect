@@ -12,11 +12,12 @@ export const productIdParams = z.object({ id: objectId });
 
 export const createProductSchema = z.object({
   cropSlug: z.string().regex(/^[a-z0-9-]{1,60}$/, 'must be a crop slug'),
+  // Optional: without a photo the listing shows the crop's stock photo.
   photoAssetIds: z
     .array(objectId)
-    .min(1, 'add at least one photo')
     .max(5, 'at most 5 photos')
-    .refine((ids) => new Set(ids).size === ids.length, 'photos must not repeat'),
+    .refine((ids) => new Set(ids).size === ids.length, 'photos must not repeat')
+    .default([]),
   quantity,
   unit: z.enum(UNITS),
   pricePerUnit,

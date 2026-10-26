@@ -1,9 +1,10 @@
-import { ArrowRight, CloudOff, Send, Volume2 } from 'lucide-react';
+import { ArrowRight, ChevronDown, CloudOff, Send, Volume2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
 import { useAuth } from '../../auth/authContext.js';
 import { PriceHint } from '../../components/ai/PriceHint.jsx';
+import { CropPhoto } from '../../components/CropPhoto.jsx';
 import { CropPicker } from '../../components/farmer/CropPicker.jsx';
 import { PhotoStep } from '../../components/farmer/PhotoStep.jsx';
 import { FormAlert } from '../../components/form/FormAlert.jsx';
@@ -44,8 +45,9 @@ function canSpeak() {
   return typeof window !== 'undefined' && 'speechSynthesis' in window;
 }
 
-// Selling in three screens (CLAUDE.md: at most 3 steps per task):
-// 1. photos + crop, 2. quantity + price + harvest date, 3. check and publish.
+// Selling in three short screens (CLAUDE.md: at most 3 steps per task):
+// 1. tap the crop photo, 2. quantity and price, 3. optional own photo, then Publish.
+// Harvest date defaults to today ("More details"); location and delivery come from the profile.
 // Choices are saved on the phone as they are made; photos are kept by usePhotoUploads.
 export function SellPage() {
   const { t, i18n } = useTranslation(['farmer', 'common']);
@@ -65,6 +67,8 @@ export function SellPage() {
   const [lastPrice, setLastPrice] = useState(null);
   const [publishing, setPublishing] = useState(false);
   const [publishError, setPublishError] = useState('');
+  // Harvest date (and the read-aloud check) sit in a closed "More details (optional)" section.
+  const [showMore, setShowMore] = useState(false);
 
   const crop = crops.data?.items.find((c) => c.slug === draft.cropSlug) ?? null;
   const recentSlugs = [
@@ -117,14 +121,10 @@ export function SellPage() {
     window.scrollTo?.(0, 0);
   }
 
-  function nextFromPhotos() {
-    const found = {};
-    if (uploads.photos.filter((p) => p.status !== 'failed').length === 0) {
-      found.photos = t('sell.needPhoto');
-    }
-    if (!crop) found.crop = t('sell.needCrop');
-    setErrors(found);
-    if (Object.keys(found).length === 0) goTo(2);
+  // Step 1 is one tap: choosing a crop moves straight on to quantity and price.
+  function chooseCrop(selected) {
+    if (selected.slug !== draft.cropSlug) selectCrop(selected);
+    goTo(2);
   }
 
   function nextFromAmount() {
@@ -136,9 +136,6 @@ export function SellPage() {
       found.price = t('sell.priceRange', {
         max: formatRupees(MAX_PRICE_RUPEES * 100, language),
       });
-    }
-    if (draft.harvestChoice === 'pick' && !draft.harvestDate) {
-      found.harvest = t('onboarding:errors.required');
     }
     setErrors(found);
     if (Object.keys(found).length === 0) goTo(3);
@@ -152,6 +149,11 @@ export function SellPage() {
 
   async function publish() {
     setPublishError('');
+    if (draft.harvestChoice === 'pick' && !draft.harvestDate) {
+      setErrors({ harvest: t('onboarding:errors.required') });
+      setShowMore(true);
+      return;
+    }
     // Without internet, or while photos are still uploading, the listing waits and is published
     // automatically as soon as both are ready (see the effect below).
     if (!navigator.onLine || !uploads.allUploaded) {
@@ -211,9 +213,9 @@ export function SellPage() {
   }
 
   const headings = {
-    1: t('sell.stepPhotosCrop'),
-    2: t('sell.stepAmount'),
-    3: t('sell.stepReview'),
+    1: t('sell.stepCrop'),
+    2: t('sell.stepAmountOnly'),
+    3: t('sell.stepPublish'),
   };
   const priceWarning =
     lastPrice &&
@@ -232,8 +234,6 @@ export function SellPage() {
 
       {draft.step === 1 && (
         <>
-          <PhotoStep uploads={uploads} />
-          {errors.photos && <p className="font-semibold text-danger-700">{errors.photos}</p>}
           {crops.loading && <SkeletonList rows={2} />}
           {crops.error && <ErrorState error={crops.error} onRetry={crops.reload} />}
           {crops.data && (
@@ -241,22 +241,16 @@ export function SellPage() {
               crops={crops.data.items}
               recentSlugs={recentSlugs}
               value={draft.cropSlug}
-              onChange={selectCrop}
-              error={errors.crop}
+              onChange={chooseCrop}
             />
           )}
-          <BigButton icon={ArrowRight} onClick={nextFromPhotos}>
-            {t('common:actions.next')}
-          </BigButton>
         </>
       )}
 
       {draft.step === 2 && crop && (
         <>
           <p className="flex items-center gap-3 rounded-2xl bg-white p-3 text-xl font-bold">
-            <span aria-hidden="true" className="text-4xl">
-              {crop.icon}
-            </span>
+            <CropPhoto crop={crop} className="size-14 shrink-0 rounded-xl" />
             {localName(crop.names, language)}
           </p>
           {crop.allowedUnits.length > 1 && (
@@ -319,25 +313,6 @@ export function SellPage() {
               })}
             </p>
           )}
-
-          <PresetChips
-            label={t('sell.harvest')}
-            options={HARVEST_CHOICES}
-            value={draft.harvestChoice}
-            onChange={(harvestChoice) => update({ harvestChoice })}
-            formatOption={(choice) => t(choice === 'pick' ? 'sell.pickDate' : `sell.${choice}`)}
-          />
-          {draft.harvestChoice === 'pick' && (
-            <TextField
-              label={t('sell.harvestDateLabel')}
-              type="date"
-              value={draft.harvestDate ?? ''}
-              min={localDateString(new Date(today.getTime() - (crop.shelfLifeDays - 1) * DAY_MS))}
-              max={localDateString(today)}
-              onChange={(event) => update({ harvestDate: event.target.value || null })}
-              error={errors.harvest}
-            />
-          )}
           <BigButton icon={ArrowRight} onClick={nextFromAmount}>
             {t('common:actions.next')}
           </BigButton>
@@ -348,54 +323,73 @@ export function SellPage() {
         <>
           <section
             aria-label={t('sell.reviewHeading')}
-            className="flex flex-col gap-3 rounded-2xl border-2 border-soil-200 bg-white p-4"
+            className="flex items-center gap-3 rounded-2xl border-2 border-soil-200 bg-white p-3"
           >
-            <div className="flex gap-2 overflow-x-auto">
-              {uploads.photos.map((photo) =>
-                photo.previewUrl ? (
-                  <img
-                    key={photo.id}
-                    src={photo.previewUrl}
-                    alt=""
-                    className="size-20 shrink-0 rounded-xl object-cover"
-                  />
-                ) : null,
+            <CropPhoto
+              crop={crop}
+              photoUrl={uploads.photos.find((p) => p.previewUrl)?.previewUrl}
+              className="size-20 shrink-0 rounded-xl"
+            />
+            <div className="flex min-w-0 flex-col">
+              <p className="text-xl font-bold">{localName(crop.names, language)}</p>
+              <p className="text-lg">
+                {formatQuantity(draft.quantity, language)} {unitLabel} ·{' '}
+                {t('sell.perUnit', {
+                  price: formatRupees(Math.round(draft.priceRupees * 100), language),
+                  unit: unitLabel,
+                })}
+              </p>
+              <p className="text-lg text-ink-muted">
+                {t('sell.totalLine', {
+                  total: formatRupees(
+                    Math.round(draft.quantity * draft.priceRupees * 100),
+                    language,
+                  ),
+                })}
+              </p>
+            </div>
+          </section>
+
+          <PhotoStep uploads={uploads} optional />
+
+          <details
+            open={showMore}
+            onToggle={(event) => setShowMore(event.currentTarget.open)}
+            className="rounded-2xl border-2 border-soil-200 bg-white"
+          >
+            <summary className="flex min-h-14 cursor-pointer items-center gap-2 px-4 text-lg font-semibold">
+              <ChevronDown aria-hidden="true" className="size-6" />
+              {t('sell.moreDetails')}
+            </summary>
+            <div className="flex flex-col gap-4 px-4 pb-4">
+              <PresetChips
+                label={t('sell.harvest')}
+                options={HARVEST_CHOICES}
+                value={draft.harvestChoice}
+                onChange={(harvestChoice) => update({ harvestChoice })}
+                formatOption={(choice) => t(choice === 'pick' ? 'sell.pickDate' : `sell.${choice}`)}
+              />
+              {draft.harvestChoice === 'pick' && (
+                <TextField
+                  label={t('sell.harvestDateLabel')}
+                  type="date"
+                  value={draft.harvestDate ?? ''}
+                  min={localDateString(
+                    new Date(today.getTime() - (crop.shelfLifeDays - 1) * DAY_MS),
+                  )}
+                  max={localDateString(today)}
+                  onChange={(event) => update({ harvestDate: event.target.value || null })}
+                  error={errors.harvest}
+                />
+              )}
+              {canSpeak() && (
+                <BigButton icon={Volume2} variant="secondary" onClick={readAloud}>
+                  {t('sell.readAloud')}
+                </BigButton>
               )}
             </div>
-            <p className="flex items-center gap-2 text-2xl font-bold">
-              <span aria-hidden="true">{crop.icon}</span>
-              {localName(crop.names, language)}
-            </p>
-            <dl className="grid grid-cols-2 gap-3 text-lg">
-              <div>
-                <dt className="text-ink-muted">{t('sell.quantity')}</dt>
-                <dd className="font-bold">
-                  {formatQuantity(draft.quantity, language)} {unitLabel}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-ink-muted">{t('sell.price', { unit: unitLabel })}</dt>
-                <dd className="font-bold">
-                  {formatRupees(Math.round(draft.priceRupees * 100), language)}
-                </dd>
-              </div>
-              <div>
-                <dt className="text-ink-muted">{t('sell.harvestDateLabel')}</dt>
-                <dd className="font-bold">{formatDate(harvestDateFor(draft), language)}</dd>
-              </div>
-              <div>
-                <dt className="text-ink-muted">{t('sell.total')}</dt>
-                <dd className="font-bold">
-                  {formatRupees(Math.round(draft.quantity * draft.priceRupees * 100), language)}
-                </dd>
-              </div>
-            </dl>
-          </section>
-          {canSpeak() && (
-            <BigButton icon={Volume2} variant="secondary" onClick={readAloud}>
-              {t('sell.readAloud')}
-            </BigButton>
-          )}
+          </details>
+
           {draft.publishWhenOnline && (
             <p
               role="status"

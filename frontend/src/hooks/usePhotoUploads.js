@@ -163,7 +163,8 @@ export function usePhotoUploads({ client, compress = compressImage, sleep = defa
   return {
     photos,
     clearAll,
-    allUploaded: photos.length > 0 && photos.every((p) => p.status === 'uploaded'),
+    // True with no photos too: a listing's own photo is optional (the stock photo is used).
+    allUploaded: loaded && photos.every((p) => p.status === 'uploaded'),
     loaded,
     canAddMore: photos.length < MAX_PHOTOS,
     uploadedAssets: photos.filter((p) => p.status === 'uploaded').map((p) => p.asset),

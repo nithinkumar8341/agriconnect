@@ -32,15 +32,12 @@ function setOnline(value) {
 const farmer = () => signedInHandlers(testUsers.farmer);
 const posts = (calls) => calls.filter((call) => call.key === 'POST /products');
 
-// Photo already uploaded (as after an earlier visit), so the tests can focus on the three steps.
-async function openSellWithPhoto(
-  options,
-  ready = () => screen.findByRole('radio', { name: /Tomato/ }),
-) {
-  await saveDraft(uploadedPhoto);
+// Opens Sell; `withPhoto` puts an already-uploaded own photo on the phone (as after an earlier visit).
+async function openSell(options, { withPhoto = false } = {}) {
+  if (withPhoto) await saveDraft(uploadedPhoto);
   const user = userEvent.setup();
   const app = renderApp('/farmer/sell', sellHandlers(farmer(), options));
-  await ready();
+  await screen.findByRole('button', { name: /Tomato/ });
   return { user, ...app };
 }
 
@@ -59,59 +56,73 @@ beforeEach(async () => {
 });
 
 describe('Sell flow', () => {
-  it('publishes a listing in three steps and opens My Products', async () => {
-    const { user, calls, router } = await openSellWithPhoto();
+  it('sells in three steps without a photo: tap crop, quantity and price, publish', async () => {
+    const { user, calls, router } = await openSell();
 
-    await user.click(screen.getByRole('radio', { name: /Tomato/ }));
-    await user.click(screen.getByRole('button', { name: 'Next' }));
-    expect(
-      screen.getByRole('heading', { name: 'Quantity, price and harvest' }),
-    ).toBeInTheDocument();
-
+    await user.click(screen.getByRole('button', { name: /Tomato/ }));
+    expect(screen.getByRole('heading', { name: 'How much, and what price?' })).toBeInTheDocument();
     await fillAmount(user);
     await user.click(screen.getByRole('button', { name: 'Next' }));
 
-    const review = screen.getByRole('region', { name: 'Check your listing' });
-    expect(within(review).getByText('10 kg')).toBeInTheDocument();
-    expect(within(review).getByText('₹300')).toBeInTheDocument();
-
+    expect(screen.getByRole('heading', { name: 'Photo and publish' })).toBeInTheDocument();
+    const summary = screen.getByRole('region', { name: 'Check your listing' });
+    expect(within(summary).getByText('10 kg · ₹30 per kg')).toBeInTheDocument();
+    expect(within(summary).getByText('Total ₹300')).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Publish listing' }));
 
     await waitFor(() => expect(router.state.location.pathname).toBe('/farmer/products'));
     expect(posts(calls)).toHaveLength(1);
     expect(posts(calls)[0].body).toMatchObject({
       cropSlug: 'tomato',
-      photoAssetIds: [uploadedPhoto.asset.id],
+      photoAssetIds: [],
       quantity: 10,
       unit: 'kg',
       pricePerUnit: 3000,
     });
     expect(await screen.findByText(/Your listing is live/)).toBeInTheDocument();
-    // The half-made listing is forgotten, so the next Sell starts fresh.
     expect(JSON.parse(localStorage.getItem('agc.sellDraft'))).toMatchObject({
       step: 1,
       cropSlug: null,
     });
   });
 
-  it('asks for a photo and a crop before moving on', async () => {
-    const user = userEvent.setup();
-    renderApp('/farmer/sell', sellHandlers(farmer()));
-    await screen.findByRole('radio', { name: /Tomato/ });
+  it("sends the farmer's own photo when one was added", async () => {
+    const { user, calls } = await openSell({}, { withPhoto: true });
+    await user.click(screen.getByRole('button', { name: /Tomato/ }));
+    await fillAmount(user);
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+    await user.click(screen.getByRole('button', { name: 'Publish listing' }));
 
+    await waitFor(() => expect(posts(calls)).toHaveLength(1));
+    expect(posts(calls)[0].body.photoAssetIds).toEqual([uploadedPhoto.asset.id]);
+  });
+
+  it('asks for the price before moving on', async () => {
+    const { user } = await openSell();
+    await user.click(screen.getByRole('button', { name: /Tomato/ }));
     await user.click(screen.getByRole('button', { name: 'Next' }));
 
-    expect(screen.getByText('Add at least one photo.')).toBeInTheDocument();
-    expect(screen.getByText('Choose a crop.')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Photos and crop' })).toBeInTheDocument();
+    expect(screen.getByText('Please fill this in.')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'How much, and what price?' })).toBeInTheDocument();
+  });
+
+  it('keeps the harvest date in "More details", defaulting to today', async () => {
+    const { user } = await openSell();
+    await user.click(screen.getByRole('button', { name: /Tomato/ }));
+    await fillAmount(user);
+    await user.click(screen.getByRole('button', { name: 'Next' }));
+
+    const more = screen.getByText('More details (optional)').closest('details');
+    expect(more).not.toHaveAttribute('open');
+    await user.click(screen.getByText('More details (optional)'));
+    expect(within(more).getByRole('radio', { name: 'Today' })).toBeChecked();
   });
 
   it('warns when the price is very different from the last price for the crop', async () => {
-    const { user } = await openSellWithPhoto({
+    const { user } = await openSell({
       lastPrice: { pricePerUnit: 2500, unit: 'kg', listedAt: '2026-10-20T00:00:00Z' },
     });
-    await user.click(screen.getByRole('radio', { name: /Tomato/ }));
-    await user.click(screen.getByRole('button', { name: 'Next' }));
+    await user.click(screen.getByRole('button', { name: /Tomato/ }));
 
     // The last price is filled in for them.
     await waitFor(() => expect(screen.getByLabelText('Or type the price (₹)')).toHaveValue('25'));
@@ -122,9 +133,8 @@ describe('Sell flow', () => {
   });
 
   it('keeps a listing made offline and publishes it once the internet is back', async () => {
-    const { user, calls } = await openSellWithPhoto();
-    await user.click(screen.getByRole('radio', { name: /Tomato/ }));
-    await user.click(screen.getByRole('button', { name: 'Next' }));
+    const { user, calls } = await openSell();
+    await user.click(screen.getByRole('button', { name: /Tomato/ }));
     await fillAmount(user);
     await user.click(screen.getByRole('button', { name: 'Next' }));
 
@@ -147,24 +157,24 @@ describe('Sell flow', () => {
       'agc.sellDraft',
       JSON.stringify({ step: 2, cropSlug: 'spinach', unit: 'bunch', quantity: 20 }),
     );
-    await openSellWithPhoto({}, () =>
-      screen.findByRole('heading', { name: 'Quantity, price and harvest' }),
-    );
+    renderApp('/farmer/sell', sellHandlers(farmer()));
+    await screen.findByRole('heading', { name: 'How much, and what price?' });
     expect(await screen.findByRole('radio', { name: '20 bunch' })).toBeChecked();
     // Spinach can be sold by the bunch or by the kilo.
     expect(screen.getByRole('radio', { name: 'kg' })).toBeInTheDocument();
   });
 
-  it('finds a crop by its Telugu name', async () => {
+  it('finds a crop by its Telugu name, with photos instead of emoji', async () => {
     await changeLanguage('te');
     const user = userEvent.setup();
     renderApp('/farmer/sell', sellHandlers(farmer()));
-    await screen.findByRole('radio', { name: /టమాటా/ });
+    const tomato = await screen.findByRole('button', { name: /టమాటా/ });
+    expect(tomato.querySelector('img')).toHaveAttribute('src', '/crops/tomato.jpg');
 
     await user.type(screen.getByRole('searchbox'), 'పాల');
 
-    expect(screen.getByRole('radio', { name: /పాలకూర/ })).toBeInTheDocument();
-    expect(screen.queryByRole('radio', { name: /టమాటా/ })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /పాలకూర/ })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /టమాటా/ })).not.toBeInTheDocument();
   });
 });
 

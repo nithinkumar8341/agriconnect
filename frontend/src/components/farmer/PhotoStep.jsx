@@ -107,7 +107,8 @@ function PhotoTile({ photo, onRemove, onRetry }) {
 
 // Photos for a listing: up to 5, compressed on the phone, uploaded with progress, and kept on
 // the phone when there is no internet until they can be sent.
-export function PhotoStep({ uploads }) {
+// `optional`: the listing works without one (the crop's stock photo is shown instead).
+export function PhotoStep({ uploads, optional = false }) {
   const { t } = useTranslation('farmer');
   const online = useOnlineStatus();
   const hasWaiting = uploads.photos.some((photo) => photo.status === 'waiting');
@@ -115,9 +116,11 @@ export function PhotoStep({ uploads }) {
   return (
     <section aria-labelledby="photos-heading" className="flex flex-col gap-4">
       <h2 id="photos-heading" className="text-2xl font-bold">
-        {t('sell.photosHeading')}
+        {optional ? t('sell.ownPhotoHeading') : t('sell.photosHeading')}
       </h2>
-      <p className="text-lg text-ink-muted">{t('sell.photosHint', { max: MAX_PHOTOS })}</p>
+      <p className="text-lg text-ink-muted">
+        {optional ? t('sell.ownPhotoHint') : t('sell.photosHint', { max: MAX_PHOTOS })}
+      </p>
 
       <div className="flex flex-col gap-3 min-[380px]:flex-row">
         <PickerButton
