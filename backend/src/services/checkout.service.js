@@ -9,6 +9,7 @@ import { AppError } from '../utils/AppError.js';
 import { getAppConfig } from './appConfig.service.js';
 import { actorFromUser, recordAudit } from './audit.service.js';
 import { deliveryDateOptions, servesBuyer, toFarmerSummary } from './market.service.js';
+import { checkDuplicateAddress } from './fraud.service.js';
 import { notify } from './notification.service.js';
 import { createUpiPayment } from './payment.service.js';
 import { buyerContext, toBuyerOrder } from './orders.service.js';
@@ -320,6 +321,7 @@ export async function checkout(user, body, { now = new Date(), requestId } = {})
     throw err;
   }
 
+  await checkDuplicateAddress(created);
   return withPayment({
     checkoutGroupId,
     orders: await Promise.all(created.map((order) => buyerView(order.toObject()))),

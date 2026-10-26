@@ -6,6 +6,7 @@ import { createOtpService } from '../services/otp.service.js';
 import { createMediaService } from '../services/media.service.js';
 import { createOrderLifecycle } from '../services/orderLifecycle.service.js';
 import { createSessionService } from '../services/session.service.js';
+import { createAdminRouter } from './admin.routes.js';
 import { createAuthRouter } from './auth.routes.js';
 import { createCropsRouter } from './crops.routes.js';
 import { createFarmerRouter, createProductsRouter } from './farmer.routes.js';
@@ -46,6 +47,7 @@ export function createApiRouter({ config, logger, smsProvider, storage }) {
   router.use('/payments', createPaymentsRouter({ requireAuth }));
   router.use('/orders', createOrdersRouter({ requireAuth, lifecycle }));
   router.use('/notifications', createNotificationsRouter({ requireAuth }));
+  router.use('/admin', createAdminRouter({ requireAuth }));
   router.use('/uploads', createUploadsRouter({ requireAuth, mediaService }));
   return router;
 }
