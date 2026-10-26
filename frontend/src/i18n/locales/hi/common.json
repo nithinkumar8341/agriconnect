@@ -113,5 +113,26 @@
       "rejected": "आपकी समस्या रिपोर्ट मंज़ूर नहीं हुई।"
     }
   },
-  "timeline": "क्या हुआ"
+  "timeline": "क्या हुआ",
+  "admin": {
+    "homeTitle": "एडमिन",
+    "users": "यूज़र",
+    "orders": "ऑर्डर",
+    "flags": "धोखाधड़ी चेतावनी",
+    "returns": "रिटर्न",
+    "all": "सभी",
+    "empty": "यहाँ कुछ नहीं।",
+    "suspend": "रोकें",
+    "activate": "चालू करें",
+    "status": "स्थिति: {{status}}",
+    "dismiss": "खारिज करें",
+    "resolve": "हल हुआ दर्ज करें",
+    "approve": "रिफ़ंड मंज़ूर करें",
+    "reject": "मना करें",
+    "accounts": "एक पते पर {{accounts}} खाते (सीमा {{limit}}), पिनकोड {{pincode}}",
+    "orderLine": "{{name}} · {{amount}} · {{status}}",
+    "reason": "कारण: {{reason}}",
+    "listingPhotos": "लिस्टिंग फ़ोटो",
+    "done": "सेव हो गया।"
+  }
 }

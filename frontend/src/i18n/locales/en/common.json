@@ -113,5 +113,26 @@
       "rejected": "Your problem report was not approved."
     }
   },
-  "timeline": "What happened"
+  "timeline": "What happened",
+  "admin": {
+    "homeTitle": "Admin",
+    "users": "Users",
+    "orders": "Orders",
+    "flags": "Fraud flags",
+    "returns": "Returns",
+    "all": "All",
+    "empty": "Nothing here.",
+    "suspend": "Suspend",
+    "activate": "Activate",
+    "status": "Status: {{status}}",
+    "dismiss": "Dismiss",
+    "resolve": "Mark resolved",
+    "approve": "Approve refund",
+    "reject": "Reject",
+    "accounts": "{{accounts}} accounts at one address (limit {{limit}}), pincode {{pincode}}",
+    "orderLine": "{{name}} · {{amount}} · {{status}}",
+    "reason": "Reason: {{reason}}",
+    "listingPhotos": "Listing photos",
+    "done": "Saved."
+  }
 }

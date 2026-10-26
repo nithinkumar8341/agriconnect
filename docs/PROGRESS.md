@@ -1,6 +1,6 @@
 # Progress
 
-NEXT: MVP item 6 (admin panel pages), then 7 (Playwright smoke), then AI service, deploy, README, CI.
+NEXT: MVP item 7 (Playwright smoke), then AI service, deploy, README, CI.
 
 ## MVP status (2026-10-26)
 
@@ -11,7 +11,7 @@ NEXT: MVP item 6 (admin panel pages), then 7 (Playwright smoke), then AI service
 | 3 Fraud: COD caps, duplicate-address flag, admin API | DONE (admin page in item 6) | backend/src/services/fraud.service.js, tests/admin.test.js |
 | 4 Reviews and trust | DONE | backend/src/services/review.service.js, frontend/src/components/buyer/Trust.jsx |
 | 5 Returns | DONE (admin page in item 6) | backend/src/services/return.service.js, frontend/src/components/buyer/ReturnSheet.jsx |
-| 6 Admin panel pages | TODO (API done: backend/src/routes/admin.routes.js) | |
+| 6 Admin panel pages | DONE | frontend/src/pages/admin/AdminPages.jsx |
 | 7 Playwright smoke test | TODO | |
 | AI service, voice, deploy, README, CI | TODO | ai-service/app/main.py has health only |
 

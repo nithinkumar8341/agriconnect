@@ -218,7 +218,6 @@ Machine-written te and hi for every UI key, in all namespaces. The app falls bac
 | buyer:cart.deliverTo | Deliver to | డెలివరీ చిరునామా |  | डिलीवरी पता |  |
 | buyer:cart.payment | Payment | చెల్లింపు |  | भुगतान |  |
 | buyer:cart.cod | Cash on delivery | డెలివరీ సమయంలో నగదు |  | डिलीवरी पर नकद |  |
-| buyer:cart.upiSoon | UPI payment comes in the next update. | UPI చెల్లింపు తదుపరి అప్‌డేట్‌లో వస్తుంది. |  | UPI भुगतान अगले अपडेट में आएगा। |  |
 | buyer:cart.summary | Price summary | ధర వివరాలు |  | कीमत का ब्योरा |  |
 | buyer:cart.itemsTotal | Vegetables and fruits | కూరగాయలు, పండ్లు |  | सब्ज़ियाँ और फल |  |
 | buyer:cart.deliveryTotal | Delivery | డెలివరీ |  | डिलीवरी |  |
@@ -238,6 +237,8 @@ Machine-written te and hi for every UI key, in all namespaces. The app falls bac
 | buyer:cart.errors.TOO_MANY_OPEN_ORDERS | You already have open orders. Please wait until they are delivered. | మీకు ఇప్పటికే తెరిచిన ఆర్డర్లు ఉన్నాయి. అవి డెలివరీ అయ్యే వరకు ఆగండి. |  | आपके पहले से खुले ऑर्डर हैं। उनके डिलीवर होने तक रुकें। |  |
 | buyer:cart.errors.COD_BLOCKED | Cash on delivery is not available on this account. | ఈ ఖాతాకు డెలివరీ సమయంలో నగదు అందుబాటులో లేదు. |  | इस खाते पर डिलीवरी पर नकद उपलब्ध नहीं है। |  |
 | buyer:cart.errors.ADDRESS_REQUIRED | Add a delivery address in your profile first. | ముందుగా మీ ప్రొఫైల్‌లో డెలివరీ చిరునామా ఇవ్వండి. |  | पहले अपनी प्रोफ़ाइल में डिलीवरी पता जोड़ें। |  |
+| buyer:cart.upi | UPI (test mode) | UPI (టెస్ట్ మోడ్) |  | UPI (टेस्ट मोड) |  |
+| buyer:cart.upiNote | Test mode: you tap Pay and no real money moves. | టెస్ట్ మోడ్: మీరు చెల్లించు నొక్కుతారు, నిజమైన డబ్బు వెళ్ళదు. |  | टेस्ट मोड: आप भुगतान दबाते हैं, असली पैसा नहीं जाता। |  |
 | buyer:orders.title | My orders | నా ఆర్డర్లు |  | मेरे ऑर्डर |  |
 | buyer:orders.emptyTitle | No orders yet | ఇంకా ఆర్డర్లు లేవు |  | अभी कोई ऑर्डर नहीं |  |
 | buyer:orders.emptyMessage | Your orders will appear here. | మీ ఆర్డర్లు ఇక్కడ కనిపిస్తాయి. |  | आपके ऑर्डर यहाँ दिखेंगे। |  |
@@ -262,6 +263,41 @@ Machine-written te and hi for every UI key, in all namespaces. The app falls bac
 | buyer:orders.callFarmer | Call {{name}} | {{name}}కు కాల్ చేయండి |  | {{name}} को कॉल करें |  |
 | buyer:orders.open | See order | ఆర్డర్ చూడండి |  | ऑर्डर देखें |  |
 | buyer:orders.autoRefresh | This page updates by itself. | ఈ పేజీ దానంతట అదే అప్‌డేట్ అవుతుంది. |  | यह पेज अपने आप अपडेट होता है। |  |
+| buyer:orders.payNow | Pay {{amount}} by UPI (test mode) | UPI ద్వారా {{amount}} చెల్లించండి (టెస్ట్ మోడ్) |  | UPI से {{amount}} दें (टेस्ट मोड) |  |
+| buyer:orders.paid | Payment received. | చెల్లింపు అందింది. |  | भुगतान मिल गया। |  |
+| buyer:orders.farmerReceives | Farmer receives | రైతుకు అందేది |  | किसान को मिलेगा |  |
+| buyer:orders.paymentLabel | Payment | చెల్లింపు |  | भुगतान |  |
+| buyer:orders.payment.pending | Not paid yet | ఇంకా చెల్లించలేదు |  | अभी भुगतान नहीं हुआ |  |
+| buyer:orders.payment.held | Paid, held until delivery | చెల్లించారు, డెలివరీ వరకు ఉంచాము |  | भुगतान हुआ, डिलीवरी तक रखा गया |  |
+| buyer:orders.payment.paid | Paid | చెల్లించారు |  | भुगतान हुआ |  |
+| buyer:orders.payment.refunded | Refunded | తిరిగి ఇచ్చాము |  | पैसा वापस हुआ |  |
+| buyer:orders.payment.partially_refunded | Partly refunded | కొంత తిరిగి ఇచ్చాము |  | कुछ पैसा वापस हुआ |  |
+| buyer:orders.payment.failed | Payment failed | చెల్లింపు విఫలమైంది |  | भुगतान नहीं हुआ |  |
+| buyer:orders.upi | UPI (test mode) | UPI (టెస్ట్ మోడ్) |  | UPI (टेस्ट मोड) |  |
+| buyer:review.title | How was your order? | మీ ఆర్డర్ ఎలా ఉంది? |  | आपका ऑर्डर कैसा रहा? |  |
+| buyer:review.stars | Stars | నక్షత్రాలు |  | स्टार |  |
+| buyer:review.starLabel | {{count}} ★ | {{count}} ★ |  | {{count}} ★ |  |
+| buyer:review.comment | Anything to add? (optional) | ఇంకా ఏమైనా చెప్పాలా? (ఐచ్ఛికం) |  | कुछ और कहना है? (वैकल्पिक) |  |
+| buyer:review.submit | Send review | రివ్యూ పంపండి |  | समीक्षा भेजें |  |
+| buyer:review.thanks | Thank you for your review! | మీ రివ్యూకు ధన్యవాదాలు! |  | समीक्षा के लिए धन्यवाद! |  |
+| buyer:trust.rating | ★ {{rating}} ({{count}} reviews) | ★ {{rating}} ({{count}} రివ్యూలు) |  | ★ {{rating}} ({{count}} समीक्षाएँ) |  |
+| buyer:trust.orders | {{count}} orders delivered | {{count}} ఆర్డర్లు డెలివరీ చేశారు |  | {{count}} ऑर्डर डिलीवर किए |  |
+| buyer:trust.noReviews | No reviews yet. | ఇంకా రివ్యూలు లేవు. |  | अभी कोई समीक्षा नहीं। |  |
+| buyer:returns.report | Report a problem | సమస్య తెలపండి |  | समस्या बताएँ |  |
+| buyer:returns.title | What was wrong? | ఏం తప్పు జరిగింది? |  | क्या गलत था? |  |
+| buyer:returns.reason | Problem | సమస్య |  | समस्या |  |
+| buyer:returns.reasons.damaged | Damaged | పాడైంది |  | खराब हालत |  |
+| buyer:returns.reasons.rotten | Rotten | కుళ్ళిపోయింది |  | सड़ा हुआ |  |
+| buyer:returns.reasons.wrong_item | Wrong item | వేరే సరుకు వచ్చింది |  | गलत सामान |  |
+| buyer:returns.reasons.underweight | Less than ordered | ఆర్డర్ కంటే తక్కువ |  | ऑर्डर से कम |  |
+| buyer:returns.note | Tell us more (optional) | ఇంకా చెప్పండి (ఐచ్ఛికం) |  | और बताएँ (वैकल्पिक) |  |
+| buyer:returns.photo | Take a photo of the problem | సమస్య ఫోటో తీయండి |  | समस्या की फ़ोटो लें |  |
+| buyer:returns.photoAdded | Photo added | ఫోటో జోడించాము |  | फ़ोटो जुड़ गई |  |
+| buyer:returns.send | Send report | రిపోర్ట్ పంపండి |  | रिपोर्ट भेजें |  |
+| buyer:returns.sent | Reported. We will check and reply soon. | రిపోర్ట్ అయింది. మేము తనిఖీ చేసి త్వరలో చెబుతాము. |  | रिपोर्ट हो गई। हम जाँच कर जल्द बताएँगे। |  |
+| buyer:returns.status.open | Problem reported, being checked | సమస్య తెలిపారు, తనిఖీ జరుగుతోంది |  | समस्या दर्ज, जाँच चल रही है |  |
+| buyer:returns.status.approved | Refund of {{amount}} approved | {{amount}} రీఫండ్ ఆమోదించాము |  | {{amount}} की वापसी मंज़ूर |  |
+| buyer:returns.status.rejected | Report not approved | రిపోర్ట్ ఆమోదించలేదు |  | रिपोर्ट मंज़ूर नहीं हुई |  |
 | common:app.name | AgriConnect | AgriConnect |  | AgriConnect |  |
 | common:app.tagline | Fresh vegetables and fruits, straight from nearby farmers | దగ్గరలోని రైతుల నుండి నేరుగా తాజా కూరగాయలు, పండ్లు |  | पास के किसानों से सीधे ताज़ी सब्ज़ियाँ और फल |  |
 | common:actions.back | Back | వెనుకకు |  | वापस |  |
@@ -339,7 +375,29 @@ Machine-written te and hi for every UI key, in all namespaces. The app falls bac
 | common:notifications.order.cancelled | {{name}} cancelled the order. | {{name}} ఆర్డర్ రద్దు చేశారు. |  | {{name}} ने ऑर्डर रद्द किया। |  |
 | common:notifications.order.rejected | {{name}} could not take your order: {{reason}} | {{name}} మీ ఆర్డర్ తీసుకోలేకపోయారు: {{reason}} |  | {{name}} आपका ऑर्डर नहीं ले सके: {{reason}} |  |
 | common:notifications.order.failed | Delivery from {{name}} did not happen: {{reason}} | {{name}} నుండి డెలివరీ జరగలేదు: {{reason}} |  | {{name}} से डिलीवरी नहीं हुई: {{reason}} |  |
+| common:notifications.return.requested | A buyer reported a problem with an order. | ఒక కొనుగోలుదారు ఆర్డర్‌లో సమస్య తెలిపారు. |  | एक खरीदार ने ऑर्डर में समस्या बताई। |  |
+| common:notifications.return.approved | Your problem report was approved. A refund is on the way. | మీ సమస్య రిపోర్ట్ ఆమోదించాము. రీఫండ్ వస్తోంది. |  | आपकी समस्या रिपोर्ट मंज़ूर हुई। पैसा वापस आ रहा है। |  |
+| common:notifications.return.rejected | Your problem report was not approved. | మీ సమస్య రిపోర్ట్ ఆమోదించలేదు. |  | आपकी समस्या रिपोर्ट मंज़ूर नहीं हुई। |  |
 | common:timeline | What happened | ఏం జరిగింది |  | क्या हुआ |  |
+| common:admin.homeTitle | Admin | అడ్మిన్ |  | एडमिन |  |
+| common:admin.users | Users | యూజర్లు |  | यूज़र |  |
+| common:admin.orders | Orders | ఆర్డర్లు |  | ऑर्डर |  |
+| common:admin.flags | Fraud flags | మోసం హెచ్చరికలు |  | धोखाधड़ी चेतावनी |  |
+| common:admin.returns | Returns | రిటర్న్‌లు |  | रिटर्न |  |
+| common:admin.all | All | అన్నీ |  | सभी |  |
+| common:admin.empty | Nothing here. | ఇక్కడ ఏమీ లేదు. |  | यहाँ कुछ नहीं। |  |
+| common:admin.suspend | Suspend | నిలిపివేయండి |  | रोकें |  |
+| common:admin.activate | Activate | సక్రియం చేయండి |  | चालू करें |  |
+| common:admin.status | Status: {{status}} | స్థితి: {{status}} |  | स्थिति: {{status}} |  |
+| common:admin.dismiss | Dismiss | తోసిపుచ్చండి |  | खारिज करें |  |
+| common:admin.resolve | Mark resolved | పరిష్కరించినట్లు గుర్తించండి |  | हल हुआ दर्ज करें |  |
+| common:admin.approve | Approve refund | రీఫండ్ ఆమోదించండి |  | रिफ़ंड मंज़ूर करें |  |
+| common:admin.reject | Reject | తిరస్కరించండి |  | मना करें |  |
+| common:admin.accounts | {{accounts}} accounts at one address (limit {{limit}}), pincode {{pincode}} | ఒకే చిరునామాలో {{accounts}} ఖాతాలు (పరిమితి {{limit}}), పిన్‌కోడ్ {{pincode}} |  | एक पते पर {{accounts}} खाते (सीमा {{limit}}), पिनकोड {{pincode}} |  |
+| common:admin.orderLine | {{name}} · {{amount}} · {{status}} | {{name}} · {{amount}} · {{status}} |  | {{name}} · {{amount}} · {{status}} |  |
+| common:admin.reason | Reason: {{reason}} | కారణం: {{reason}} |  | कारण: {{reason}} |  |
+| common:admin.listingPhotos | Listing photos | లిస్టింగ్ ఫోటోలు |  | लिस्टिंग फ़ोटो |  |
+| common:admin.done | Saved. | సేవ్ అయింది. |  | सेव हो गया। |  |
 | devui:title | Component gallery | కాంపోనెంట్ గ్యాలరీ |  | कंपोनेंट गैलरी |  |
 | devui:intro | Every reusable component, shown in the current language. Switch the language to check the layout. | ప్రతి కాంపోనెంట్ ప్రస్తుత భాషలో చూపబడింది. లేఅవుట్ చూడటానికి భాష మార్చండి. |  | हर कंपोनेंट मौजूदा भाषा में दिखाया गया है। लेआउट जाँचने के लिए भाषा बदलें। |  |
 | devui:sections.buttons | Big buttons | పెద్ద బటన్లు |  | बड़े बटन |  |
@@ -390,6 +448,7 @@ Machine-written te and hi for every UI key, in all namespaces. The app falls bac
 | farmer:tiles.callSupport | Call support | సపోర్ట్‌కు కాల్ |  | सहायता को कॉल |  |
 | farmer:tiles.noAgent | No agent yet | ఇంకా ఏజెంట్ లేరు |  | अभी कोई एजेंट नहीं |  |
 | farmer:tiles.newOrders | new | కొత్తవి |  | नए |  |
+| farmer:tiles.earnings | My earnings | నా సంపాదన |  | मेरी कमाई |  |
 | farmer:products.title | My products | నా పంటలు |  | मेरे उत्पाद |  |
 | farmer:products.filterLabel | Show | చూపించు |  | दिखाएँ |  |
 | farmer:products.filters.all | All | అన్నీ |  | सभी |  |
@@ -562,6 +621,16 @@ Machine-written te and hi for every UI key, in all namespaces. The app falls bac
 | farmer:orders.errors.DELIVERY_OTP_LOCKED | Too many wrong codes. Mark the delivery as failed, or call support. | చాలా సార్లు తప్పు కోడ్. డెలివరీ కాలేదని గుర్తించండి లేదా సపోర్ట్‌కు కాల్ చేయండి. |  | बहुत बार गलत कोड। डिलीवरी नहीं हुई दर्ज करें या सपोर्ट को कॉल करें। |  |
 | farmer:orders.errors.INVALID_STATUS_CHANGE | This order just changed. The page has been refreshed. | ఈ ఆర్డర్ ఇప్పుడే మారింది. పేజీ రిఫ్రెష్ అయింది. |  | यह ऑर्डर अभी बदला है। पेज रीफ़्रेश हो गया। |  |
 | farmer:orders.errors.REASON_REQUIRED | Please choose or write a reason. | దయచేసి కారణం ఎంచుకోండి లేదా రాయండి. |  | कृपया कारण चुनें या लिखें। |  |
+| farmer:earnings.title | My earnings | నా సంపాదన |  | मेरी कमाई |  |
+| farmer:earnings.delivered | Delivered orders | డెలివరీ చేసిన ఆర్డర్లు |  | डिलीवर किए ऑर्डर |  |
+| farmer:earnings.earned | You earned | మీ సంపాదన |  | आपकी कमाई |  |
+| farmer:earnings.produce | Produce sold | అమ్మిన పంట |  | बेची गई फ़सल |  |
+| farmer:earnings.delivery | Delivery fees | డెలివరీ ఛార్జీలు |  | डिलीवरी शुल्क |  |
+| farmer:earnings.platformFee | Platform fee | ప్లాట్‌ఫామ్ ఫీజు |  | प्लेटफ़ॉर्म शुल्क |  |
+| farmer:earnings.mandi | Estimate: a mandi commission of about {{percent}}% would have taken {{amount}} from this produce. | అంచనా: సుమారు {{percent}}% మండీ కమీషన్ ఈ పంట నుండి {{amount}} తీసుకునేది. |  | अनुमान: लगभग {{percent}}% मंडी कमीशन इस फ़सल से {{amount}} ले लेता। |  |
+| farmer:earnings.simulated | UPI payouts are simulated in test mode. | టెస్ట్ మోడ్‌లో UPI చెల్లింపులు అనుకరణ మాత్రమే. |  | टेस्ट मोड में UPI भुगतान नकली हैं। |  |
+| farmer:earnings.empty | Your earnings appear here after your first delivery. | మీ మొదటి డెలివరీ తర్వాత సంపాదన ఇక్కడ కనిపిస్తుంది. |  | पहली डिलीवरी के बाद आपकी कमाई यहाँ दिखेगी। |  |
+| farmer:earnings.order | Delivered {{date}} | {{date}}న డెలివరీ |  | {{date}} को डिलीवर |  |
 | onboarding:role.title | How will you use AgriConnect? | AgriConnectను మీరు ఎలా ఉపయోగిస్తారు? |  | आप AgriConnect का उपयोग कैसे करेंगे? |  |
 | onboarding:role.farmer | I am a farmer | నేను రైతును |  | मैं किसान हूँ |  |
 | onboarding:role.farmerHint | Sell my vegetables and fruits | నా కూరగాయలు, పండ్లు అమ్ముతాను |  | अपनी सब्ज़ियाँ और फल बेचें |  |

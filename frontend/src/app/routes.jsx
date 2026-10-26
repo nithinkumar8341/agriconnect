@@ -4,6 +4,13 @@ import { ROLE_SECTIONS } from '../layouts/navigation.js';
 import { PublicLayout } from '../layouts/PublicLayout.jsx';
 import { RoleLayout } from '../layouts/RoleLayout.jsx';
 import { RootLayout } from '../layouts/RootLayout.jsx';
+import {
+  AdminFraudFlagsPage,
+  AdminHomePage,
+  AdminOrdersPage,
+  AdminReturnsPage,
+  AdminUsersPage,
+} from '../pages/admin/AdminPages.jsx';
 import { BuyerHomePage } from '../pages/buyer/BuyerHomePage.jsx';
 import { BuyerOrderDetailPage } from '../pages/buyer/BuyerOrderDetailPage.jsx';
 import { BuyerOrdersPage } from '../pages/buyer/BuyerOrdersPage.jsx';
@@ -37,6 +44,13 @@ const devUiRoute = {
 
 // Screens built so far, by role and path ('' = home). Any other menu entry shows a placeholder.
 const BUILT_SCREENS = {
+  admin: {
+    '': <AdminHomePage />,
+    users: <AdminUsersPage />,
+    orders: <AdminOrdersPage />,
+    'fraud-flags': <AdminFraudFlagsPage />,
+    returns: <AdminReturnsPage />,
+  },
   buyer: {
     '': <BuyerHomePage />,
     cart: <CartPage />,
